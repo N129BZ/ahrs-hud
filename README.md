@@ -50,9 +50,7 @@ chromium-browser --kiosk 'http://localhost/hud/hud.html' --disable-notifications
 
 6. Create a bash file: **pi@raspberrypi:~ $ ~/.bash_profile** and add the **startx** command
 ```bash
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-    startx
-fi
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor
 ```
 
 7. Set the pi for desktop auto-login:
