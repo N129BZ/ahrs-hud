@@ -79,7 +79,7 @@ var connections = new Array;
 var port;
 var parser;
 try {
-  port = new SerialPort(serialport);    // open the port
+  port = new SerialPort(serialport, { baudRate: 115200 });    // open the port
   parser = port.pipe(new Readline({ delimiter: '\n' }));
 
   port.on('open', showPortOpen);   

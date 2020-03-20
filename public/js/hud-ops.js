@@ -4,11 +4,19 @@
 // when data comes in from the Dynon ADAHRS serial port
 ///////////////////////////////////////////////////////////////////// 
 
-const host = "ws://" + location.hostname + ":9696";
-const websock = new WebSocket(host);
+var host;
+var websock;
 
-websock.onopen = openSocket;
-websock.onmessage = onSerialData;
+try {
+	let host = "ws://" + location.hostname + ":9696";
+ 	let websock = new WebSocket(host);
+
+	websock.onopen = openSocket;
+	websock.onmessage = onSerialData;
+}
+catch(error) {
+	console.log(error);
+}
 
 function openSocket() {
 	//console.log("Websocket OPENED!");
