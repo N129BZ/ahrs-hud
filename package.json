@@ -1,0 +1,26 @@
+{
+  "name": "hudserver",
+  "version": "1.0.0",
+  "description": "Heads Up Display server using Dynon Efis serial data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "HUD",
+    "DYNON",
+    "EFIS"
+  ],
+  "author": "Brian A. Manlove",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "@serialport/parser-readline": "^8.0.6",
+    "express": "^4.17.1",
+    "gulp": "^4.0.2",
+    "http": "0.0.0",
+    "minimist": "^1.2.5",
+    "serialport": "^8.0.7",
+    "websocket": "^1.0.31"
+  },
+  "devDependencies": {}
+}

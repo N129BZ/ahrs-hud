@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="50" viewBox="0 0 21.165 13.229">
+  <path stroke-miterlimit="10" d="M.91.91h19.345v11.408H.91z" stroke="#00bbeb" stroke-width="1.821" stroke-linejoin="round" paint-order="fill markers stroke"/>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center" x="12.611" y="7.889" transform="scale(.83699 1.19476)" font-weight="700" font-size="6.395" letter-spacing="0" word-spacing="0" font-family="sans-serif" text-anchor="middle" fill="#fff" stroke-width=".466">
+    <tspan id="tspanGMeter" x="12.611" y="7.889">1.0 G</tspan>
+  </text>
+</svg>

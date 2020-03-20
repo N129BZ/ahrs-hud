@@ -1,0 +1,9 @@
+<svg id="headingmask" xmlns="http://www.w3.org/2000/svg" width="800" height="104.314" viewBox="0 0 211.667 27.6">
+  <path d="M212.322 0H.722v13.425h211.6zm-.003 25.062H.723V27.6h211.596z" paint-order="fill markers stroke"/>
+  <path paint-order="fill markers stroke" d="M211.62 12.257h-60V27.6h60zm-148.111.628H.107v12.562h63.402z"/>
+  <path d="M111.279 10.179l-3.31 3.718-2.954-3.783h6.29s-.04.13-.027.065z" fill="#f60" stroke="#000" stroke-width=".266"/>
+  <path d="M98.175.97h19.043v9.255H98.175z" stroke="#f60" stroke-width="1.407" stroke-linejoin="round" paint-order="fill markers stroke"/>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="107.263" y="8.355" transform="scale(.93389 1.0708)" font-weight="700" font-size="7.952" letter-spacing="0" word-spacing="0" font-family="sans-serif" fill="#fff" stroke-width=".542">
+    <tspan id="tspanHeading" x="107.263" y="8.355" style="-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start">000</tspan>
+  </text>
+</svg>
