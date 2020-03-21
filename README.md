@@ -5,7 +5,9 @@
 ![Image of hud](https://github.com/N129BZ/dynon-hud/blob/master/docs/hud_in_bank.png)
 ## Instructions for an installation of Buster Lite on the Raspberry Pi. This has been tested on pi 2, pi 3b, and pi 3b+ NOTE: This does NOT require a Stratux. This requires a connection using 3 twisted pair wires from the selected Dynon serial port to the pi's GPIO pins.  (See GPIO picture under step 8 below.)
 
-###### Raspberry Pi Buster Lite installation instructions and download can be found at: https://www.raspberrypi.org/downloads/raspbian/
+###### Raspberry Pi Buster Lite indownload can be found at: https://www.raspberrypi.org/downloads/raspbian/
+
+###### The following steps can also be found at: https://desertbot.io/blog/raspberry-pi-touchscreen-kiosk-setup
 
 1. After installing Buster, open the **raspi-config** configuration app:
 ```
