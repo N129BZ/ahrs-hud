@@ -46,7 +46,7 @@ npm install serialport
 npm install @serialport/parser-readline
 ```
 
-6. Change the directory to: **pi@raspberrypi:~/dynon-hud$ cd** and then run the following command:
+6. Change the directory to: **pi@raspberrypi:~$** and then run the following command:
 ```
 sudo npm install pm2@latest -g
 ```
