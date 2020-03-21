@@ -106,7 +106,7 @@ Add this line to start the X server on boot. Because I am using a touch screen I
 12. Reboot.
 
 13. Connect the Ground wire from the Dynon serial port to pin 6, connect the RX wire to pin 8, and the TX wire to pin 10.
-![Image of GPIO](https://github.com/N129BZ/dynon-hud/blob/master/docs/rpi-serial.png)
+![Image of GPIO](https://github.com/N129BZ/dynon-hud/blob/master/docs/GPIO-Pinout-Diagram.png)
 
 14. Connect the HUD to the HDMI port on the pi and reboot. When that is done, you should see the AHRS display.
 
