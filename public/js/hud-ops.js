@@ -200,6 +200,13 @@ function onSerialData(e) {
 	ball.css('left', ballposition + 'px');
 	
 	// set the wind speed & direction
+	// fix for backwards arrow 
+	if (winddirection < 180) {
+		winddirection += 180;
+	}
+	else {
+		winddirection -= 180;	
+	} 
 	windarrow.style.transform  = 'rotate('+ winddirection +'deg)';
 	windspeed.textContent = "  " + windkts;
 }
