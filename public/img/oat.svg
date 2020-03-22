@@ -42,8 +42,8 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="2.1692308"
-     inkscape:cx="-149.43473"
-     inkscape:cy="21.312058"
+     inkscape:cx="147.51773"
+     inkscape:cy="19.468087"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -55,7 +55,8 @@
      stroke-width="1.884"
      stroke-linejoin="round"
      paint-order="fill markers stroke"
-     id="path2" />
+     id="path2"
+     style="stroke:#0234ff;stroke-opacity:1" />
   <text
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.95375586px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:small-caps;font-variant-numeric:proportional-nums;font-feature-settings:normal;text-align:center;letter-spacing:0;word-spacing:0;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;stroke-width:0.81853741"
      x="6.915432"

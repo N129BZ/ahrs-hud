@@ -41,8 +41,8 @@
      id="namedview13"
      showgrid="false"
      inkscape:zoom="2.1692308"
-     inkscape:cx="-24.893617"
-     inkscape:cy="25"
+     inkscape:cx="-117.0922"
+     inkscape:cy="23.156029"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -54,7 +54,8 @@
      stroke-width="1.884"
      stroke-linejoin="round"
      paint-order="fill markers stroke"
-     id="path2" />
+     id="path2"
+     style="stroke:#0052ff;stroke-opacity:1" />
   <text
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.7084713px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:small-caps;font-variant-numeric:proportional-nums;font-feature-settings:normal;text-align:center;letter-spacing:0;word-spacing:0;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;stroke-width:0.66262031"
      x="12.387164"
@@ -79,7 +80,8 @@
      stroke-miterlimit="10"
      paint-order="fill markers stroke"
      d="M-4.18 1.481h.363v10.173h-.363z"
-     id="path7" />
+     id="path7"
+     style="stroke:#0255ff;stroke-opacity:1" />
   <text
      style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center"
      x="-8.692"

@@ -111,7 +111,7 @@ var attitude = $.attitudeIndicator('#attitude', 'attitude', {roll:50, pitch:-20,
 
 // offsets, in pixels per unit of measure
 const spd_offset = 4.8;    // Knots
-const alt_offset = .4792;  // Feet MSL
+const alt_offset = .1249;  // Feet MSL
 const hdg_offset = 4.720;  // Degrees
 const ball_offset = 3;     // Degrees
 const ball_center = 433;   // this is "center" of the slip-skid indicator
@@ -126,6 +126,8 @@ var arrowbox = document.getElementById('tspanArrow');
 var tas = document.getElementById("tspanTAS");
 var oat = document.getElementById("tspanOAT");
 var dalt = document.getElementById("tspanDalt");
+var windarrow = document.getElementById("windarrow");
+var windspeed = document.getElementById("tspanWindspeed");
 
 function pad(num, size) {
     var s = num+"";
@@ -155,6 +157,8 @@ function onSerialData(e) {
     var TAS = parseInt(str.substr(52,4));
     var baro = parseInt(str.substr(56,3));
     var dAlt = parseInt(str.substr(59,6));
+	var winddirection = parseInt(str.substr(65,3));
+	var windkts = parseInt(str.substr(68,2));
 
     attitude.setRoll(roll * -1);
     attitude.setPitch(pitch * pitch_offset);
@@ -172,6 +176,7 @@ function onSerialData(e) {
     tas.textContent = "tas " + TAS + " kt";
 	dalt.textContent = "d  alt " + dAlt + " ft";
 	
+
     var speedticks = (airspeed * spd_offset);
     var altticks = (altitude * alt_offset);
     var hdgticks = (heading * hdg_offset) * -1;
@@ -192,5 +197,9 @@ function onSerialData(e) {
     }
     var ballposition = ball_center + (slipskid * ball_offset);
     //console.log("slipskid: " + slipskid + ", ball position: " + ballposition)
-    ball.css('left', ballposition + 'px');
+	ball.css('left', ballposition + 'px');
+	
+	// set the wind speed & direction
+	windarrow.style.transform  = 'rotate('+ winddirection +'deg)';
+	windspeed.textContent = "  " + windkts;
 }

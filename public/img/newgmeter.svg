@@ -12,7 +12,7 @@
    height="50"
    viewBox="0 0 10.507 13.229"
    version="1.1"
-   sodipodi:docname="dalt.svg"
+   sodipodi:docname="newgmeter.svg"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
   <metadata
      id="metadata12">
@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -42,8 +42,8 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="2.1692308"
-     inkscape:cx="-116.17021"
-     inkscape:cy="23.156029"
+     inkscape:cx="-113.40426"
+     inkscape:cy="20.620568"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -55,23 +55,19 @@
      stroke-width="1.884"
      stroke-linejoin="round"
      paint-order="fill markers stroke"
-     id="path2"
-     style="stroke:#0255ff;stroke-opacity:1" />
+     id="path2" />
   <text
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.47836018px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:small-caps;font-variant-numeric:proportional-nums;font-feature-settings:normal;text-align:center;letter-spacing:0;word-spacing:0;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;stroke-width:0.6356371"
-     x="6.4527097"
-     y="7.4037976"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.17388587px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:small-caps;font-variant-numeric:proportional-nums ;font-feature-settings:normal;text-align:center;letter-spacing:0;word-spacing:0;writing-mode:lr;text-anchor:middle;fill:#ffffff;stroke-width:0.71633536;"
+     x="6.5810471"
+     y="7.5434284"
      font-weight="700"
      font-size="6.059"
      letter-spacing="0"
      word-spacing="0"
-     transform="scale(0.79501847,1.2578324)"
+     transform="scale(0.80400925,1.2437668)"
      id="text5">
     <tspan
        sodipodi:role="line"
-       id="tspan9"
-       x="6.4527106"
-       y="7.4037976"
-       style="stroke-width:0.6356371">dALT 0000 ft</tspan>
+       id="tspan13">1.0 G</tspan>
   </text>
 </svg>
