@@ -1,289 +1,300 @@
 body { 
-  background-color: #000000; 
-  width: 960px;
-  height: 480px;
-  top: 0px;
-  left: 0px;
-  margin: 0%;
-  overflow: hidden;
-}
-
-/* uncomment this class if you are using a Kivic unit */
-/*
-.hud {
-  width: 960px;
-  height: 480px;
-  top: -53px;
-  left: -150px;
-  position: relative;
-  overflow: hidden;
-  transform: scale(0.74,0.80);
-}
-*/
-
-/* uncomment this class if you are using a Hudly unit */
-.hud {
-  width: 960px;
-  height: 480px;
-  top: 220px;
-  left: 450px;
-  position: relative;
-  overflow: hidden;
-  transform: scale(2.1, 2.2);
-}
-
-.scrollspeed {
-  width: 200px;
-  height: 600px;
-  top: -110px;
-  left: 20px;
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-}
-
-#speedmask {
-  position: absolute;
-  top: 2px;
-  left: 0px;
-  width: 192px;
-  height: 600px;
-  display: inline-block;
-  border: 0px;
-  z-index: 15;
-}
-
-#speedtape {
-  position: absolute;
-  top: -1315px;
-  left: 16px;
-  width: 85px;
-  height: 1844px;
-  z-index: 4;
-}
-
-.scrollaltitude {
-  width: 200px;
-  height: 632px;
-  top: -120px;
-  left: 720px;
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-}
-
-#altmask {
-  position: absolute;
-  top: -97px;
-  left: -5px;
-  width: 230px;
-  height: 790px;
-  display: inline-block;
-  overflow: hidden;
-  border: 0px;
-  z-index: 10;
-}
-
-#alttape {
-  position: absolute;
-  top: -2221px;
-  left: 100px;
-  width: 85px;
-  height: 2507px;
-  z-index: 1;
-}
-
-.scrollheading {
-  width: 800px;
-  height: 95px;
-  top: 380px;
-  left: -40px;
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-}
-
-#headingmask {
-  position: absolute;
-  top: 0px;
-  left: 98px;
-  width: 800px;
-  height: 104px;
-  display: inline-block;
-  border: 0px;
-  z-index: 150;
-}
-
-#headingtape {
-  position: absolute;
-  top: 46px;
-  left: -598px;
-  width:3900px;
-  height: 62px;
-  z-index: 1;
-}
-
-#windcircle {
-  height: 82;
-  width: 82px;
-  top: 283px;
-  left: 121px;
-  position: absolute;
-  visibility: visible;
-  z-index: 200;
-}
-
-#windarrow {
-  height: 65px;
-  width: 10px;
-  position: absolute;
-  top: 292px;
-  left: 158px;
-  visibility: visible;
-  z-index: 201;
-}
-
-#windindicator {
-  position: absolute;
-  top: 292px;
-  left: 50px;
-  width: 68px;
-  height: 108px;
-  visibility: visible;
-  z-index: 201;
-}
-
-#windknots {
-  position: absolute;
-  top: 299px;
-  left: 15px;
-  width: 40px;
-  height: 10px;
-  visibility: visible;
-  z-index: 201;
-}
-
-#gmeter {
-  height: 40px;
-  width: 113px;
-  position: absolute;
-  top: 422px;
-  left: 60px;
-  visibility: visible;
-  z-index: 200;
-  transform: scale(1.25, 1.25);
-}
-
-#tas {
-  height: 40px;
-  width: 113px;
-  position: absolute;
-  top: 380px;
-  left: 60px;
-  visibility: visible;
-  z-index: 200;
-  transform: scale(1.25, 1.25);
-}
-
-#oat {
-  height: 40px;
-  width: 113px;
-  position: absolute;
-  top: 382px;
-  left: 758px;
-  visibility: visible;
-  z-index: 200;
-  transform: scale(1.25, 1.25);
-}
-
-#dalt {
-  height: 40px;
-  width: 113px;
-  position: absolute;
-  top: 422px;
-  left: 758px;
-  visibility: visible;
-  z-index: 200;
-  transform: scale(1.25, 1.25);
-}
-
-#verticalspeed {
-  height: 40px;
-  width: 113px;
-  position: absolute;
-  top: 339px;
-  left: 758px;
-  visibility: visible;
-  z-index: 200;
-  transform: scale(1.25, 1.25);
-}
-
-#slipskid {
-  height: 120px;
-  width: 387px;
-  position: absolute;
-  top: 292px;
-  left: 273px;
-  visibility: visible;
-  z-index: 200;
-  transform: scale(.4,.3);
-}
-
-#ball {
-  height: 95px;
-  width: 70px;
-  position: absolute;
-  top: 305px;
-  left: 433px;
-  visibility: visible;
-  z-index: 201;
-  transform: scale(.3,.28);
-}
-
-#leftbar {
-  height: 83px;
-  width: 10px;
-  position: absolute;
-  top: 311px;
-  left: 450px;
-  visibility: visible;
-  z-index: 210;
-  transform: scale(.54,.35);
-}
-
-#rightbar {
-  height: 83px;
-  width: 10px;
-  position: absolute;
-  top: 311px;
-  left: 478px;
-  visibility: visible;
-  z-index: 210;
-  transform: scale(.54,.35);
-}
-
-.attitude {
-  width: 300px;
-  height: 400px;
-  top: -50px;
-  left: 170px;
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-}
-
-.attitude .box {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-div.instrument.attitude div.roll {
-  transform: rotate(0deg);
-}
-
-div.instrument.attitude div.roll div.pitch {
-  top: 0%;
-}
+    background-color: #000000; 
+    width: 960px;
+    height: 480px;
+    top: 0px;
+    left: 0px;
+    margin: 0%;
+    overflow: hidden;
+  }
+  
+  /* uncomment this class if you are using a Kivic unit */
+  /*
+  .hud {
+    width: 960px;
+    height: 480px;
+    top: -53px;
+    left: -150px;
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.74,0.80);
+  }
+  */
+  
+  /* uncomment this class if you are using a Hudly unit */
+  .hud {
+    width: 960px;
+    height: 480px;
+    top: 220px;
+    left: 450px;
+    position: relative;
+    overflow: hidden;
+    transform: scale(2.1, 2.2);
+  }
+  
+  .scrollspeed {
+    width: 200px;
+    height: 600px;
+    top: -110px;
+    left: 20px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+  }
+  
+  #speedmask {
+    position: absolute;
+    top: 2px;
+    left: 0px;
+    width: 192px;
+    height: 600px;
+    display: inline-block;
+    border: 0px;
+    z-index: 15;
+  }
+  
+  #speedtape {
+    position: absolute;
+    top: -1315px;
+    left: 16px;
+    width: 85px;
+    height: 1844px;
+    z-index: 4;
+  }
+  
+  .scrollaltitude {
+    width: 200px;
+    height: 632px;
+    top: -120px;
+    left: 720px;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+  }
+  
+  #altmask {
+    position: absolute;
+    top: -97px;
+    left: -5px;
+    width: 230px;
+    height: 790px;
+    display: inline-block;
+    overflow: hidden;
+    border: 0px;
+    z-index: 10;
+  }
+  /*
+  #alttape {
+    position: absolute;
+    top: -2221px;
+    left: 100px;
+    width: 85px;
+    height: 2507px;
+    z-index: 1;
+  }
+  */
+  
+  #alttape {
+    position: absolute;
+    top: -5090px;
+    left: 100px;
+    width: 85px;
+    height: 5487px;
+    z-index: 1;
+  }
+  
+  .scrollheading {
+    width: 800px;
+    height: 95px;
+    top: 380px;
+    left: -40px;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+  }
+  
+  #headingmask {
+    position: absolute;
+    top: 0px;
+    left: 98px;
+    width: 800px;
+    height: 104px;
+    display: inline-block;
+    border: 0px;
+    z-index: 150;
+  }
+  
+  #headingtape {
+    position: absolute;
+    top: 46px;
+    left: -598px;
+    width:3900px;
+    height: 62px;
+    z-index: 1;
+  }
+  
+  #windcircle {
+    height: 60px;
+    width: 60px;
+    top: 308px;
+    left: 121px;
+    position: absolute;
+    visibility: visible;
+    z-index: 200;
+  }
+  
+  #windarrow {
+    height: 42px;
+    width: 10px;
+    position: absolute;
+    top: 318px;
+    left: 148px;
+    visibility: visible;
+    z-index: 201;
+  }
+  
+  #windindicator {
+    position: absolute;
+    top: 323px;
+    left: 46px;
+    width: 68px;
+    height: 52px;
+    visibility: visible;
+    z-index: 201;
+  }
+  
+  #windknots {
+    position: absolute;
+    top: 299px;
+    left: 15px;
+    width: 40px;
+    height: 10px;
+    visibility: visible;
+    z-index: 201;
+  }
+  
+  #gmeter {
+    height: 40px;
+    width: 113px;
+    position: absolute;
+    top: 422px;
+    left: 60px;
+    visibility: visible;
+    z-index: 200;
+    transform: scale(1.25, 1.25);
+  }
+  
+  #tas {
+    height: 40px;
+    width: 113px;
+    position: absolute;
+    top: 380px;
+    left: 60px;
+    visibility: visible;
+    z-index: 200;
+    transform: scale(1.25, 1.25);
+  }
+  
+  #oat {
+    height: 40px;
+    width: 113px;
+    position: absolute;
+    top: 382px;
+    left: 758px;
+    visibility: visible;
+    z-index: 200;
+    transform: scale(1.25, 1.25);
+  }
+  
+  #dalt {
+    height: 40px;
+    width: 113px;
+    position: absolute;
+    top: 422px;
+    left: 758px;
+    visibility: visible;
+    z-index: 200;
+    transform: scale(1.25, 1.25);
+  }
+  
+  #verticalspeed {
+    height: 40px;
+    width: 113px;
+    position: absolute;
+    top: 339px;
+    left: 758px;
+    visibility: visible;
+    z-index: 200;
+    transform: scale(1.25, 1.25);
+  }
+  
+  #slipskid {
+    height: 120px;
+    width: 387px;
+    position: absolute;
+    top: 292px;
+    left: 273px;
+    visibility: visible;
+    z-index: 200;
+    transform: scale(.4,.3);
+  }
+  
+  #ball {
+    height: 95px;
+    width: 70px;
+    position: absolute;
+    top: 305px;
+    left: 433px;
+    visibility: visible;
+    z-index: 201;
+    transform: scale(.3,.28);
+  }
+  
+  #leftbar {
+    height: 83px;
+    width: 10px;
+    position: absolute;
+    top: 311px;
+    left: 450px;
+    visibility: visible;
+    z-index: 210;
+    transform: scale(.54,.35);
+  }
+  
+  #rightbar {
+    height: 83px;
+    width: 10px;
+    position: absolute;
+    top: 311px;
+    left: 478px;
+    visibility: visible;
+    z-index: 210;
+    transform: scale(.54,.35);
+  }
+  
+  .attitude {
+    width: 300px;
+    height: 400px;
+    top: -50px;
+    left: 170px;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+  }
+  
+  .attitude .box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  div.instrument.attitude div.roll {
+    transform: rotate(0deg);
+  }
+  
+  div.instrument.attitude div.roll div.pitch {
+    top: 0%;
+  }
+  

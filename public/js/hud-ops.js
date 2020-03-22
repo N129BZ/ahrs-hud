@@ -111,7 +111,7 @@ var attitude = $.attitudeIndicator('#attitude', 'attitude', {roll:50, pitch:-20,
 
 // offsets, in pixels per unit of measure
 const spd_offset = 4.8;    // Knots
-const alt_offset = .1249;  // Feet MSL
+const alt_offset = .4792   // .1249;  // Feet MSL
 const hdg_offset = 4.720;  // Degrees
 const ball_offset = 3;     // Degrees
 const ball_center = 433;   // this is "center" of the slip-skid indicator

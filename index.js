@@ -7,7 +7,6 @@ const WebSocketServer = require('websocket').server;
 const Readline = require('@serialport/parser-readline');
 
 var args = minimist(process.argv.slice(2), {
-    
     alias: {
         h: 'http',
         s: 'serial',
@@ -41,16 +40,13 @@ var connection;
 try {
   wss.on('request', function(request) {
     connection = request.accept(null, request.origin);
-    handleConnection(connection);
+    console.log("New Connection");       
+    connections.push(connection);             
 
-    // This is the most important callback for us, we'll handle
-    // all messages from users here.
-    connection.on('message', function(message) {
-        // do nothing
-    });
-
-    connection.on('close', function(connection) {
-      // close user connection
+    connection.on('close', function() {           
+	    console.log("connection closed");      
+        var position = connections.indexOf(connection); 
+	    connections.splice(position, 1);
     });
   });
 }
@@ -116,12 +112,12 @@ function showError(error) {
 }
 
 function handleConnection(client) {
-  console.log("New Connection");        // you have a new client
+  console.log("New Connection");       
   connections.push(client);             
 
-  client.on('close', function() {           // when a client closes its connection
-	console.log("connection closed");       // print it out
-    var position = connections.indexOf(client); // get the client's position in the array
+  client.on('close', function() {           
+	console.log("connection closed");      
+    var position = connections.indexOf(client); 
 	connections.splice(position, 1);
   });
 }
