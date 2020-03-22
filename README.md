@@ -1,7 +1,7 @@
 # dynon-hud for Experimental Aircraft
 
 ## Heads Up Display for Dynon Efis using a Raspberry Pi and one of the multiple Dynon serial ports. The pi's HDMI video port is then used to display the Dynon ADHRS data on a Hudly or Kivic HUD. 
-![Image of hud](https://github.com/N129BZ/dynon-hud/blob/master/docs/newlayout.png)
+![Image of hud](https://github.com/N129BZ/dynon-hud/blob/master/docs/newlayout2.png)
 
 ## Instructions for an installation of Buster Lite on the Raspberry Pi. This has been tested on pi 2, pi 3b, and pi 3b+ NOTE: This does NOT require a Stratux. This requires a connection using 3 twisted pair wires from the selected Dynon serial port to the pi's GPIO pins.  (See GPIO picture under step 8 below.)
 
@@ -117,4 +117,4 @@ If you need to tweak the view of the HUD screen, the div.hud class in css/hud.cs
 
 ![Image of ScaleSetting](https://github.com/N129BZ/dynon-hud/blob/master/docs/hudcss2.png)
 
-![Image of UpsideDown](https://github.com/N129BZ/dynon-hud/blob/master/docs/newlayout_ud.png)
+![Image of UpsideDown](https://github.com/N129BZ/dynon-hud/blob/master/docs/newlayout2_ud.png)
