@@ -1,15 +1,32 @@
-body { 
-    background-color: #000000; 
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'Monaco';
+    src: url('../fonts/monaco.ttf');
+}
+
+@font-face {
+    font-family: 'MonacoB';
+    src: url('../fonts/monacob.otf')
+}
+
+@font-face {
+    font-family: 'MonacoB2-Bold';
+    src: url('../fonts/monacob2-bold.otf');
+}
+
+body {
+    background-color: #000000;
     width: 960px;
     height: 480px;
     top: 0px;
     left: 0px;
     margin: 0%;
     overflow: hidden;
-  }
-  
-  /* uncomment this class if you are using a Kivic unit */
-  /*
+}
+
+/* uncomment this class if you are using a Kivic unit */
+/*
   .hud {
     width: 960px;
     height: 480px;
@@ -20,9 +37,9 @@ body {
     transform: scale(0.74,0.80);
   }
   */
-  
-  /* uncomment this class if you are using a Hudly unit */
-  .hud {
+
+/* uncomment this class if you are using a Hudly unit */
+.hud {
     width: 960px;
     height: 480px;
     top: 220px;
@@ -30,9 +47,9 @@ body {
     position: relative;
     overflow: hidden;
     transform: scale(2.1, 2.2);
-  }
-  
-  .scrollspeed {
+}
+
+.scrollspeed {
     width: 200px;
     height: 600px;
     top: -110px;
@@ -40,100 +57,241 @@ body {
     position: relative;
     display: inline-block;
     overflow: hidden;
-  }
-  
-  #speedmask {
+}
+
+.speedbox {
+    border-style: solid;
+    border-color: rgba(255,102,0,255);
+    border-width: 6px;
     position: absolute;
-    top: 2px;
-    left: 0px;
-    width: 192px;
-    height: 600px;
+    top: 128px;
+    left: 146px;
+    width: 63px;
+    height: 40px;
     display: inline-block;
-    border: 0px;
-    z-index: 15;
-  }
-  
-  #speedtape {
-    position: absolute;
-    top: -1315px;
-    left: 16px;
-    width: 85px;
-    height: 1844px;
-    z-index: 4;
-  }
-  
-  .scrollaltitude {
-    width: 200px;
+    z-index: 210;
+}
+
+.scrollaltitude {
+    width: 229px;
     height: 632px;
     top: -120px;
     left: 720px;
     position: absolute;
     display: inline-block;
     overflow: hidden;
-  }
-  
-  #altmask {
+}
+
+.altbox {
+    border-style: solid;
+    border-color: rgba(255,102,0,255);
+    border-width: 6px;
+    position: absolute;
+    top: 127px;
+    left: 701px;
+    width: 99px;
+    height: 40px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.scrollheading {
+    width: 800px;
+    height: 95px;
+    top: 380px;
+    left: -52px;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.headingbox {
+    border-style: solid;
+    border-color: rgba(255,102,0,255);
+    border-width: 4px;
+    position: absolute;
+    top: 379px;
+    left: 422px;
+    width: 63px;
+    height: 30px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.gmeterbox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    position: absolute;
+    top: 422px;
+    left: 52px;
+    width: 132px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+ 
+.daltbox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    position: absolute;
+    top: 422px;
+    left: 744px;
+    width: 144px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+ 
+.oatbox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    position: absolute;
+    top: 379px;
+    left: 744px;
+    width: 144px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+} 
+
+.tasbox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    position: absolute;
+    top: 379px;
+    left: 52px;
+    width: 131px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.vsbox {rgba(255,102,0,255);
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    position: absolute;
+    top: 338px;
+    left: 781px;
+    width: 107px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.vsarrowbox {rgba(255,102,0,255);
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    position: absolute;
+    top: 338px;
+    left: 744px;
+    width: 33px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
+#spanspeedbox {
+    font-family: 'MonacoB2-Bold';
+    font-size: 31px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+#speedmask {
+    position: absolute;
+    top: 2px;
+    left: 26px;
+    width: 172px;
+    height: 600px;
+    display: inline-block;
+    border: 0px;
+    z-index: 15;
+}
+
+#speedtape {
+    position: absolute;
+    top: -1315px;
+    left: 33px;
+    width: 85px;
+    height: 1844px;
+    z-index: 4;
+}
+
+#spanaltbox {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 99px;
+    height: 40px;
+    font-family: 'MonacoB2-Bold';
+    font-size: 31px;
+    text-align: right;
+    vertical-align: middle;
+    color: white;
+}
+
+#altmask {
     position: absolute;
     top: -97px;
-    left: -5px;
-    width: 230px;
+    left: 31px;
+    width: 245px;
     height: 790px;
     display: inline-block;
     overflow: hidden;
     border: 0px;
     z-index: 10;
-  }
-  /*
-  #alttape {
-    position: absolute;
-    top: -2221px;
-    left: 100px;
-    width: 85px;
-    height: 2507px;
-    z-index: 1;
-  }
-  */
-  
-  #alttape {
+}
+
+#alttape {
     position: absolute;
     top: -5090px;
-    left: 100px;
-    width: 85px;
+    left: 106px;
+    width: 99px;
     height: 5487px;
     z-index: 1;
-  }
-  
-  .scrollheading {
-    width: 800px;
-    height: 95px;
-    top: 380px;
-    left: -40px;
-    position: absolute;
-    display: inline-block;
-    overflow: hidden;
-  }
-  
-  #headingmask {
+}
+
+#headingmask {
     position: absolute;
     top: 0px;
-    left: 98px;
-    width: 800px;
+    left: 75px;
+    width: 853px;
     height: 104px;
     display: inline-block;
     border: 0px;
     z-index: 150;
-  }
-  
-  #headingtape {
+}
+
+#headingtape {
     position: absolute;
     top: 46px;
-    left: -598px;
-    width:3900px;
+    left: -597px;
+    width: 3900px;
     height: 62px;
     z-index: 1;
-  }
-  
-  #windcircle {
+}
+
+#spanheadingbox {
+    position: absolute;
+    width: 60px;
+    height: 30px;
+    top: -3px;
+    left: -1px;
+    font-family: 'MonacoB2-Bold';
+    font-size: 30px;
+    text-align: right;
+    vertical-align: middle;
+    color: white;
+}
+
+#windcircle {
     height: 60px;
     width: 60px;
     top: 308px;
@@ -141,160 +299,211 @@ body {
     position: absolute;
     visibility: visible;
     z-index: 200;
-  }
-  
-  #windarrow {
+}
+
+#windarrow {
     height: 42px;
     width: 10px;
     position: absolute;
     top: 318px;
     left: 148px;
     visibility: visible;
-    z-index: 201;
-  }
-  
-  #windindicator {
+    z-index: 210;
+}
+
+#spanwindindicator {
     position: absolute;
     top: 323px;
-    left: 46px;
-    width: 68px;
-    height: 52px;
+    left: 59px;
+    width: 43px;
+    height: 22px;
     visibility: visible;
-    z-index: 201;
-  }
-  
-  #windknots {
+    z-index: 210;
+    transform: scale(1.25, 1.25);
+    font-family: 'MonacoB2-Bold';
+    font-size: 15px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+#spanwindspeed {
     position: absolute;
-    top: 299px;
+    top: 347px;
+    left: 63px;
+    width: 48px;
+    height: 26px;
+    visibility: visible;
+    z-index: 210;
+    transform: scale(1.25, 1.25);
+    font-family: 'MonacoB2-Bold';
+    font-size: 15px;
+    text-align: left;
+    vertical-align: middle;
+    color: white;
+}
+
+#spangmeter {
+    height: 25px;
+    width: 100px;
+    position: absolute;
+    top: 8px;
+    left: 17px;
+    visibility: visible;
+    z-index: 210;
+    transform: scale(1.25, 1.25);
+    font-family: 'MonacoB2-Bold';
+    font-size: 19px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+#spantas {
+    height: 28px;
+    width: 103px;
+    position: absolute;
+    top: 6px;
     left: 15px;
-    width: 40px;
-    height: 10px;
     visibility: visible;
-    z-index: 201;
-  }
-  
-  #gmeter {
-    height: 40px;
+    z-index: 210;
+    transform: scale(1.25, 1.25);
+    font-family: 'MonacoB2-Bold';
+    font-size: 17px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+#spanoat {
+    height: 32px;
     width: 113px;
     position: absolute;
-    top: 422px;
-    left: 60px;
+    top: 8px;
+    left: 15px;
     visibility: visible;
     z-index: 200;
     transform: scale(1.25, 1.25);
-  }
-  
-  #tas {
-    height: 40px;
+    font-family: 'MonacoB2-Bold';
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+#spandalt {
+    height: 29px;
     width: 113px;
     position: absolute;
-    top: 380px;
-    left: 60px;
+    top: 9px;
+    left: 15px;
     visibility: visible;
     z-index: 200;
     transform: scale(1.25, 1.25);
-  }
-  
-  #oat {
-    height: 40px;
-    width: 113px;
+    font-family: 'MonacoB2-Bold';
+    font-size: 18px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+#spanvsarrow {
+    height: 100%;
+    width: 100%;
     position: absolute;
-    top: 382px;
-    left: 758px;
+    top: 0px;
+    left: 1px;
     visibility: visible;
     z-index: 200;
-    transform: scale(1.25, 1.25);
-  }
-  
-  #dalt {
-    height: 40px;
-    width: 113px;
+    font-family: 'MonacoB2-Bold';
+    font-size: 26px;
+    text-align: center;
+    vertical-align: top;
+    color: white;
+}
+
+#spanvspeed {
+    height: 29px;
+    width: 86px;
     position: absolute;
-    top: 422px;
-    left: 758px;
+    top: 7px;
+    left: 11px;
     visibility: visible;
-    z-index: 200;
+    z-index: 210;
     transform: scale(1.25, 1.25);
-  }
-  
-  #verticalspeed {
-    height: 40px;
-    width: 113px;
-    position: absolute;
-    top: 339px;
-    left: 758px;
-    visibility: visible;
-    z-index: 200;
-    transform: scale(1.25, 1.25);
-  }
-  
-  #slipskid {
+    font-family: 'MonacoB2-Bold';
+    font-size: 17px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+}
+
+#slipskid {
     height: 120px;
     width: 387px;
     position: absolute;
     top: 292px;
-    left: 273px;
+    left: 260px;
     visibility: visible;
     z-index: 200;
-    transform: scale(.4,.3);
-  }
-  
-  #ball {
+    transform: scale(.4, .3);
+}
+
+#ball {
     height: 95px;
     width: 70px;
     position: absolute;
     top: 305px;
-    left: 433px;
+    left: 422px;
     visibility: visible;
     z-index: 201;
-    transform: scale(.3,.28);
-  }
-  
-  #leftbar {
+    transform: scale(.3, .28);
+}
+
+#leftbar {
     height: 83px;
     width: 10px;
     position: absolute;
-    top: 311px;
-    left: 450px;
     visibility: visible;
+    top: 310px;
+    left: 436px;
     z-index: 210;
-    transform: scale(.54,.35);
-  }
-  
-  #rightbar {
+    transform: scale(.54, .35);
+}
+
+#rightbar {
     height: 83px;
     width: 10px;
     position: absolute;
-    top: 311px;
-    left: 478px;
+    top: 310px;
+    left: 469px;
     visibility: visible;
     z-index: 210;
-    transform: scale(.54,.35);
-  }
-  
-  .attitude {
+    transform: scale(.54, .35);
+}
+
+.attitude {
     width: 300px;
     height: 400px;
     top: -50px;
-    left: 170px;
+    left: 159px;
     position: absolute;
     display: inline-block;
     overflow: hidden;
-  }
-  
-  .attitude .box {
+}
+
+.attitude .box {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-  }
-  
-  div.instrument.attitude div.roll {
+}
+
+div.instrument.attitude div.roll {
     transform: rotate(0deg);
-  }
-  
-  div.instrument.attitude div.roll div.pitch {
+}
+
+div.instrument.attitude div.roll div.pitch {
     top: 0%;
-  }
-  
+}

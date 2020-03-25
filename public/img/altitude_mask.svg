@@ -1,13 +1,73 @@
-<svg id="altmask" xmlns="http://www.w3.org/2000/svg" width="230" height="790" viewBox="0 0 60.854 209.021">
-  <path d="M26.442.15H-.339v208.871h26.781z"/>
-  <path d="M51.921.15H22.839v73.669h29.082zm1.854 121.212H23.188v87.808h30.587z"/>
-  <path d="M60.881.15H48.667v208.871h12.214z"/>
-  <path stroke="#f60" stroke-width="1.602" stroke-linejoin="round" d="M21.642 91.565H1.598v12.85h20.044z"/>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end" x="23.861" y="86.739" transform="scale(.85673 1.16723)" font-weight="700" font-size="7.582" font-family="sans-serif" letter-spacing="0" word-spacing="0" text-anchor="end" fill="#fff" stroke-width=".433">
-    <tspan id="tspanAltitude" x="23.861" y="86.739">0</tspan>
-  </text>
-  <path d="M24.031 99.374l1.538-.91.819-.015.818-.016v-1.027h-1.459l-1.589-1.06c-.874-.584-1.597-1.048-1.607-1.033-.031.049-.067 2.067-.036 2.085.047.028.035.873-.013.898-.048.025-.085 2.004-.037 1.994.016-.003.72-.415 1.567-.916z" fill="#f60"/>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-align:start" x="6.351" y="110.009" transform="scale(.99977 1.00023)" font-weight="700" font-size="4.587" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#fff" stroke-width=".265">
-    <tspan x="6.351" y="110.009">MSL</tspan>
-  </text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="altmask"
+   width="230"
+   height="790"
+   viewBox="0 0 60.854 209.021"
+   version="1.1"
+   sodipodi:docname="altitude_mask.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   inkscape:export-filename="/home/bro/dynon-hud/public/img/altitude_mask.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <metadata
+     id="metadata24">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs22" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1005"
+     id="namedview20"
+     showgrid="false"
+     inkscape:zoom="1.1949367"
+     inkscape:cx="356.37603"
+     inkscape:cy="451.90678"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="altmask" />
+  <path
+     d="M 18.028019,0.15 H -0.339 v 208.871 h 18.367019 z"
+     id="path2"
+     inkscape:connector-curvature="0"
+     style="stroke-width:0.82814413" />
+  <path
+     d="M 46.66909,0.5928411 H 15.089281 V 74.261841 H 46.66909 Z M 48.682328,121.80484 H 15.468257 v 87.808 h 33.214071 z"
+     id="path4"
+     inkscape:connector-curvature="0"
+     style="stroke-width:1.04205978" />
+  <path
+     d="M 60.881,0.15 H 45.788533 V 209.021 H 60.881 Z"
+     id="path6"
+     inkscape:connector-curvature="0"
+     style="stroke-width:1.11160672" />
+  <path
+     d="m 15.035161,99.374 1.538,-0.91 0.819,-0.015 0.818,-0.016 v -1.027 h -1.459 l -1.589,-1.06 c -0.874,-0.584 -1.597,-1.048 -1.607,-1.033 -0.031,0.049 -0.067,2.067 -0.036,2.085 0.047,0.028 0.035,0.873 -0.013,0.898 -0.048,0.025 -0.085,2.004 -0.037,1.994 0.016,-0.003 0.72,-0.415 1.567,-0.916 z"
+     id="path13"
+     inkscape:connector-curvature="0"
+     style="fill:#ff6600" />
 </svg>

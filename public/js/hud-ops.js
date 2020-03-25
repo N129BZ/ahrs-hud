@@ -117,17 +117,17 @@ const ball_offset = 3;     // Degrees
 const ball_center = 433;   // this is "center" of the slip-skid indicator
 const pitch_offset = 1.19; // this adjusts the pitch to match Stratux
 
-var speedbox = document.getElementById('tspanSpeed');
-var altitudebox = document.getElementById('tspanAltitude');
-var headingbox = document.getElementById('tspanHeading');
-var gbox = document.getElementById('tspanGMeter');
-var vspeedbox = document.getElementById('tspanVertSpeed');
-var arrowbox = document.getElementById('tspanArrow');
-var tas = document.getElementById("tspanTAS");
-var oat = document.getElementById("tspanOAT");
-var dalt = document.getElementById("tspanDalt");
+var speedbox = document.getElementById('spanspeedbox');
+var altitudebox = document.getElementById('spanaltbox');
+var headingbox = document.getElementById('spanheadingbox');
+var gbox = document.getElementById('spangmeter');
+var vspeedbox = document.getElementById('spanvspeed');
+var arrowbox = document.getElementById('spanvsarrow');
+var tasbox = document.getElementById("spantas");
+var oatbox = document.getElementById("spanoat");
+var daltbox = document.getElementById("spandalt");
 var windarrow = document.getElementById("windarrow");
-var windspeed = document.getElementById("tspanWindspeed");
+var windspeed = document.getElementById("spanwindspeed");
 
 function pad(num, size) {
     var s = num+"";
@@ -152,10 +152,10 @@ function onSerialData(e) {
     var heading = parseInt(str.substr(20,3));
     var airspeed = parseInt(str.substr(23,4));
     var vertspeed = (parseInt(str.substr(45,4))*10);
-    var OAT = str.substr(49,3);
-    var TAS = parseInt(str.substr(52,4));
+    var oat = str.substr(49,3);
+    var tas = parseInt(str.substr(52,4));
     var baro = parseInt(str.substr(56,3));
-    var dAlt = parseInt(str.substr(59,6));
+    var dalt = parseInt(str.substr(59,6));
     var winddirection = parseInt(str.substr(65,3));
     var windkts = parseInt(str.substr(68,2));
 
@@ -165,16 +165,17 @@ function onSerialData(e) {
     // set these values to a reasonable precision
     gnumber = gLoad.toFixed(1);
     slipskid = Math.trunc(slipskid);
+    strdalt = dalt >= 0 ? "+" + dalt : "-" + dalt;
 
     speedbox.textContent = airspeed;
     altitudebox.textContent = altitude;
     headingbox.textContent = heading;
     vspeedbox.textContent = Math.abs(vertspeed) + " fpm";
-    arrowbox.textContent = (vertspeed < 0 ? "▼" : "▲");
-    oat.textContent = "oat " + OAT + " c";
-    tas.textContent = "tas " + TAS + " kt";
-    dalt.textContent = "d  alt " + dAlt + " ft";
-  
+    arrowbox.textContent = vertspeed < 0 ? "▼" : "▲";
+    oatbox.textContent = "OAT " + oat;
+    tasbox.textContent = "TAS " + tas + " kt";
+    daltbox.textContent = "DALT " + strdalt;
+    windspeed.textContent =  windkts + " KT"
 
     var speedticks = (airspeed * spd_offset);
     var altticks = (altitude * alt_offset);
@@ -185,7 +186,8 @@ function onSerialData(e) {
     alttape.css('transform', 'translateY(' + altticks + 'px');
     headingtape.css('transform', 'translateX('+ hdgticks + 'px');
 
-    gbox.textContent = `${gnumber} g`;
+    var tmpgnumber = gnumber >= 0 ? "+" + gnumber : "-" + gnumber;
+    gbox.textContent =  tmpgnumber + " g";
 
     // set the skid-slip ball position
     if (slipskid < -17) {
@@ -207,5 +209,4 @@ function onSerialData(e) {
         winddirection -= 180; 
     } 
     windarrow.style.transform  = 'rotate('+ winddirection +'deg)';
-    windspeed.textContent = "  " + windkts;
 }
