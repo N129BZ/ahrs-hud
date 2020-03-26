@@ -255,6 +255,18 @@ body {
     z-index: 15;
 }
 
+#ktlabel {
+    position: absolute;
+    top: 292px;
+    left: 150px;
+    font-family: 'MonacoB2-Bold';
+    font-size: 22px;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 16;
+    color: white;
+}
+
 #speedtape {
     position: absolute;
     top: -1315px;
@@ -296,6 +308,20 @@ body {
     width: 99px;
     height: 5487px;
     z-index: 1;
+}
+
+#msllabel {
+    position: absolute;
+    top: 302px;
+    left: 23px;
+    width: 15px;
+    height: 22px;
+    z-index: 11;
+    font-family: 'MonacoB2-Bold';
+    font-size: 22px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
 }
 
 #spanbaro {

@@ -99,7 +99,7 @@ function openSocket() {
 
 $(document).keyup(function(e) {
     console.log(e.keyCode);
-    e.data = "!1121144703-085-03003310146+04736+003-03+1013-033+110152245+01650023176C"
+    e.data = "!1121144703-085-03003310146+04736+003-03+1013-033+110138245+01650023176C"
     onSerialData(e);
 });
 
