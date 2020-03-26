@@ -63,6 +63,7 @@ body {
     border-style: solid;
     border-color: rgba(255,102,0,255);
     border-width: 6px;
+    border-radius: 5px;
     position: absolute;
     top: 128px;
     left: 146px;
@@ -86,6 +87,7 @@ body {
     border-style: solid;
     border-color: rgba(255,102,0,255);
     border-width: 6px;
+    border-radius: 5px;
     position: absolute;
     top: 127px;
     left: 701px;
@@ -95,11 +97,25 @@ body {
     z-index: 210;
 }
 
+.barobox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 337px;
+    left: 741px;
+    width: 146px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
 .scrollheading {
     width: 800px;
     height: 95px;
     top: 380px;
-    left: -52px;
+    left: -44px;
     position: absolute;
     display: inline-block;
     overflow: hidden;
@@ -109,9 +125,10 @@ body {
     border-style: solid;
     border-color: rgba(255,102,0,255);
     border-width: 4px;
+    border-radius: 5px;
     position: absolute;
     top: 379px;
-    left: 422px;
+    left: 430px;
     width: 63px;
     height: 30px;
     display: inline-block;
@@ -122,6 +139,7 @@ body {
     border-style: solid;
     border-color: rgba(2,85,255,255);
     border-width: 4px;
+    border-radius: 5px;
     position: absolute;
     top: 422px;
     left: 52px;
@@ -135,9 +153,10 @@ body {
     border-style: solid;
     border-color: rgba(2,85,255,255);
     border-width: 4px;
+    border-radius: 5px;
     position: absolute;
     top: 422px;
-    left: 730px;
+    left: 742px;
     width: 145px;
     height: 38px;
     display: inline-block;
@@ -148,9 +167,10 @@ body {
     border-style: solid;
     border-color: rgba(2,85,255,255);
     border-width: 4px;
+    border-radius: 5px;
     position: absolute;
     top: 379px;
-    left: 730px;
+    left: 742px;
     width: 145px;
     height: 38px;
     display: inline-block;
@@ -161,6 +181,7 @@ body {
     border-style: solid;
     border-color: rgba(2,85,255,255);
     border-width: 4px;
+    border-radius: 5px;
     position: absolute;
     top: 379px;
     left: 52px;
@@ -174,29 +195,48 @@ body {
     border-style: solid;
     border-color: rgba(2,85,255,255);
     border-width: 4px;
+    border-radius: 5px;
     position: absolute;
-    top: 338px;
-    left: 768px;
+    top: 296px;
+    left: 780px;
     width: 107px;
     height: 38px;
     display: inline-block;
     z-index: 210;
 }
 
-.vsarrowbox {rgba(255,102,0,255);
+.vsarrowbox {
     border-style: solid;
     border-color: rgba(2,85,255,255);
     border-width: 4px;
+    border-radius: 5px;
     position: absolute;
-    top: 338px;
-    left: 730px;
+    top: 296px;
+    left: 742px;
     width: 33px;
     height: 38px;
     display: inline-block;
     z-index: 210;
 }
 
+.yawindicator {
+    border-style: solid;
+    border-color: rgba(255,102,0,255);
+    border-width: 4px;
+    border-radius: 5px;
+    background-color: black;
+    position: absolute;
+    width: 177px;
+    height: 29px;
+    top: 337px;
+    left: 371px;
+    z-index: 210;
+}
+
 #spanspeedbox {
+    position: absolute;
+    left: 4px;
+    top: 0px;
     font-family: 'MonacoB2-Bold';
     font-size: 31px;
     text-align: center;
@@ -256,6 +296,19 @@ body {
     width: 99px;
     height: 5487px;
     z-index: 1;
+}
+
+#spanbaro {
+    position: absolute;
+    top: 6px;
+    left: 1px;
+    width: 147px;
+    height: 26px;
+    font-family: 'MonacoB2-Bold';
+    font-size: 21px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
 }
 
 #headingmask {
@@ -439,13 +492,16 @@ body {
 }
 
 #slipskid {
+    border-style: solid;
+    border-color: rgba(255,102,0,255);
+    border-width: 4px;
     height: 120px;
-    width: 387px;
+    width: 500px;
     position: absolute;
-    top: 292px;
-    left: 260px;
+    top: -43px;
+    left: -127px;
     visibility: visible;
-    z-index: 200;
+    z-index: 210;
     transform: scale(.4, .3);
 }
 
@@ -453,10 +509,10 @@ body {
     height: 95px;
     width: 70px;
     position: absolute;
-    top: 305px;
-    left: 422px;
+    top: -33px;
+    left: 55px;
     visibility: visible;
-    z-index: 201;
+    z-index: 211;
     transform: scale(.3, .28);
 }
 
@@ -465,9 +521,9 @@ body {
     width: 10px;
     position: absolute;
     visibility: visible;
-    top: 310px;
-    left: 436px;
-    z-index: 210;
+    top: -27px;
+    left: 69px;
+    z-index: 212;
     transform: scale(.54, .35);
 }
 
@@ -475,10 +531,10 @@ body {
     height: 83px;
     width: 10px;
     position: absolute;
-    top: 310px;
-    left: 469px;
+    top: -27px;
+    left: 101px;
     visibility: visible;
-    z-index: 210;
+    z-index: 212;
     transform: scale(.54, .35);
 }
 
@@ -486,7 +542,7 @@ body {
     width: 300px;
     height: 400px;
     top: -50px;
-    left: 159px;
+    left: 168px;
     position: absolute;
     display: inline-block;
     overflow: hidden;

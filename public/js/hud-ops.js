@@ -113,8 +113,8 @@ var attitude = $.attitudeIndicator('#attitude', 'attitude', {roll:50, pitch:-20,
 const spd_offset = 4.8;    // Knots
 const alt_offset = .4792   // .1249;  // Feet MSL
 const hdg_offset = 4.720;  // Degrees
-const ball_offset = 3;     // Degrees
-const ball_center = 433;   // this is "center" of the slip-skid indicator
+const ball_offset = -4;    // Degrees
+const ball_center = 53.5;  // this is "center" of the slip-skid indicator
 const pitch_offset = 1.19; // this adjusts the pitch to match Stratux
 
 var speedbox = document.getElementById('spanspeedbox');
@@ -128,6 +128,7 @@ var oatbox = document.getElementById("spanoat");
 var daltbox = document.getElementById("spandalt");
 var windarrow = document.getElementById("windarrow");
 var windspeed = document.getElementById("spanwindspeed");
+var barobox = document.getElementById("spanbaro");
 
 function pad(num, size) {
     var s = num+"";
@@ -166,15 +167,17 @@ function onSerialData(e) {
     gnumber = gLoad.toFixed(1);
     slipskid = Math.trunc(slipskid);
     strdalt = dalt >= 0 ? "+" + dalt : "-" + dalt;
+    var baropressure = (baro / 100) + 27.5;
 
     speedbox.textContent = airspeed;
     altitudebox.textContent = altitude;
     headingbox.textContent = heading;
     vspeedbox.textContent = Math.abs(vertspeed) + " fpm";
+    barobox.textContent = "BpHg " + baropressure;
     arrowbox.textContent = vertspeed < 0 ? "▼" : "▲";
     oatbox.textContent = "OAT " + oat;
     tasbox.textContent = "TAS " + tas + " kt";
-    daltbox.textContent = "DALT " + strdalt;
+    daltbox.textContent = "DAlt " + strdalt;
     windspeed.textContent =  windkts + " KT"
 
     var speedticks = (airspeed * spd_offset);
@@ -190,6 +193,7 @@ function onSerialData(e) {
     gbox.textContent =  tmpgnumber + " g";
 
     // set the skid-slip ball position
+    slipskid = slipskid * -1;
     if (slipskid < -17) {
         slipskid = -17;
     }
