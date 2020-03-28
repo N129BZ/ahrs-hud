@@ -1,0 +1,259 @@
+
+
+body {
+    background-color: #000000;
+    width: 960px;
+    height: 480px;
+    top: 0px;
+    left: 0px;
+    margin: 0%;
+    overflow: hidden;
+}
+
+/* uncomment this class if you are using a Kivic unit */
+/*
+  .hud {
+    width: 960px;
+    height: 480px;
+    top: -53px;
+    left: -150px;
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.74,0.80);
+  }
+  */
+
+/* uncomment this class if you are using a Hudly unit */
+.hud {
+    width: 940px;
+    height: 480px;
+    top: 220px;
+    left: 450px;
+    position: relative;
+    overflow: hidden;
+    transform: scale(2.1, 2.2);
+}
+
+.scrollspeed {
+    width: 200px;
+    height: 600px;
+    top: -110px;
+    left: 20px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.speedbox {
+    border-style: solid;
+    border-color: rgba(255,102,0,255);
+    border-width: 6px;
+    border-radius: 5px;
+    position: absolute;
+    top: 128px;
+    left: 146px;
+    width: 63px;
+    height: 40px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.scrollaltitude {
+    width: 229px;
+    height: 632px;
+    top: -120px;
+    left: 720px;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.altbox {
+    border-style: solid;
+    border-color: rgba(255,102,0,255);
+    border-width: 6px;
+    border-radius: 5px;
+    position: absolute;
+    top: 127px;
+    left: 701px;
+    width: 99px;
+    height: 40px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.altbox_flipped {
+    border-style: solid;
+    border-color: rgba(255,102,0,255);
+    border-width: 6px;
+    border-radius: 5px;
+    position: absolute;
+    top: 127px;
+    left: 792px;
+    width: 99px;
+    height: 40px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.scrollheading {
+    width: 800px;
+    height: 95px;
+    top: 380px;
+    left: -44px;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.headingbox {
+    border-style: solid;
+    border-color: rgba(255,102,0,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 379px;
+    left: 430px;
+    width: 63px;
+    height: 30px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.gmeterbox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 422px;
+    left: 52px;
+    width: 132px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+ 
+.barobox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 337px;
+    left: 750px;
+    width: 146px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.daltbox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 422px;
+    left: 750px;
+    width: 145px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+ 
+.oatbox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 379px;
+    left: 750px;
+    width: 145px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+} 
+
+.tasbox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 379px;
+    left: 52px;
+    width: 131px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.vsbox {rgba(255,102,0,255);
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 296px;
+    left: 788px;
+    width: 107px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.vsarrowbox {
+    border-style: solid;
+    border-color: rgba(2,85,255,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 296px;
+    left: 750px;
+    width: 33px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.yawindicator {
+    border-style: solid;
+    border-color: rgba(255,102,0,255);
+    border-width: 4px;
+    border-radius: 5px;
+    background-color: black;
+    position: absolute;
+    width: 177px;
+    height: 29px;
+    top: 337px;
+    left: 371px;
+    z-index: 210;
+}
+
+.attitude {
+    width: 300px;
+    height: 400px;
+    top: -50px;
+    left: 168px;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.attitude .box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+div.instrument.attitude div.roll {
+    transform: rotate(0deg);
+}
+
+div.instrument.attitude div.roll div.pitch {
+    top: 0%;
+}
