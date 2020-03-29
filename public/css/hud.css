@@ -65,7 +65,7 @@
     width: 99px;
     height: 40px;
     font-family: 'MonacoB2-Bold';
-    font-size: 31px;
+    font-size: 29px;
     text-align: right;
     vertical-align: middle;
     color: white;
@@ -189,8 +189,8 @@
 #windcircle {
     height: 60px;
     width: 60px;
-    top: 308px;
-    left: 121px;
+    top: 10px;
+    left: 65px;
     position: absolute;
     visibility: visible;
     z-index: 200;
@@ -200,23 +200,23 @@
     height: 42px;
     width: 10px;
     position: absolute;
-    top: 318px;
-    left: 148px;
+    top: 19px;
+    left: 89px;
     visibility: visible;
     z-index: 210;
 }
 
-#spanwindindicator {
+#spanwindlabel {
     position: absolute;
-    top: 323px;
-    left: 59px;
+    top: 12px;
+    left: 11px;
     width: 43px;
     height: 22px;
     visibility: visible;
     z-index: 210;
     transform: scale(1.25, 1.25);
     font-family: 'MonacoB2-Bold';
-    font-size: 14px;
+    font-size: 15px;
     text-align: center;
     vertical-align: middle;
     color: white;
@@ -224,8 +224,8 @@
 
 #spanwindspeed {
     position: absolute;
-    top: 347px;
-    left: 63px;
+    top: 50px;
+    left: 12px;
     width: 48px;
     height: 26px;
     visibility: visible;
@@ -378,4 +378,15 @@
     visibility: visible;
     z-index: 212;
     transform: scale(.54, .35);
+}
+
+#yawbackground {
+    height: 120px;
+    width: 500px;
+    position: absolute;
+    top: 315px;
+    left: 213px;
+    visibility: visible;
+    z-index: 200;
+    transform: scale(.4, .3);
 }

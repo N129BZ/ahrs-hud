@@ -31,7 +31,7 @@ body {
     left: 450px;
     position: relative;
     overflow: hidden;
-    transform: scale(2.1, 2.2);
+    transform: scale(2.1, 2.3);
 }
 
 .scrollspeed {
@@ -46,7 +46,7 @@ body {
 
 .speedbox {
     border-style: solid;
-    border-color: rgba(255,102,0,255);
+    border-color: rgb(255,102,0);
     border-width: 6px;
     border-radius: 5px;
     position: absolute;
@@ -70,7 +70,7 @@ body {
 
 .altbox {
     border-style: solid;
-    border-color: rgba(255,102,0,255);
+    border-color: rgb(255,102,0);
     border-width: 6px;
     border-radius: 5px;
     position: absolute;
@@ -84,7 +84,7 @@ body {
 
 .altbox_flipped {
     border-style: solid;
-    border-color: rgba(255,102,0,255);
+    border-color: rgb(255,102,0);
     border-width: 6px;
     border-radius: 5px;
     position: absolute;
@@ -108,7 +108,7 @@ body {
 
 .headingbox {
     border-style: solid;
-    border-color: rgba(255,102,0,255);
+    border-color: rgb(255,102,0);
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
@@ -122,7 +122,7 @@ body {
 
 .gmeterbox {
     border-style: solid;
-    border-color: rgba(2,85,255,255);
+    border-color: rgb(2,85,255);
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
@@ -136,7 +136,7 @@ body {
  
 .barobox {
     border-style: solid;
-    border-color: rgba(2,85,255,255);
+    border-color: rgb(2,85,255);
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
@@ -150,7 +150,7 @@ body {
 
 .daltbox {
     border-style: solid;
-    border-color: rgba(2,85,255,255);
+    border-color: rgb(2,85,255);
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
@@ -164,7 +164,7 @@ body {
  
 .oatbox {
     border-style: solid;
-    border-color: rgba(2,85,255,255);
+    border-color: rgb(2,85,255);
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
@@ -178,7 +178,7 @@ body {
 
 .tasbox {
     border-style: solid;
-    border-color: rgba(2,85,255,255);
+    border-color: rgb(2,85,255);
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
@@ -192,7 +192,7 @@ body {
 
 .vsbox {rgba(255,102,0,255);
     border-style: solid;
-    border-color: rgba(2,85,255,255);
+    border-color: rgb(2,85,255);
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
@@ -206,7 +206,7 @@ body {
 
 .vsarrowbox {
     border-style: solid;
-    border-color: rgba(2,85,255,255);
+    border-color: rgb(2,85,255);
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
@@ -218,9 +218,23 @@ body {
     z-index: 210;
 }
 
+.windindicator {
+    border-style: solid;
+    border-color: rgb(2,85,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 298px;
+    left: 52px;
+    width: 131px;
+    height: 77px;
+    display: inline-block;
+    z-index: 205;
+}
+
 .yawindicator {
     border-style: solid;
-    border-color: rgba(255,102,0,255);
+    border-color: rgb(255,102,0);
     border-width: 4px;
     border-radius: 5px;
     background-color: black;
@@ -235,7 +249,7 @@ body {
 .attitude {
     width: 300px;
     height: 400px;
-    top: -50px;
+    top: -15px;
     left: 168px;
     position: absolute;
     display: inline-block;
