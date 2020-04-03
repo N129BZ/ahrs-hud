@@ -165,6 +165,7 @@ body {
     width: 145px;
     height: 38px;
     display: inline-block;
+    z-index: 210;
 }
 
 .daltbox {
