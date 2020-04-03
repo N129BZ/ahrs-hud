@@ -99,7 +99,7 @@ function openSocket() {
 
 $(document).keyup(function(e) {
     console.log(e.keyCode);
-    e.data = "!1121144703-085-03003310146+04736+003-03+1013-033+110138245+01650023176C"
+    e.data = "!1121144703-085-03003550146+04736+003-03+1013-033+110138245+01650023176C"
     onSerialData(e);
 });
 
@@ -112,7 +112,7 @@ var attitude = $.attitudeIndicator('#attitude', 'attitude', {roll:50, pitch:-20,
 // offsets, in pixels per unit of measure
 const spd_offset = 4.8;    // Knots
 const alt_offset = .4792   // .1249;  // Feet MSL
-const hdg_offset = 4.720;  // Degrees
+const hdg_offset = 4.793;  // Degrees
 const ball_offset = -4;    // Degrees
 const ball_center = 53.5;  // this is "center" of the slip-skid indicator
 const pitch_offset = 1.19; // this adjusts the pitch to match Stratux
@@ -178,7 +178,7 @@ function onSerialData(e) {
     oatbox.textContent = "OAT " + oat;
     tasbox.textContent = "TAS " + tas + " kt";
     daltbox.textContent = "DAlt " + strdalt;
-    windspeed.textContent =  windkts + " KT"
+    windspeed.textContent =  windkts + " kt"
 
     var speedticks = (airspeed * spd_offset);
     var altticks = (altitude * alt_offset);

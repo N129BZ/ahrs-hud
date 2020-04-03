@@ -58,6 +58,16 @@ body {
     z-index: 210;
 }
 
+.leftarrow {
+    position: absolute;
+    top: 138px;
+    left: 146px;
+    height: 40px;
+    width: 20px;
+    z-index: 210;
+    display: inline-block
+}
+
 .scrollaltitude {
     width: 229px;
     height: 632px;
@@ -75,11 +85,21 @@ body {
     border-radius: 5px;
     position: absolute;
     top: 127px;
-    left: 701px;
+    left: 694px;
     width: 99px;
     height: 40px;
     display: inline-block;
     z-index: 210;
+}
+
+.rightarrow {
+    position: absolute;
+    top: 137px;
+    left: 720px;
+    height: 40px;
+    width: 20px;
+    z-index: 210;
+    display: inline-block;
 }
 
 .altbox_flipped {
@@ -140,12 +160,11 @@ body {
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
-    top: 337px;
+    top: 335px;
     left: 750px;
     width: 145px;
     height: 38px;
     display: inline-block;
-    z-index: 210;
 }
 
 .daltbox {
@@ -190,13 +209,13 @@ body {
     z-index: 210;
 }
 
-.vsbox {rgba(255,102,0,255);
+.vsbox {
     border-style: solid;
     border-color: rgb(2,85,255);
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
-    top: 296px;
+    top: 293px;
     left: 788px;
     width: 107px;
     height: 38px;
@@ -210,7 +229,7 @@ body {
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
-    top: 296px;
+    top: 293px;
     left: 750px;
     width: 33px;
     height: 38px;
@@ -224,7 +243,7 @@ body {
     border-width: 4px;
     border-radius: 5px;
     position: absolute;
-    top: 298px;
+    top: 296px;
     left: 52px;
     width: 131px;
     height: 77px;
