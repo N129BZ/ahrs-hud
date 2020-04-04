@@ -71,16 +71,6 @@
     color: white;
 }
 
-#ltarrow {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 10px;
-    height: 20px;
-    transform: scale(.2, .2);
-    z-index: 210;
-}
-
 #spanaltbox_flipped {
     position: absolute;
     top: 0px;
@@ -104,16 +94,6 @@
     overflow: hidden;
     border: 0px;
     z-index: 10;
-}
-
-#rtarrow {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 10px;
-    height: 20px;
-    transform: scale(.2, .2);
-    z-index: 210;
 }
 
 #alttape {
