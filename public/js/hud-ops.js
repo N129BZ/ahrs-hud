@@ -186,8 +186,8 @@ function onSerialData(e) {
 
     // set the coordinates of the tapes
     speedtape.css('transform', 'translateY(' + speedticks + 'px)');
-    alttape.css('transform', 'translateY(' + altticks + 'px');
-    headingtape.css('transform', 'translateX('+ hdgticks + 'px');
+    alttape.css('transform', 'translateY(' + altticks + 'px)');
+    headingtape.css('transform', 'translateX('+ hdgticks + 'px)');
 
     var tmpgnumber = gnumber >= 0 ? "+" + gnumber : "-" + gnumber;
     gbox.textContent =  tmpgnumber + " g";
