@@ -99,9 +99,12 @@ function openSocket() {
 
 $(document).keyup(function(e) {
     console.log(e.keyCode);
+
+    //   DYNON SAMPLE
     //e.data = "!1121144703-014+00003310811+01736+003-03+1013-033+110831245+01650023176C";
-    //        !1121144703-014+00003310811+01736+003-03+1013-033+110831245+01650023176C
+    //   GARMIN SAMPLE  
     e.data = "=1121144703-300+03003310811+01736+003-03+1013-033+11245xx/n";
+    
     onSerialData(e);
 });
 
@@ -218,6 +221,61 @@ function onSerialData(e) {
     windarrow.style.transform  = 'rotate('+ data.winddirection +'deg)';
 }
 
+/* 
+    ////////////////////////////////////////////////
+    //          GARMIN MESSAGE FORMAT             //
+    ////////////////////////////////////////////////
+    FIELD       VALUE       OFFSET   LENGTH     END 
+    ------------------------------------------------
+    header:     =11         00 - 02  3 chars   =  3
+    time:       HHMMSSMS    03 - 10  8 chars   = 11
+    pitch:      +100        11 - 14  4 chars   = 15
+    roll:       +0300       15 - 19  5 chars   = 20
+    heading:    180         20 - 22  3 chars   = 23
+    airspeed:   1400        23 - 26  4 chars   = 27
+    altitude:   004760      27 - 32  6 chars   = 33
+    turn rate:  +100        33 - 36  4 chars   = 37
+    slipskid:   +10         37 - 39  3 chars   = 40
+    gmeter:     +10         40 - 42  3 chars   = 43
+    aoa:        00          43 - 44  2 chars   = 45
+    vertspeed:  +010        45 - 48  4 chars   = 49
+    oat:        +27         49 - 51  3 chars   = 52
+    baro:       050         52 - 54  3 chars   = 55
+    checksum:   xx          55 - 56  2 chars   = 57
+    CRLF        /n          57 - 58  2 chars   = 59
+    ------------------------------------------------
+    TOTAL CHAR COUNT                           = 59
+    ------------------------------------------------
+ 
+    ////////////////////////////////////////////////
+    //           DYNON MESSAGE FORMAT             //
+    ////////////////////////////////////////////////
+    FIELD       VALUE       OFFSET   LENGTH     END 
+    ------------------------------------------------
+    header:     !11_        00 - 02  3 chars   =  3
+    time:       HHMMSSMS    03 - 10  8 chars   = 11
+    pitch:      +100        11 - 14  4 chars   = 15
+    roll:       +0300       15 - 19  5 chars   = 20
+    heading:    180         20 - 22  3 chars   = 23
+    airspeed:   1400        23 - 26  4 chars   = 27
+    altitude:   004760      27 - 32  6 chars   = 33
+    turn rate:  +100        33 - 36  4 chars   = 37
+    slipskid:   +10         37 - 39  3 chars   = 40
+    gmeter:     +10         40 - 42  3 chars   = 43
+    aoa:        00          43 - 44  2 chars   = 45
+    vertspeed:  +010        45 - 48  4 chars   = 49
+    oat:        +99         49 - 51  3 chars   = 52  
+    tas:        0000        52 - 55  4 chars   = 56
+    baro:       000         56 - 58  3 chars   = 59 
+    dalt:       +00000      59 - 64  6 chars   = 65 
+    wind dir:   000         65 - 67  3 chars   = 68
+    wind speed: 00          68 - 69  2 chars   = 70
+    checksum:   xx          70 - 71  2 chars   = 72
+    CRLF:       /n          72 - 73  2 chars   = 74
+    ------------------------------------------------
+    TOTAL CHAR COUNT                           = 74
+    ------------------------------------------------
+*/
 class HudData {
     constructor(sdata) {
         this.str = String(sdata);
@@ -238,17 +296,16 @@ class HudData {
         this.oatF = (parseInt(this.str.substr(49, 3)) * 1.8 + 32);
         this.oatC = parseInt(this.str.substr(49,3));
 
-        if (this.client == "dynon") { 
+        if (this.client == "dynon") {   // Dynon furnishes these extra fields
             this.tas = Math.trunc(parseInt(this.str.substr(52, 4)) /10);
             this.baro = parseInt(this.str.substr(56, 3));
             this.dalt = parseInt(this.str.substr(59, 6));
             this.winddirection = parseInt(this.str.substr(65, 3));
             this.windkts = parseInt(this.str.substr(68, 2));
         }
-        else if (this.client == "garmin") { 
-            this.tas = tascalculator.tas(this.airspeed, this.altitude, this.oat);
+        else if (this.client == "garmin") { // Garmin needs those fields calculated
+            this.tas = tascalculator.tas(this.airspeed, this.altitude, this.oatC);
             this.baro = parseInt(this.str.substr(52, 3));
-            //this.baropressure = ((this.baro / 100) + 27.5);
             var factor = (this.altitude * 2) / 1000;
             var adjustment = Math.trunc((this.oatC - (15 - factor)) * 120); 
             this.dalt = this.altitude + adjustment;  
@@ -271,61 +328,6 @@ var tascalculator = {
         return Math.round((ias2 * msl2) + ias);
     }
  };
-
-/* 
-    GARMIN MESSAGE FORMAT
-    ------------------------------------------------
-    header:     =11         00 - 02  3 chars   =  3
-    ------------------------------------------------
-    time:       HHMMSSMM    03 - 10  8 chars   = 11
-    pitch:      +100        11 - 14  4 chars   = 15
-    roll:       +0300       15 - 19  5 chars   = 20
-    heading:    180         20 - 22  3 chars   = 23
-    airspeed:   1400        23 - 26  4 chars   = 27
-    altitude:   004760      27 - 32  6 chars   = 33
-    turn rate:  +100        33 - 36  4 chars   = 37
-    slipskid:   +10         37 - 39  3 chars   = 40
-    gmeter:     +10         40 - 42  3 chars   = 43
-    aoa:        00          43 - 44  2 chars   = 45
-    vertspeed:  +010        45 - 48  4 chars   = 49
-    oat:        +27         49 - 51  3 chars   = 52
-    baro:       050         52 - 54  3 chars   = 55
-    checksum:   xx          55 - 56  2 chars   = 57
-    CRLF        /n          57 - 58  2 chars   = 59
-    ------------------------------------------------
-    TOTAL CHAR COUNT                           = 59
-
-    sample message:   "=1108103249+100+03001801400004760+100+10+1000+010+27050XX/n"
-
-    DYNON MESSAGE FORMAT
-    -----------------------------------------------------------
-    Position____width____Name_________________data______type
-    -----------------------------------------------------------
-    1           1        Start                !         string   
-    2           1        Data Type            1         number
-    3           1        Data Version         1         number
-    4           8        System Time          HHMMSSFF  string
-    12          4        Pitch (deg)          +- 000    number
-    16          5        Roll (deg)           +- 1800   number
-    21          3        Magnetic Heading     000 (deg) number
-    24          4        Indicated Airspeed   9999      number
-    28          6        Pressure Altitude    +- 00000  number 
-    34          4        Turn Rate (deg/s)    +- 000    number
-    38          3        Lateral Accel (g)    +- 00     number
-    41          3        Vertical Accel(g)    +- 00     number
-    44          2        Angle of Attack (%)  00        number
-    46          4        Vertical Speed       +- 000    number
-    50          3        OAT (deg C)          +- 00     number 
-    53          4        True Airspeed        0000      number
-    57          3        Barometer Setting    000       number
-    60          6        Density Altitude     +- 00000  number
-    66          3        Wind Direction       000       number
-    69          2        Wind Speed           00        number
-    71          2        Checksum             00        hex 
-    73          2        CR/LF                /n        string
-    -----------------------------------------------------------
-    TOTAL CHARS = 74
-*/
 
 function perRound(num, precision) {
     var precision = 3 //default value if not passed from caller, change if desired
