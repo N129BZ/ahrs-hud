@@ -34,6 +34,26 @@ body {
     transform: scale(2.1, 2.3);
 }
 
+.lhblocker {
+    width: 200px;
+    height:100px;
+    top: 0px;
+    left: 138px;
+    position: absolute;
+    z-index: 200;
+    background-color: black;
+}
+
+.rhblocker {
+    width: 179px;
+    height:100px;
+    top: 0px;
+    left: 622px;
+    position: absolute;
+    z-index: 200;
+    background-color: black;
+}
+
 .aoa {
     border-style: solid;
     border-color: red;

@@ -103,7 +103,7 @@ $(document).keyup(function(e) {
     //   DYNON SAMPLE
     //e.data = "!1121144703-014+00003310811+01736+003-03+1013-033+110831245+01650023176C";
     //   GARMIN SAMPLE  
-    e.data = "=1121144703-300+03003310811+01736+003-03+1013-033+11245xx/n";
+    e.data = "=1121144703-150-01503310811+01736+003-03+1013-033+11245xx/n";
     
     onSerialData(e);
 });
@@ -123,7 +123,7 @@ const alt_offset = .4792   // Feet MSL
 const hdg_offset = 4.793;  // Degrees
 const ball_offset = -4;    // Degrees
 const ball_center = 44.5;  // this is "center" of the slip-skid indicator
-const pitch_offset = 1.28; // this adjusts the pitch to match Stratux
+const pitch_offset = 1.24; // this adjusts the pitch 
 
 var speedbox = document.getElementById('spanspeedbox');
 var altitudebox = document.getElementById('spanaltbox');
@@ -166,9 +166,9 @@ function onSerialData(e) {
     speedbox.textContent = data.airspeed;
     altitudebox.textContent = data.baltitude;
     headingbox.textContent = data.heading;
-    vspeedbox.textContent = data.vertspeed + " fpm";
-    barobox.textContent = "BpHg " + data.baropressure;
     arrowbox.textContent = data.vertspeed < 0 ? "▼" : "▲";
+    vspeedbox.textContent = Math.abs(data.vertspeed) + " fpm";
+    barobox.textContent = "BpHg " + data.baropressure;
     oatbox.textContent = "OAT " + data.oatF + " F";
     tasbox.textContent = "TAS " + data.tas + " kt";
     daltbox.textContent = "DAlt " + strdalt;

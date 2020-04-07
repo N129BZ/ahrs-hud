@@ -160,7 +160,7 @@
     width: 147px;
     height: 26px;
     font-family: 'MonacoB2-Bold';
-    font-size: 21px;
+    font-size: 18px;
     text-align: center;
     vertical-align: middle;
     color: white;
@@ -257,9 +257,8 @@
     left: 17px;
     visibility: visible;
     z-index: 210;
-    transform: scale(1.25, 1.25);
     font-family: 'MonacoB2-Bold';
-    font-size: 16px;
+    font-size: 19px;
     text-align: center;
     vertical-align: middle;
     color: white;
@@ -289,7 +288,7 @@
     visibility: visible;
     z-index: 200;
     font-family: 'MonacoB2-Bold';
-    font-size: 21px;
+    font-size: 18px;
     text-align: center;
     vertical-align: middle;
     color: white;
@@ -304,7 +303,7 @@
     visibility: visible;
     z-index: 200;
     font-family: 'MonacoB2-Bold';
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     vertical-align: middle;
     color: white;
