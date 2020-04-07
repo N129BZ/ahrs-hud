@@ -22,7 +22,6 @@ var args = argparse(process.argv.slice(2), {
 var websocketPort = parseInt(args.websocketPort);
 var serialPort = args.serialPort;
 var httpPort = parseInt(args.httpPort);
-var client = new String(args.clientType).toUpperCase();
 
 var server = http.createServer(function (request, response) { });
 try {
