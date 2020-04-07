@@ -19,19 +19,19 @@ var args = argparse(process.argv.slice(2), {
     },
 });
 
-var websockport = parseInt(args.websocketPort);
-var serialport = args.serialPort;
-var webserverport = parseInt(args.httpPort);
+var websocketPort = parseInt(args.websocketPort);
+var serialPort = args.serialPort;
+var httpPort = parseInt(args.httpPort);
 var client = new String(args.clientType).toUpperCase();
 
 var server = http.createServer(function (request, response) { });
 try {
-    server.listen(websockport, function () { });
+    server.listen(websocketPort, function () { });
     // create the server
     wss = new WebSocketServer({
         httpServer: server
     });
-    console.log("Websocket server listening at port " + websockport);
+    console.log("Websocket server listening at port " + websocketPort);
 }
 catch (error) {
     console.log(error);
@@ -58,8 +58,8 @@ catch (error) {
 var webserver;
 try {
     webserver = express();
-    webserver.listen(webserverport, () => {
-        console.log("Webserver listening at port " + webserverport);
+    webserver.listen(httpPort, () => {
+        console.log("Webserver listening at port " + httpPort);
     });
 
     webserver.use(express.static(__dirname + "/public"));
@@ -76,7 +76,7 @@ var connections = new Array;
 var port;
 var parser;
 try {
-    port = new SerialPort(serialport, { baudRate: 115200 });    // open the port
+    port = new SerialPort(serialPort, { baudRate: 115200 });    // open the port
     parser = port.pipe(new Readline({ delimiter: '\n' }));
 
     port.on('open', showPortOpen);
@@ -92,7 +92,7 @@ catch (error) {
 // ------------------------ Serial event functions:
 // this is called when the serial port is opened:
 function showPortOpen() {
-    console.log("serial port opened at " + serialport);
+    console.log("serial port opened at " + serialPort);
 }
 
 // this is called when new data comes into the serial port:
