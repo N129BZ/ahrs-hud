@@ -11,7 +11,12 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/index.js"
+            "program": "${workspaceFolder}/index.js",
+            "args": [   
+                "--websocketPort=9696",
+                "--httpPort=8686",
+                "--serialPort=/dev/ttyACM0"
+            ]
         }
     ]
 }
