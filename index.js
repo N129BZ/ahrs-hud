@@ -1,16 +1,16 @@
 
-const minimist = require('minimist');
 const express = require('express');
 const http = require('http');
 const SerialPort = require('serialport');
 const WebSocketServer = require('websocket').server;
 const Readline = require('@serialport/parser-readline');
+const argparse = require('minimist');
 
-var args = minimist(process.argv.slice(2), {
+var args = argparse(process.argv.slice(2), {
     alias: {
-        h: 'http',
-        s: 'serial',
-        w: 'websocket'
+        h: 'httpPort',
+        s: 'serialPort',
+        w: 'websocketPort'
     },
     default: {
         h: 8686,
@@ -19,9 +19,10 @@ var args = minimist(process.argv.slice(2), {
     },
 });
 
-var websockport = args['websocket'];
-var serialport = args['serial'];
-var webserverport = args['http'];
+var websockport = parseInt(args.websocketPort);
+var serialport = args.serialPort;
+var webserverport = parseInt(args.httpPort);
+var client = new String(args.clientType).toUpperCase();
 
 var server = http.createServer(function (request, response) { });
 try {
