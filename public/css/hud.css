@@ -15,6 +15,19 @@
     src: url('../fonts/monacob2-bold.otf');
 }
 
+#spanaoa {
+    position: absolute;
+    left: 6px;
+    top: 1px;
+    width: 340px;
+    height: 78px;
+    font-family: 'MonacoB2-Bold';
+    font-size: 58px;
+    text-align: center;
+    vertical-align: middle;
+    color: red;
+}
+
 #spanspeedbox {
     position: absolute;
     left: 4px;
@@ -61,7 +74,7 @@
 #spanaltbox {
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: -1px;
     width: 99px;
     height: 40px;
     font-family: 'MonacoB2-Bold';
@@ -246,7 +259,7 @@
     z-index: 210;
     transform: scale(1.25, 1.25);
     font-family: 'MonacoB2-Bold';
-    font-size: 19px;
+    font-size: 16px;
     text-align: center;
     vertical-align: middle;
     color: white;
@@ -342,33 +355,33 @@
 }
 
 #ball {
-    height: 95px;
+    height: 63px;
     width: 70px;
     position: absolute;
-    top: -33px;
-    left: 55px;
+    top: -23px;
+    left: 44px;
     visibility: visible;
     z-index: 211;
-    transform: scale(.3, .28);
+    transform: scale(.25, .25);
 }
 
 #leftbar {
-    height: 83px;
-    width: 10px;
+    height: 59px;
+    width: 7px;
     position: absolute;
     visibility: visible;
-    top: -27px;
-    left: 69px;
+    top: -21px;
+    left: 62px;
     z-index: 212;
     transform: scale(.54, .35);
 }
 
 #rightbar {
-    height: 83px;
-    width: 10px;
+    height: 59px;
+    width: 7px;
     position: absolute;
-    top: -27px;
-    left: 101px;
+    top: -21px;
+    left: 90px;
     visibility: visible;
     z-index: 212;
     transform: scale(.54, .35);
