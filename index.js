@@ -65,7 +65,7 @@ try {
         var newport = req.body.portname;
         if (newport != serialPort)
         {
-            let filename = __dirname + '/hudconfig.json';
+            let filename = __dirname + '/config.json';
             serialPort = newport;
             fs.unlinkSync(filename);
             let data = { "portname" : serialPort };
@@ -89,7 +89,7 @@ function openSerialPort(needsFileRead) {
     try {
 
         if (needsFileRead) {
-            let rawdata = fs.readFileSync(__dirname + '/hudconfig.json');
+            let rawdata = fs.readFileSync(__dirname + '/config.json');
             serialPort = JSON.parse(rawdata).portname;
             needsFileRead = false;
         }
@@ -142,17 +142,6 @@ function handleConnection(client) {
 }
 
 function buildConfigWebPage() {
-    let output = "<html><head><title>ADAHRS-HUD SETTINGS</title><script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>" + 
-      "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>" + 
-      "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css'>" +
-      "<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>" + 
-      "<style>input[type=submit] {background-color: rgb(10, 94, 20);border: none;color: white;padding: 20px 40px;text-decoration: none;" +
-      "font-size: 20px;font-weight: bold;margin: 4px 2px;cursor: pointer;}</style></head><body><div style='margin:100px;'>" +
-      "<nav class='navbar navbar-inverse navbar-static-top'><div class='container'><a class='navbar-brand href='/'>ADAHRS-HUD</a>" +
-      "</div></nav><div class='jumbotron' style='padding:40px;'><h2>Please enter your serial port name</h2><p>" +
-      "<h3><label for='portname'>Your serial to USB cable will use a named port, for example: /dev/ttyACM0</label></h3></p>" +
-      "<form method='post' action='/config' novalidate><div class='form-field'><input type='text id='portname' name='portname'" + 
-      "value='" + serialPort + "'></div><p><div class='form-actions'><input type='submit' value='Save'>" +
-      "</div></p></form></div></div></body></html>";
-      return output;
+    let rawdata = fs.readFileSync(__dirname + '/config.html');
+    return String(rawdata).replace("##PORTNAME##", serialPort);
 }
