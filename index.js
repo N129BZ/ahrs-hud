@@ -9,7 +9,6 @@ const fs = require('fs');
 var websocketPort = 9696; 
 var httpPort = 8686; 
 var serialPort;
-var serialPortChanged = false;
 
 var server = http.createServer(function (request, response) { });
 try {
@@ -64,16 +63,14 @@ try {
 
     webserver.post("/config", (req, res) => {
         var newport = req.body.portname;
-        var filename = __dirname + '/hudconfig.json';
         if (newport != serialPort)
         {
+            let filename = __dirname + '/hudconfig.json';
             serialPort = newport;
             fs.unlinkSync(filename);
-            var writer = fs.createWriteStream(filename);
-            var data = { "portname" : serialPort };
-            writer.write(JSON.stringify(data));
-            writer.close();
-            openSerialPort();
+            let data = { "portname" : serialPort };
+            fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
+            openSerialPort(true);
         }
         res.redirect('/'); 
         res.end();
@@ -83,16 +80,20 @@ catch (error) {
     console.log(error);
 }
 
-openSerialPort();
+openSerialPort(true);
 
 var connections = new Array;
 var port;
 var parser;
-function openSerialPort() {
+function openSerialPort(needsFileRead) {
     try {
-        let rawdata = fs.readFileSync(__dirname + '/hudconfig.json');
-        serialPort = JSON.parse(rawdata).portname;
-        
+
+        if (needsFileRead) {
+            let rawdata = fs.readFileSync(__dirname + '/hudconfig.json');
+            serialPort = JSON.parse(rawdata).portname;
+            needsFileRead = false;
+        }
+
         port = new SerialPort(serialPort, { baudRate: 115200 });    // open the port
         parser = port.pipe(new Readline({ delimiter: '\n' }));
 
