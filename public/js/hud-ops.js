@@ -168,7 +168,7 @@ function onSerialData(e) {
     headingbox.textContent = data.heading;
     arrowbox.textContent = data.vertspeed < 0 ? "▼" : "▲";
     vspeedbox.textContent = Math.abs(data.vertspeed) + " fpm";
-    barobox.textContent = "BpHg " + data.baropressure;
+    barobox.textContent = "BARO " + data.baropressure;
     oatbox.textContent = "OAT " + data.oatF + " F";
     tasbox.textContent = "TAS " + data.tas + " kt";
     daltbox.textContent = "DAlt " + strdalt;
