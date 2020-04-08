@@ -171,7 +171,7 @@ function onSerialData(e) {
     barobox.textContent = "BARO " + data.baropressure;
     oatbox.textContent = "OAT " + data.oatF + " F";
     tasbox.textContent = "TAS " + data.tas + " kt";
-    daltbox.textContent = "DAlt " + strdalt;
+    daltbox.textContent = "DALT " + strdalt;
     windspeed.textContent =  data.windkts + " kt"
 
     var speedticks = (data.airspeed * spd_offset);
