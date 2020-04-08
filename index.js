@@ -44,7 +44,7 @@ catch (error) {
 var webserver;
 try {
     webserver = express();
-    webserver.use(express.urlencoded({ extended: true }))
+    webserver.use(express.urlencoded({ extended: true }));
     webserver.listen(httpPort, () => {
         console.log("Webserver listening at port " + httpPort);
     });
