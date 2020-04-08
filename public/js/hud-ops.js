@@ -101,9 +101,9 @@ $(document).keyup(function(e) {
     console.log(e.keyCode);
 
     //   DYNON SAMPLE
-    //e.data = "!1121144703-014+00003310811+01736+003-03+1013-033+110831245+01650023176C";
+       e.data = "!1121144703-014+00003310811+01736+033-15+1013-033+110831245+01650023176C\r\n";
     //   GARMIN SAMPLE  
-    e.data = "=1121144703-150-01503310811+01736+003-03+1013-033+11245xx/n";
+      //e.data = "=1121144703-150+03003310811+01736+003+99+1013-033+11245xx\r\n";
     
     onSerialData(e);
 });
@@ -121,8 +121,8 @@ var aoa = $('.aoa');
 const spd_offset = 4.8;    // Knots
 const alt_offset = .4792   // Feet MSL
 const hdg_offset = 4.793;  // Degrees
-const ball_offset = -4;    // Degrees
-const ball_center = 44.5;  // this is "center" of the slip-skid indicator
+const ball_offset = 6.7;   // Degrees
+const ball_center = 68;    // this is "center" of the slip-skid indicator
 const pitch_offset = 1.24; // this adjusts the pitch 
 
 var speedbox = document.getElementById('spanspeedbox');
@@ -175,7 +175,7 @@ function onSerialData(e) {
     windspeed.textContent =  data.windkts + " kt"
 
     var speedticks = (data.airspeed * spd_offset);
-    var altticks = (data.altitude * alt_offset);
+    var altticks = (data.baltitude * alt_offset);
     var hdgticks = (data.heading * hdg_offset) * -1;
 
     if (data.client == "garmin") {
@@ -200,14 +200,7 @@ function onSerialData(e) {
     gbox.textContent =  tmpgnumber + " g";
 
     // set the skid-slip ball position
-    slipskid = slipskid * -1;
-    if (slipskid < -17) {
-        slipskid = -17;
-    }
-    else if (slipskid > 17) {
-        slipskid = 17;
-    }
-    var ballposition = ball_center + (slipskid * ball_offset);
+    let ballposition = ball_center + (slipskid * ball_offset);
     ball.css('left', ballposition + 'px');
   
     // set the wind speed & direction
@@ -289,7 +282,7 @@ class HudData {
         this.airspeed = Math.trunc(parseInt(this.str.substr(23, 4)) / 10);
         this.altitude = parseInt(this.str.substr(27, 6));
         this.turnrate = (parseInt(this.str.substr(33, 4)) / 10);
-        this.slipskid = (parseInt(this.str.substr(37, 3)) / 100);
+        this.slipskid = (parseInt(this.str.substr(37, 3)) / 10);
         this.gLoad = (parseInt(this.str.substr(40, 3)) / 10).toFixed(1);
         this.aoa = parseInt(this.str.substr(43, 2));
         this.vertspeed = Math.trunc(parseInt(this.str.substr(45, 4)) * 10);

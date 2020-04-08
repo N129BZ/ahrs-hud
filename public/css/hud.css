@@ -354,14 +354,13 @@
 }
 
 #ball {
-    height: 63px;
-    width: 70px;
+    height: 17px;
+    width: 20px;
     position: absolute;
-    top: -23px;
-    left: 44px;
+    top: 1px;
+    left: 69px;
     visibility: visible;
     z-index: 211;
-    transform: scale(.25, .25);
 }
 
 #leftbar {
