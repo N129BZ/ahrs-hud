@@ -38,7 +38,7 @@ git clone https://github.com/N129BZ/dynon-hud.git
 bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)
 ```
 
-5. Change the directory: **pi@raspberrypi:~$ cd dynon-hud** and then run the following npm commands:
+5. Change the directory: **pi@raspberrypi:~$ cd adahrs-hud** and then run the following npm commands:
 ```bash
 npm install minimist
 npm install http
@@ -64,7 +64,7 @@ sudo apt install --no-install-recommends chromium-browser
 8. Open this file for editing: **pi@raspberrypi:~ $ sudo nano /etc/xdg/openbox/autostart** and add the following commands. 
 ```
 # Launch the server process, which opens serial port, etc.
-pm2 start /home/pi/dynon-hud/index.js
+pm2 start /home/pi/adahrs-hud/index.js
 
 # Disable any form of screen saver / screen blanking / power management
 xset s off
