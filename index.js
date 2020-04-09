@@ -9,6 +9,7 @@ const fs = require('fs');
 var websocketPort = 9696; 
 var httpPort = 8686; 
 var serialPort;
+var speedtape;
 
 var server = http.createServer(function (request, response) { });
 try {
@@ -56,21 +57,42 @@ try {
     });
 
     webserver.get("/config", (req,res) => {
-        let chunk = buildConfigWebPage();
+        var chunk = buildConfigWebPage();
         res.write(chunk);           
     });
 
     webserver.post("/config", (req, res) => {
-        var newport = req.body.portname;
-        if (newport != serialPort)
-        {
-            let filename = __dirname + '/config.json';
+        console.log(req.body.params);
+        let newport = req.body.portname;
+        let newspeedtape = req.body.selectedspeedtape;
+        let writeconfig = false;
+        let reopenport = false;
+
+        if (newport != serialPort) {
             serialPort = newport;
+            writeconfig = true;
+            reopenport = true;
+        }
+
+        if (newspeedtape != speedtape) {
+            var workingtape = __dirname + "/public/img/speed_tape.png";
+            var tapename = __dirname + "/public/img/speed_tapes/speed_tape_";
+            fs.copyFileSync(tapename + newspeedtape + ".png", workingtape);
+            speedtape = newspeedtape;
+            writeconfig = true;
+        }
+        
+        if (writeconfig) {
+            let filename = __dirname + '/config.json';
             fs.unlinkSync(filename);
-            let data = { "portname" : serialPort };
+            let data = { "portname" : serialPort, "speedtape" : speedtape };
             fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
+        }
+
+        if (reopenport) {
             openSerialPort(true);
         }
+        
         res.redirect('/'); 
         res.end();
     });
@@ -79,7 +101,8 @@ catch (error) {
     console.log(error);
 }
 
-openSerialPort(true);
+readConfigFile();
+openSerialPort(false);
 
 var connections = new Array;
 var port;
@@ -88,8 +111,7 @@ function openSerialPort(needsFileRead) {
     try {
 
         if (needsFileRead) {
-            let rawdata = fs.readFileSync(__dirname + '/config.json');
-            serialPort = JSON.parse(rawdata).portname;
+            readConfigFile();
             needsFileRead = false;
         }
 
@@ -104,6 +126,12 @@ function openSerialPort(needsFileRead) {
     catch (error) {
         console.log(error);
     }
+}
+
+function readConfigFile() {
+    var rawdata = fs.readFileSync(__dirname + '/config.json');
+    serialPort = JSON.parse(rawdata).portname;
+    speedtape = JSON.parse(rawdata).speedtape;
 }
 
 // ------------------------ Serial event functions:
@@ -141,6 +169,9 @@ function handleConnection(client) {
 }
 
 function buildConfigWebPage() {
-    let rawdata = fs.readFileSync(__dirname + '/config.html');
-    return String(rawdata).replace("##PORTNAME##", serialPort);
+    const regex1 = /##PORTNAME##/gi;
+    const regex2 = /##SPEEDTAPE##/gi;
+    var rawdata = String(fs.readFileSync(__dirname + '/config.html'));
+    var newdata = rawdata.replace(regex1, serialPort);
+    return newdata.replace (regex2, speedtape);
 }

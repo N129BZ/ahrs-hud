@@ -22,6 +22,20 @@
         text-align: center;
         vertical-align: middle;
       }
+      #portname {
+        background-color: white;
+          font-size: 20px;
+          font-weight: bold;
+          height: 44px;
+          width: 192px;
+      }
+      #speedtape {
+          background-color: white;
+          font-size: 20px;
+          font-weight: bold;
+          height: 44px;
+          width: 192px;
+      }
     </style>
 </head>
 <body>
@@ -32,21 +46,46 @@
         </div>
     </nav>
     <div class="jumbotron"  style="padding:40px;">
-      <h2>Please enter your serial port name</h2>
       <p>
-         <h3><label for="portname">Linux uses a named port for a serial to USB cable connection, for example: /dev/ttyACM0</label></h3>
+         <h3><label for="portname">Enter the named port for the serial to USB cable connection, for example: /dev/ttyACM0</label></h3>
       </p>
-      <form method="post" action="/config" novalidate>
-        <div class="form-field">
+      <form method="post" action="/config" id="configform" novalidate>
+        <div class="form-field">  
           <input type="text" id="portname" name="portname" style="font-size: 20px; font-weight: bold;" value="##PORTNAME##"> 
         </div>
+        <br>
         <p>
-        <div class="form-actions">
-          <input type="submit" value="Save"><input type="cancel" value="Cancel" onClick="window.location='/';">
+        <h3><label for="speedtape">Select your aircraft type from the list below, this is so the HUD will display the correct speed tape</label></h3>
+        </p>
+        <select id="speedtape" name=”speedtape” onClick="updateSelectedTape(this.value);">
+            <option value="RV8">RV8</option>
+            <option value="RV9">RV9</option>
+            <option value="RV10">RV10</option>
+            <option value="Bonanza">Bonanza</option>
+            <option value="Zenith650">Zenith 601/650</option>
+            <option value="Zenith750">Zenith 750</option>
+        </select>
+        <div class="form-field"> 
+            <input type="text" id="selectedspeedtape" name="selectedspeedtape" style="visibility: hidden;">
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="form-field">
+            <input type="submit" value="Save"><input type="cancel" value="Cancel" onClick="window.location='/';">
         </div>
         </p>
       </form>
     </div>
   </div>
+  <script>
+      document.getElementById("speedtape").value="##SPEEDTAPE##";
+      document.getElementById("selectedspeedtape").value="##SPEEDTAPE##";
+      function updateSelectedTape(newvalue) {
+         document.getElementById("speedtape").value=newvalue; 
+         document.getElementById("selectedspeedtape").value=newvalue;
+      }
+  </script>
 </body>
 </html>
