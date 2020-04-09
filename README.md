@@ -1,9 +1,9 @@
-# dynon-hud for Experimental Aircraft
+# adahrs-hud for Experimental Aircraft
 
-## Heads Up Display for Dynon Efis using a Raspberry Pi and one of the multiple Dynon serial ports. The pi's HDMI video port is then used to display the Dynon ADHRS data on a Hudly or Kivic HUD. 
-![Image of hud](https://github.com/N129BZ/dynon-hud/blob/master/docs/20200330.png)
+## Heads Up Display for Garmin or Dynon EFIS's using a Raspberry Pi Zero and one of the multiple EFIS serial ports. The pi's HDMI video port is then used to display the ADAHRS data on a Hudly or Kivic HUD. 
+![Image of hud](https://github.com/N129BZ/adahrs-hud/blob/master/docs/20200330.png)
 
-## Instructions for an installation of Buster Lite on the Raspberry Pi. This has been tested on pi 2, pi 3b, and pi 3b+ NOTE: This does NOT require a Stratux. This requires a connection using 3 twisted pair wires from the selected Dynon serial port to the pi's GPIO pins.  (See GPIO picture under step 8 below.)
+## Instructions for an installation of Buster Lite on the Raspberry Pi. This has been tested on pi Zero, pi 2, pi 3b, and pi 3b+ NOTE: This does NOT require a Stratux. This requires a connection using 3 twisted pair wires from the selected EFIS serial port to either the pi's GPIO pins or a USB port.  (See GPIO picture under step 8 below.)
 
 ###### Raspberry Pi Buster Lite indownload can be found at: https://www.raspberrypi.org/downloads/raspbian/
 
@@ -106,15 +106,15 @@ Add this line to start the X server on boot. Because I am using a touch screen I
 12. Reboot.
 
 13. Connect the Ground wire from the Dynon serial port to pin 6, connect the RX wire to pin 8, and the TX wire to pin 10.
-![Image of GPIO](https://github.com/N129BZ/dynon-hud/blob/master/docs/GPIO-Pinout-Diagram.png)
+![Image of GPIO](https://github.com/N129BZ/adahrs-hud/blob/master/docs/GPIO-Pinout-Diagram.png)
 
 14. Connect the HUD to the HDMI port on the pi and reboot. When that is done, you should see the AHRS display.
 
 ###### NOTE:
 If you need to tweak the view of the HUD screen, the div.hud class in css/hud.css can be edited at the setting transform: scale(x, y) to scale the 2 dimensions to your liking, or even rotate 180° if mounting the HUD from the top of the windscreen. It is suggested to not change values for masks and tapes, as they are calibrated by number of pixels to offset based on the speed, altitude, or heading values being applied.
 
-![Image of ScaleSetting](https://github.com/N129BZ/dynon-hud/blob/master/docs/hudcss1.png)
+![Image of ScaleSetting](https://github.com/N129BZ/adahrs-hud/blob/master/docs/hudcss1.png)
 
-![Image of ScaleSetting](https://github.com/N129BZ/dynon-hud/blob/master/docs/hudcss2.png)
+![Image of ScaleSetting](https://github.com/N129BZ/adahrs-hud/blob/master/docs/hudcss2.png)
 
-![Image of UpsideDown](https://github.com/N129BZ/dynon-hud/blob/master/docs/20200330_ud.png)
+![Image of UpsideDown](https://github.com/N129BZ/adahrs-hud/blob/master/docs/20200330_ud.png)
