@@ -16,6 +16,7 @@
   "dependencies": {
     "@serialport/parser-readline": "^8.0.6",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "gulp": "^4.0.2",
     "http": "0.0.0",
     "minimist": "^1.2.5",
