@@ -46,6 +46,7 @@ npm install express
 npm install websocket
 npm install serialport
 npm install @serialport/parser-readline
+npm install fs
 ```
 
 6. Change the directory to: **pi@raspberrypi:~$** and then run the following command:
