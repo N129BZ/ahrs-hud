@@ -29,6 +29,13 @@
           height: 44px;
           width: 192px;
       }
+      #baudrate {
+        background-color: white;
+          font-size: 20px;
+          font-weight: bold;
+          height: 44px;
+          width: 192px;
+      }
       #speedtape {
           background-color: white;
           font-size: 20px;
@@ -46,16 +53,23 @@
         </div>
     </nav>
     <div class="jumbotron"  style="padding:40px;">
-      <p>
-         <h3><label for="portname">Enter the named port for the serial to USB cable connection, for example: /dev/ttyACM0</label></h3>
-      </p>
-      <form method="post" action="/config" id="configform" novalidate>
+        <form method="post" action="/config" id="configform" novalidate>
+        <p>
+          <h3><label for="portname">Enter the named port for the serial to USB cable connection, for example: /dev/ttyACM0</label></h3>
+       </p>
         <div class="form-field">  
-          <input type="text" id="portname" name="portname" style="font-size: 20px; font-weight: bold;" value="##PORTNAME##"> 
+          <input type="text" id="portname" name="portname" style="font-size: 20px; font-weight: bold;" value="##PORTNAME##">  
         </div>
         <br>
         <p>
-        <h3><label for="speedtape">Select your aircraft type from the list below, this is so the HUD will display the correct speed tape</label></h3>
+            <h3><label for="baudrate">Enter the baud rate of your EFIS serial port, default is 9600 baud</label></h3>
+        </p>
+        <div class="form-field">
+            <input type="text" id="baudrate" name="baudrate" style="font-size: 20px; font-weight: bold;" value="##BAUDRATE##">
+        </div>
+        <br>
+        <p>
+        <h3><label for="speedtape">Select your aircraft type from the list, this is so the HUD will display the correct speed tape</label></h3>
         </p>
         <select id="speedtape" name=”speedtape” onClick="updateSelectedTape(this.value);">
             <option value="RV8">RV8</option>

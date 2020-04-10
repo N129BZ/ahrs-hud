@@ -10,6 +10,7 @@ var websocketPort = 9696;
 var httpPort = 8686; 
 var serialPort;
 var speedtape;
+var baudrate;
 
 var server = http.createServer(function (request, response) { });
 try {
@@ -64,12 +65,19 @@ try {
     webserver.post("/config", (req, res) => {
         console.log(req.body.params);
         let newport = req.body.portname;
+        let newbaudrate =  parseInt(req.body.baudrate);
         let newspeedtape = req.body.selectedspeedtape;
         let writeconfig = false;
         let reopenport = false;
 
         if (newport != serialPort) {
             serialPort = newport;
+            writeconfig = true;
+            reopenport = true;
+        }
+
+        if (newbaudrate != baudrate) {
+            baudrate = newbaudrate;
             writeconfig = true;
             reopenport = true;
         }
@@ -85,7 +93,7 @@ try {
         if (writeconfig) {
             let filename = __dirname + '/config.json';
             fs.unlinkSync(filename);
-            let data = { "portname" : serialPort, "speedtape" : speedtape };
+            let data = { "portname" : serialPort, "baudrate" : baudrate, "speedtape" : speedtape };
             fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
         }
 
@@ -115,7 +123,7 @@ function openSerialPort(needsFileRead) {
             needsFileRead = false;
         }
 
-        port = new SerialPort(serialPort, { baudRate: 115200 });    // open the port
+        port = new SerialPort(serialPort, { baudRate: baudrate });    // open the port
         parser = port.pipe(new Readline({ delimiter: '\n' }));
 
         port.on('open', showPortOpen);
@@ -131,13 +139,15 @@ function openSerialPort(needsFileRead) {
 function readConfigFile() {
     var rawdata = fs.readFileSync(__dirname + '/config.json');
     serialPort = JSON.parse(rawdata).portname;
+    baudrate = parseInt(JSON.parse(rawdata).baudrate);
     speedtape = JSON.parse(rawdata).speedtape;
+    
 }
 
 // ------------------------ Serial event functions:
 // this is called when the serial port is opened:
 function showPortOpen() {
-    console.log("serial port opened at " + serialPort);
+    console.log("serial port opened at " + port.path + " baud rate: " + port.baudRate);
 }
 
 // this is called when new data comes into the serial port:
@@ -157,7 +167,7 @@ function showError(error) {
     console.log('Serial port error: ' + error);
 }
 
-function handleConnection(client) {
+function handleConnection(client) {baudrate = JSON.parse(rawdata).baudrate;
     console.log("New Connection");
     connections.push(client);
 
@@ -170,8 +180,10 @@ function handleConnection(client) {
 
 function buildConfigWebPage() {
     const regex1 = /##PORTNAME##/gi;
-    const regex2 = /##SPEEDTAPE##/gi;
+    const regex2 = /##BAUDRATE##/gi;
+    const regex3 = /##SPEEDTAPE##/gi;
     var rawdata = String(fs.readFileSync(__dirname + '/config.html'));
-    var newdata = rawdata.replace(regex1, serialPort);
-    return newdata.replace (regex2, speedtape);
+    return rawdata.replace(regex1, serialPort)
+                  .replace(regex2, baudrate)
+                  .replace(regex3, speedtape);
 }
