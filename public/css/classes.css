@@ -6,6 +6,7 @@ body {
     height: 480px;
     top: 0px;
     left: 0px;
+    position: absolute;
     margin: 0%;
     overflow: hidden;
 }
@@ -225,7 +226,7 @@ body {
     z-index: 210;
 }
 
-.vsbox {rgba(255,102,0,255);
+.vsbox {
     border-style: solid;
     border-color: rgb(2,85,255);
     border-width: 4px;

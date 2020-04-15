@@ -5,12 +5,14 @@ const SerialPort = require('serialport');
 const WebSocketServer = require('websocket').server;
 const Readline = require('@serialport/parser-readline');
 const fs = require('fs');
+const exec = require('child_process').exec;
 
 var websocketPort = 9696; 
 var httpPort = 8686; 
 var serialPort;
 var speedtape;
 var baudrate;
+var viewer;
 
 var server = http.createServer(function (request, response) { });
 try {
@@ -57,28 +59,38 @@ try {
         res.sendFile(__dirname + "/public/index.html");
     });
 
-    webserver.get("/config", (req,res) => {
-        var chunk = buildConfigWebPage();
+    webserver.get("/setup", (req,res) => {
+        var chunk = buildSettingsWebPage();
         res.write(chunk);           
     });
 
-    webserver.post("/config", (req, res) => {
-        console.log(req.body.params);
+    webserver.get("/shutdown", (req,res) => {
+        exec('sudo shutdown -h now', function (msg) { console.log(msg) });
+    });    
+    
+    webserver.post("/setup", (req, res) => {
+        console.log(req.body);
+        let newviewer = req.body.selectedviewer;
         let newport = req.body.portname;
         let newbaudrate =  parseInt(req.body.baudrate);
         let newspeedtape = req.body.selectedspeedtape;
-        let writeconfig = false;
+        let writefile = false;
         let reopenport = false;
+        
+        if (newviewer != viewer) {
+            viewer = newviewer;
+            writefile = true;
+        }
 
         if (newport != serialPort) {
             serialPort = newport;
-            writeconfig = true;
+            writefile = true;
             reopenport = true;
         }
 
         if (newbaudrate != baudrate) {
             baudrate = newbaudrate;
-            writeconfig = true;
+            writefile = true;
             reopenport = true;
         }
 
@@ -87,13 +99,13 @@ try {
             var tapename = __dirname + "/public/img/speed_tapes/speed_tape_";
             fs.copyFileSync(tapename + newspeedtape + ".png", workingtape);
             speedtape = newspeedtape;
-            writeconfig = true;
+            writefile = true;
         }
         
-        if (writeconfig) {
-            let filename = __dirname + '/config.json';
+        if (writefile) {
+            let filename = __dirname + '/settings.json';
             fs.unlinkSync(filename);
-            let data = { "portname" : serialPort, "baudrate" : baudrate, "speedtape" : speedtape };
+            let data = { "viewer" : viewer, "portname" : serialPort, "baudrate" : baudrate, "speedtape" : speedtape };
             fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
         }
 
@@ -109,7 +121,7 @@ catch (error) {
     console.log(error);
 }
 
-readConfigFile();
+readSettingsFile();
 openSerialPort(false);
 
 var connections = new Array;
@@ -119,13 +131,12 @@ function openSerialPort(needsFileRead) {
     try {
 
         if (needsFileRead) {
-            readConfigFile();
+            readSettingsFile();
             needsFileRead = false;
         }
 
         port = new SerialPort(serialPort, { baudRate: baudrate });    // open the port
         parser = port.pipe(new Readline({ delimiter: '\n' }));
-
         port.on('open', showPortOpen);
         port.on('close', showPortClose);
         port.on('error', showError);
@@ -136,12 +147,12 @@ function openSerialPort(needsFileRead) {
     }
 }
 
-function readConfigFile() {
-    var rawdata = fs.readFileSync(__dirname + '/config.json');
+function readSettingsFile() {
+    var rawdata = fs.readFileSync(__dirname + '/settings.json');
     serialPort = JSON.parse(rawdata).portname;
     baudrate = parseInt(JSON.parse(rawdata).baudrate);
     speedtape = JSON.parse(rawdata).speedtape;
-    
+    viewer = JSON.parse(rawdata).viewer;
 }
 
 // ------------------------ Serial event functions:
@@ -178,12 +189,14 @@ function handleConnection(client) {baudrate = JSON.parse(rawdata).baudrate;
     });
 }
 
-function buildConfigWebPage() {
+function buildSettingsWebPage() {
     const regex1 = /##PORTNAME##/gi;
     const regex2 = /##BAUDRATE##/gi;
     const regex3 = /##SPEEDTAPE##/gi;
-    var rawdata = String(fs.readFileSync(__dirname + '/config.html'));
-    return rawdata.replace(regex1, serialPort)
-                  .replace(regex2, baudrate)
-                  .replace(regex3, speedtape);
+    const regex4 = /##VIEWER##/gi;
+    var rawdata = String(fs.readFileSync(__dirname + '/setup.html'));
+    return rawdata.replace(regex1, viewer)
+                  .replace(regex2, serialPort)
+                  .replace(regex3, baudrate)
+                  .replace(regex4, speedtape);
 }
