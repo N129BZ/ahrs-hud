@@ -1,1 +1,1 @@
-{"viewer":"VuFine","portname":"/dev/ttyACM0","baudrate":9600,"speedtape":"Zenith650"}
+{"viewer":"VuFine","portname":"/dev/ttyACM0","baudrate":9600,"speedtape":"Zenith650", "websocketPort":9696, "httpPort":8686}
