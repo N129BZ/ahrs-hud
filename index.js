@@ -14,6 +14,8 @@ var speedtape;
 var baudrate;
 var viewer;
 
+readSettingsFile();
+
 var server = http.createServer(function (request, response) { });
 try {
     server.listen(websocketPort, function () { });
@@ -53,10 +55,20 @@ try {
         console.log("Webserver listening at port " + httpPort);
     });
 
-    webserver.use(express.static(__dirname + "/public"));
+    if (viewer == "VuFine") {
+        webserver.use(express.static(__dirname + "/public", {index: "vufine.html"}));
+    }
+    else {
+        webserver.use(express.static(__dirname + "/public", {index: "index.html"}));
+    }
 
     webserver.get("/", (req, res) => {
-        res.sendFile(__dirname + "/public/index.html");
+        if (viewer == "VuFine") {
+            res.sendFile(__dirname + "/public/vufine.html");
+        }
+        else {
+            res.sendFile(__dirname + "/public/index.html");
+        }
     });
 
     webserver.get("/setup", (req,res) => {
@@ -76,10 +88,12 @@ try {
         let newspeedtape = req.body.selectedspeedtape;
         let writefile = false;
         let reopenport = false;
-        
+        let reboot = false;
+
         if (newviewer != viewer) {
             viewer = newviewer;
             writefile = true;
+            reboot = true;
         }
 
         if (newport != serialPort) {
@@ -107,6 +121,12 @@ try {
             fs.unlinkSync(filename);
             let data = { "viewer" : viewer, "portname" : serialPort, "baudrate" : baudrate, "speedtape" : speedtape };
             fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
+
+            if (reboot) {
+                exec("sudo shutdown -r now", function (msg) { console.log(msg) });
+                res.end();
+                return;
+            }
         }
 
         if (reopenport) {
@@ -190,10 +210,10 @@ function handleConnection(client) {baudrate = JSON.parse(rawdata).baudrate;
 }
 
 function buildSettingsWebPage() {
-    const regex1 = /##PORTNAME##/gi;
-    const regex2 = /##BAUDRATE##/gi;
-    const regex3 = /##SPEEDTAPE##/gi;
-    const regex4 = /##VIEWER##/gi;
+    const regex1 = /##VIEWER##/gi;
+    const regex2 = /##PORTNAME##/gi;
+    const regex3 = /##BAUDRATE##/gi;
+    const regex4 = /##SPEEDTAPE##/gi;
     var rawdata = String(fs.readFileSync(__dirname + '/setup.html'));
     return rawdata.replace(regex1, viewer)
                   .replace(regex2, serialPort)

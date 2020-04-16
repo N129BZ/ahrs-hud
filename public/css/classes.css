@@ -1,5 +1,32 @@
 
 
+@font-face {
+    font-family: 'monacoregular';
+    src: url('../fonts/ monaco-webfont.woff2') format('woff2'),
+         url('../fonts/monaco-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'monacob2bold';
+    src: url('../fonts/monacob2-bold-webfont.woff2') format('woff2'),
+         url('../fonts/monacob2-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'monacobregular';
+    src: url('../fonts/monacob-webfont.woff2') format('woff2'),
+         url('../fonts/monacob-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body {
     background-color: #000000;
     width: 960px;
