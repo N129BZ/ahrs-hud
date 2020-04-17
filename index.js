@@ -6,9 +6,10 @@ const WebSocketServer = require('websocket').server;
 const Readline = require('@serialport/parser-readline');
 const fs = require('fs');
 const exec = require('child_process').exec;
+const protobuf = require("protobufjs");
 
-var websocketPort = 9696; 
-var httpPort = 8686; 
+var websocketPort; 
+var httpPort; 
 var serialPort;
 var speedtape;
 var baudrate;
@@ -119,7 +120,13 @@ try {
         if (writefile) {
             let filename = __dirname + '/settings.json';
             fs.unlinkSync(filename);
-            let data = { "viewer" : viewer, "portname" : serialPort, "baudrate" : baudrate, "speedtape" : speedtape };
+            let data = { "viewer" : viewer, 
+                         "portname" : serialPort, 
+                         "baudrate" : baudrate, 
+                         "speedtape" : speedtape,
+                         "websocketPort" : websocketPort,
+                         "httpPort" : httpPort
+                        };
             fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
 
             if (reboot) {
@@ -173,6 +180,8 @@ function readSettingsFile() {
     baudrate = parseInt(JSON.parse(rawdata).baudrate);
     speedtape = JSON.parse(rawdata).speedtape;
     viewer = JSON.parse(rawdata).viewer;
+    websocketPort = JSON.parse(rawdata).websocketPort;
+    httpPort = JSON.parse(rawdata).httpPort;
 }
 
 // ------------------------ Serial event functions:

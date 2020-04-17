@@ -1,0 +1,151 @@
+
+syntax="proto3";
+
+package dynon;
+
+message PB_BcastMsg {
+    string system_id = 1;
+    string endpoint_uuid = 2;
+    PB_BcastMsgType msg_type = 3;
+    PB_Heartbeat heartbeat = 4;
+    PB_Data_GPS data_gps = 5;
+    PB_Data_ADAHRS data_adahrs = 6;
+}
+
+message PB_Data_GPS {
+    int32 timestamp = 1;
+    PB_Data_GeoPoint geo = 2;
+    float alt_m = 3;
+    float gnd_trk_drgt = 4;
+    float mag_var_deg = 5;
+    bool valid = 6;
+}
+
+message PB_Data_GeoPoint {
+    float lat = 1;
+    float lon = 2;
+}
+
+message PB_Data_ADAHRS {
+    int32 timestamp = 1;
+    int32 milliseconds = 2;
+    bool pitch_valid = 3;
+    float pitch_deg = 4;
+    bool roll_valid = 5;
+    float roll_deg = 6;
+    bool heading_valid = 7;
+    float heading_degm = 8;
+    bool lateral_accel_valid = 9;
+    float lateral_accel = 10;
+    bool alt_pres_valid = 11;
+    float alt_pres_msl_m = 12;
+    bool alt_ind_valid = 13;
+    float alt_ind_msl_m = 14;
+    bool airspeed_true_valid = 15;
+    float airspeed_true_kts = 16;
+    bool airspeed_ind_valid = 17;
+    float airspeed_ind_kts = 18;
+}
+
+message PB_Heartbeat {
+    string system_id = 1;
+    int32 timestamp = 2;
+    string ip_address = 3;
+    uint32 ip_port = 4;
+    bool is_efis = 5;
+    PB_Capabilities capabilities = 6;
+    string prod_make = 7;
+    string prod_name = 8;
+    string prod_model = 9;
+    string prod_serial = 10;
+    string prod_firmware = 11;
+    string hostname = 12;
+}
+
+message PB_Capabilities {
+    bool status = 1 ;
+    bool gps = 2;
+    bool ahrs = 3;
+    bool adahrs = 4;
+    bool fpl_send = 5;
+    bool fpl_receive = 6;
+}
+
+message PB_Data_FlightPlan {
+    string name = 1;
+    int32 active_index = 2;
+    repeated PB_Data_FplWpt waypoint = 3;
+}
+
+message PB_Data_FplWpt {
+    string ident = 1;
+    PB_Data_GeoPoint geo = 2;
+    PB_WptType waypoint_type = 3;
+    string name = 4;
+    int32 elevation = 5;
+    int32 xing_alt = 6;
+    PB_XingConstraintType xing_constraint = 7;
+    float xing_along_trkoffset = 8;
+}
+
+message PB_Data_StreamConfig {
+    float gps_freq_hz = 1;
+    float adahrs_freq_hz = 2;
+}
+
+message PB_Data_TransactionRequest {
+    PB_TransactionRequestType transaction_request_type = 1;
+    int32 payload_length = 2;
+    string filename = 3;
+    int32 fetch_index = 4;
+}
+
+enum PB_BcastMsgType {
+    BcastMsgType_Empty = 0;
+    BcastMsgType_Heartbeat = 1;
+    BcastMsgType_Data_GPS = 2;
+    BcastMsgType_Data_ADAHRS = 3;
+}
+
+enum PB_WptType {
+    WptType_Unknown = 0;
+    WptType_Airport = 1;
+    WptType_VOR = 2;
+    WptType_NDB = 3;
+    WptType_User = 4;
+    WptType_Localizer = 5;
+    WptType_VRP = 6;
+    WptType_Fix = 7;
+    WptType_LatLon = 8;
+    WptType_PresentPositionLatLon = 9;
+}
+
+enum PB_XingConstraintType {
+    XingConstraintType_None = 0;
+    XingConstraintType_Unknown = 1;
+    XingConstraintType_At = 2;
+    XingConstraintType_Above = 3;
+    XingConstraintType_Below = 4;
+}
+
+enum PB_TransactionRequestType {
+    TransactionRequestType_Unknown = 0;
+    TransactionRequestType_StreamConfig_Push = 1;
+    TransactionRequestType_FlightPlan_Push = 2;
+    TransactionRequestType_FlightPlan_Pull = 3;
+    TransactionRequestType_Tracklog_Inventory = 4;
+    TransactionRequestType_Tracklog_Fetch = 5;
+}
+
+enum PB_TransactionReplyType {
+    TransactionReplyType_Unknown = 0;
+    TransactionReplyType_Success = 1;
+    TransactionReplyType_RequestNotUnderstood = 2;
+    TransactionReplyType_RequestNotPermitted = 3;
+    TransactionReplyType_RequestFailed = 4;
+    TransactionReplyType_ConnectTimedOut = 5;
+    TransactionReplyType_ConnectionError = 6;
+    TransactionReplyType_ReplyNotUnderstood = 7;
+    TransactionReplyType_LocalFailure = 8;
+}
+
