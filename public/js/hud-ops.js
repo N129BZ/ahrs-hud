@@ -118,6 +118,7 @@ var wind = $('.windindicator');
 var aoa = $('.aoa');
 var avgVspeed = new Array();
 var avgAltitude = new Array();
+var isGarmin = false;
 
 // offsets, in pixels per unit of measure
 const spd_offset = 4.8;    // Knots
@@ -157,6 +158,11 @@ function pad(num, size) {
 function onSerialData(e) {
     var data = new HudData(e.data);
 
+    if (!isGarmin && data.client == "garmin") {
+        isGarmin = true;
+        wind.css('left', '-1000');
+    }
+
     attitude.setRoll(data.roll * -1);
     attitude.setPitch(data.pitch * pitch_offset);
 
@@ -172,39 +178,27 @@ function onSerialData(e) {
     oatbox.textContent = "OAT " + data.oatF + " F";
     tasbox.textContent = "TAS " + data.tas + " kt";
     daltbox.textContent = "DALT " + strdalt;
-    windspeed.textContent =  isNaN(data.windkts) ? "---" : data.windkts + " kt";
+    windspeed.textContent = isNaN(data.windkts) ? "-- kt" : data.windkts + " kt";
 
-    if (avgAltitude.length < 10) {
+    if (avgAltitude.length < 3) {
         avgAltitude.push(data.baltitude);
     }
     else {
-        var total = 0;
-        avgAltitude.forEach(function(element) {
-            total += isNaN(data.baltitude) ? 0 : data.baltitude;
-        });
-        altitudebox.textContent = total / 10;
+        altitudebox.textContent = GetAverage(avgAltitude);
+        avgAltitude.splice(0, avgAltitude.length);
     }
 
-    if (avgVspeed.length < 10) {
+    if (avgVspeed.length < 3) {
         avgVspeed.push(Math.abs(data.vertspeed));
     }
     else {
-        var total = 0;
-        avgVspeed.forEach(function(element) {
-            total += isNaN(element) ? 0 : element;
-        });
+        vspeedbox.textContent = GetAverage(avgVspeed) + " fpm";
         avgVspeed.splice(0, avgVspeed.length);
-        vspeedbox.textContent = Math.abs(total / 10) + " fpm";
     }
     
-
     var speedticks = (data.airspeed * spd_offset);
     var altticks = (data.baltitude * alt_offset);
     var hdgticks = (data.heading * hdg_offset) * -1;
-
-    if (data.client == "garmin") {
-        wind.css('left', '-1000');
-    }
     
     // check the AOA
     if (data.aoa >= 99) {
@@ -228,7 +222,6 @@ function onSerialData(e) {
     ball.css('left', ballposition + 'px');
   
     // set the wind speed & direction
-    // fix for backwards arrow 
     if (data.winddirection < 180) {
         data.winddirection += 180;
     }
@@ -236,6 +229,18 @@ function onSerialData(e) {
         data.winddirection -= 180; 
     } 
     windarrow.style.transform  = 'rotate('+ data.winddirection +'deg)';
+}
+
+function GetAverage(arrayToAverage) {
+    var total = 0;
+    var counter = 0;
+    arrayToAverage.forEach(function(element) {
+        if (!isNaN(element)) {
+            total += element;
+            counter ++;
+        } 
+    });
+    return (total / counter).toFixed(0);
 }
 
 /* 
