@@ -336,7 +336,7 @@ class HudData {
         }
 
         this.baropressure = ((this.baro / 100) + 27.5);
-        let baltfactor = 1000 * (29.92 - this.baropressure);
+        let baltfactor = -1000 * (29.92 - this.baropressure);
         this.baltitude = Math.trunc(this.altitude + baltfactor);
     }
 }
