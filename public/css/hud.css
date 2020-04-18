@@ -40,7 +40,7 @@
 #spanspeedbox {
     position: absolute;
     left: 4px;
-    top: 0px;
+    top: -5px;
     font-family: 'monacob2bold';
     font-size: 31px;
     text-align: center;
@@ -82,7 +82,7 @@
 
 #spanaltbox {
     position: absolute;
-    top: 0px;
+    top: -4px;
     left: -1px;
     width: 99px;
     height: 40px;
@@ -199,7 +199,7 @@
     position: absolute;
     width: 60px;
     height: 30px;
-    top: -3px;
+    top: -9px;
     left: -1px;
     font-family: 'monacob2bold';
     font-size: 30px;
@@ -322,7 +322,7 @@
     height: 100%;
     width: 100%;
     position: absolute;
-    top: 0px;
+    top: -5px;
     left: 1px;
     visibility: visible;
     z-index: 200;
@@ -337,7 +337,7 @@
     height: 29px;
     width: 107px;
     position: absolute;
-    top: 7px;
+    top: 3px;
     left: 0px;
     visibility: visible;
     z-index: 210;

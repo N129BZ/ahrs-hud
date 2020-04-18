@@ -116,6 +116,8 @@ var ball = $('#ball');
 var attitude = $.attitudeIndicator('#attitude', 'attitude', {roll:50, pitch:-20, size:600, showBox : true});
 var wind = $('.windindicator');
 var aoa = $('.aoa');
+var avgVspeed = new Array();
+var avgAltitude = new Array();
 
 // offsets, in pixels per unit of measure
 const spd_offset = 4.8;    // Knots
@@ -164,15 +166,37 @@ function onSerialData(e) {
     strdalt = data.dalt >= 0 ? "+" + data.dalt : "-" + data.dalt;
 
     speedbox.textContent = data.airspeed;
-    altitudebox.textContent = data.baltitude;
     headingbox.textContent = data.heading;
     arrowbox.textContent = data.vertspeed < 0 ? "▼" : "▲";
-    vspeedbox.textContent = Math.abs(data.vertspeed) + " fpm";
-    barobox.textContent = "BARO " + data.baropressure;
+    barobox.textContent = "BARO " + data.baropressure.toFixed(2);
     oatbox.textContent = "OAT " + data.oatF + " F";
     tasbox.textContent = "TAS " + data.tas + " kt";
     daltbox.textContent = "DALT " + strdalt;
-    windspeed.textContent =  data.windkts + " kt"
+    windspeed.textContent =  isNaN(data.windkts) ? "---" : data.windkts + " kt";
+
+    if (avgAltitude.length < 10) {
+        avgAltitude.push(data.baltitude);
+    }
+    else {
+        var total = 0;
+        avgAltitude.forEach(function(element) {
+            total += isNaN(data.baltitude) ? 0 : data.baltitude;
+        });
+        altitudebox.textContent = total / 10;
+    }
+
+    if (avgVspeed.length < 10) {
+        avgVspeed.push(Math.abs(data.vertspeed));
+    }
+    else {
+        var total = 0;
+        avgVspeed.forEach(function(element) {
+            total += isNaN(element) ? 0 : element;
+        });
+        avgVspeed.splice(0, avgVspeed.length);
+        vspeedbox.textContent = Math.abs(total / 10) + " fpm";
+    }
+    
 
     var speedticks = (data.airspeed * spd_offset);
     var altticks = (data.baltitude * alt_offset);

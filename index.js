@@ -7,13 +7,15 @@ const Readline = require('@serialport/parser-readline');
 const fs = require('fs');
 const exec = require('child_process').exec;
 const protobuf = require("protobufjs");
+const lineReader = require('line-by-line');
 
-var websocketPort; 
-var httpPort; 
+var websocketPort = 9696; 
+var httpPort = 8686; 
 var serialPort;
 var speedtape;
 var baudrate;
 var viewer;
+var debug = false;
 
 readSettingsFile();
 
@@ -36,6 +38,10 @@ try {
         connection = request.accept(null, request.origin);
         console.log("New Connection");
         connections.push(connection);
+        
+        if (debug) {
+            ReadDebugFile();
+        }
 
         connection.on('close', function () {
             console.log("connection closed");
@@ -46,6 +52,33 @@ try {
 }
 catch (error) {
     console.log(error);
+}
+
+function ReadDebugFile() {
+    lr = new lineReader(__dirname + "/adahrsdata.log");
+
+    lr.on('error', function (err) {
+        // 'err' contains error object
+    });
+
+    lr.on('line', function (line) {
+        // pause emitting of lines...
+        lr.pause();
+
+        // ...do your asynchronous line processing..
+        var dataline = new String(line);
+        sendDataToBrowser("!" + dataline.substr(1));
+
+        setTimeout(function () {
+
+            // ...and continue emitting lines.
+            lr.resume();
+        }, 100);
+    });
+
+    lr.on('end', function () {
+    // All lines are read, file is closed now.
+    });
 }
 
 var webserver;
@@ -84,7 +117,7 @@ try {
     webserver.post("/setup", (req, res) => {
         console.log(req.body);
         let newviewer = req.body.selectedviewer;
-        let newport = req.body.portname;
+        let newserialport = req.body.serialPort;
         let newbaudrate =  parseInt(req.body.baudrate);
         let newspeedtape = req.body.selectedspeedtape;
         let writefile = false;
@@ -97,8 +130,8 @@ try {
             reboot = true;
         }
 
-        if (newport != serialPort) {
-            serialPort = newport;
+        if (newserialport != serialPort) {
+            serialPort = newserialport;
             writefile = true;
             reopenport = true;
         }
@@ -121,11 +154,10 @@ try {
             let filename = __dirname + '/settings.json';
             fs.unlinkSync(filename);
             let data = { "viewer" : viewer, 
-                         "portname" : serialPort, 
+                         "serialPort" : serialPort, 
                          "baudrate" : baudrate, 
                          "speedtape" : speedtape,
-                         "websocketPort" : websocketPort,
-                         "httpPort" : httpPort
+                         "debug" : debug
                         };
             fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
 
@@ -149,6 +181,7 @@ catch (error) {
 }
 
 readSettingsFile();
+
 openSerialPort(false);
 
 var connections = new Array;
@@ -176,12 +209,11 @@ function openSerialPort(needsFileRead) {
 
 function readSettingsFile() {
     var rawdata = fs.readFileSync(__dirname + '/settings.json');
-    serialPort = JSON.parse(rawdata).portname;
+    viewer = JSON.parse(rawdata).viewer;
+    serialPort = JSON.parse(rawdata).serialPort;
     baudrate = parseInt(JSON.parse(rawdata).baudrate);
     speedtape = JSON.parse(rawdata).speedtape;
-    viewer = JSON.parse(rawdata).viewer;
-    websocketPort = JSON.parse(rawdata).websocketPort;
-    httpPort = JSON.parse(rawdata).httpPort;
+    debug = JSON.parse(rawdata).debug;
 }
 
 // ------------------------ Serial event functions:
@@ -207,20 +239,9 @@ function showError(error) {
     console.log('Serial port error: ' + error);
 }
 
-function handleConnection(client) {baudrate = JSON.parse(rawdata).baudrate;
-    console.log("New Connection");
-    connections.push(client);
-
-    client.on('close', function () {
-        console.log("connection closed");
-        var position = connections.indexOf(client);
-        connections.splice(position, 1);
-    });
-}
-
 function buildSettingsWebPage() {
     const regex1 = /##VIEWER##/gi;
-    const regex2 = /##PORTNAME##/gi;
+    const regex2 = /##SERIALPORT##/gi;
     const regex3 = /##BAUDRATE##/gi;
     const regex4 = /##SPEEDTAPE##/gi;
     var rawdata = String(fs.readFileSync(__dirname + '/setup.html'));
