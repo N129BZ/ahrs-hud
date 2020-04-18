@@ -223,7 +223,7 @@
     width: 10px;
     position: absolute;
     top: 19px;
-    left: 89px;
+    left: 89px;5px
     visibility: visible;
     z-index: 210;
 }
@@ -262,7 +262,7 @@
     height: 25px;
     width: 100px;
     position: absolute;
-    top: 8px;
+    top: 5px;
     left: 17px;
     visibility: visible;
     z-index: 210;
@@ -292,7 +292,7 @@
     height: 32px;
     width: 146px;
     position: absolute;
-    top: 8px;
+    top: 5px;
     left: 0px;
     visibility: visible;
     z-index: 200;
@@ -307,7 +307,7 @@
     height: 29px;
     width: 146px;
     position: absolute;
-    top: 7px;
+    top: 5px;
     left: 0px;
     visibility: visible;
     z-index: 200;
