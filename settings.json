@@ -1,1 +1,1 @@
-{"viewer":"Hudly","serialPort":"/dev/ttyACM0","baudrate":9600,"speedtape":"Zenith650", "debug":true}
+{"viewer":"Hudly","serialPort":"/dev/Serial0","baudrate":9600,"speedtape":"RV9", "debug":false}

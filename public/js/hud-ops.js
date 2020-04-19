@@ -97,18 +97,6 @@ function openSocket() {
   }
 }( jQuery ));
 
-$(document).keyup(function(e) {
-    console.log(e.keyCode);
-
-    //   DYNON SAMPLE
-       e.data = "!1121144703-014+00003310811+01736+033-15+1013-033+110831245+01650023176C\r\n";
-    //   GARMIN SAMPLE  
-      //e.data = "=1121144703-150+03003310811+01736+003+99+1013-033+11245xx\r\n";
-    
-    onSerialData(e);
-});
-
-
 var speedtape = $('#speedtape');
 var alttape = $('#alttape');
 var headingtape = $('#headingtape');
@@ -308,7 +296,7 @@ class HudData {
         this.pitch = (parseInt(this.str.substr(11, 4)) / 10);
         this.roll = (parseInt(this.str.substr(15, 5)) / 10);
         this.heading = parseInt(this.str.substr(20, 3));
-        this.airspeed = Math.trunc(parseInt(this.str.substr(23, 4)) / 10);
+        this.airspeed = 85; //Math.trunc(parseInt(this.str.substr(23, 4)) / 10);
         this.altitude = parseInt(this.str.substr(27, 6));
         this.turnrate = (parseInt(this.str.substr(33, 4)) / 10);
         this.slipskid = (parseInt(this.str.substr(37, 3)) / 10);
@@ -336,7 +324,7 @@ class HudData {
         }
 
         this.baropressure = ((this.baro / 100) + 27.5);
-        let baltfactor = -1000 * (29.92 - this.baropressure);
+        let baltfactor = 1000 * (29.92 - this.baropressure);
         this.baltitude = Math.round(this.altitude + baltfactor);
     }
 }

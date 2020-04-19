@@ -65,12 +65,11 @@ function ReadDebugFile() {
         // pause emitting of lines...
         lr.pause();
 
-        // ...do your asynchronous line processing..
+        // ...do asynchronous line processing..
         var dataline = new String(line);
         sendDataToBrowser("!" + dataline.substr(1));
 
         setTimeout(function () {
-
             // ...and continue emitting lines.
             lr.resume();
         }, 100);
@@ -195,7 +194,7 @@ function openSerialPort(needsFileRead) {
             needsFileRead = false;
         }
 
-        port = new SerialPort(serialPort, { baudRate: baudrate });    // open the port
+        port = new SerialPort(serialPort, { baudRate: baudrate });    
         parser = port.pipe(new Readline({ delimiter: '\n' }));
         port.on('open', showPortOpen);
         port.on('close', showPortClose);
@@ -217,18 +216,14 @@ function readSettingsFile() {
 }
 
 // ------------------------ Serial event functions:
-// this is called when the serial port is opened:
 function showPortOpen() {
     console.log("serial port opened at " + port.path + " baud rate: " + port.baudRate);
 }
 
-// this is called when new data comes into the serial port:
 function sendDataToBrowser(data) {
-    // if there are webSocket connections, send the serial data
-    // console.log(data);
-    for (c in connections) {     // iterate over the array of connections
-        connections[c].send(data); // send the data to each connection
-    }
+    connections.forEach(function(element) {
+        element.send(data); 
+    });
 }
 
 function showPortClose() {

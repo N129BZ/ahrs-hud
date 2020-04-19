@@ -178,8 +178,8 @@
 #headingmask {
     position: absolute;
     top: 0px;
-    left: 75px;
-    width: 853px;
+    left: -232px;
+    width: 1502px;
     height: 104px;
     display: inline-block;
     border: 0px;
@@ -262,7 +262,7 @@
     height: 25px;
     width: 100px;
     position: absolute;
-    top: 5px;
+    top: 1px;
     left: 17px;
     visibility: visible;
     z-index: 210;
