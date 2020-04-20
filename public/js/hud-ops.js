@@ -1,9 +1,4 @@
 
-/////////////////////////////////////////////////////////////////////
-// Node.js serialport implementation - raise the parser.data event 
-// when data comes in from the Dynon ADAHRS serial port
-///////////////////////////////////////////////////////////////////// 
-
 var host;
 var websock;
 
@@ -19,7 +14,7 @@ catch(error) {
 }
 
 function openSocket() {
-  //console.log("Websocket OPENED!");
+  console.log("Websocket opened...");
 }
 
 (function($) {
@@ -324,7 +319,7 @@ class HudData {
         }
 
         this.baropressure = ((this.baro / 100) + 27.5);
-        let baltfactor = 1000 * (29.92 - this.baropressure);
+        let baltfactor = -1000 * (29.92 - this.baropressure);
         this.baltitude = Math.round(this.altitude + baltfactor);
     }
 }
@@ -341,45 +336,33 @@ var tascalculator = {
 
 function perRound(num, precision) {
     var precision = 3 //default value if not passed from caller, change if desired
-
     // remark if passed from caller
-
     precision = parseInt(precision) // make certain the decimal precision is an integer
-
     var result1 = num * Math.pow(10, precision)
-
     var result2 = Math.round(result1)
-
     var result3 = result2 / Math.pow(10, precision)
-
     return zerosPad(result3, precision)
 }
 
 function zerosPad(rndVal, decPlaces) {
     var valStrg = rndVal.toString() // Convert the number to a string
-
     var decLoc = valStrg.indexOf('.') // Locate the decimal point
 
     // check for a decimal
-
     if (decLoc == -1) {
         decPartLen = 0 // If no decimal, then all decimal places will be padded with 0s
-
         // If decPlaces is greater than zero, add a decimal point
-
         valStrg += decPlaces > 0 ? '.' : ''
-    } else {
+    } 
+    else {
         decPartLen = valStrg.length - decLoc - 1 // If there is a decimal already, only the needed decimal places will be padded with 0s
     }
-
     var totalPad = decPlaces - decPartLen // Calculate the number of decimal places that need to be padded with 0s
 
     if (totalPad > 0) {
         // Pad the string with 0s
-
         for (var cntrVal = 1; cntrVal <= totalPad; cntrVal++) valStrg += '0'
     }
-
     return valStrg
 }
 
