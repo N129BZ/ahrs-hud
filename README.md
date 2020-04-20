@@ -1,7 +1,7 @@
 # adahrs-hud for Experimental Aircraft
 
 ## Heads Up Display for Garmin or Dynon EFIS's using a Raspberry Pi Zero and one of the multiple EFIS serial ports. The pi's HDMI video port is then used to display the ADAHRS data on a Hudly or Kivic HUD. 
-![Image of hud](https://github.com/N129BZ/adahrs-hud/blob/master/docs/20200330.png)
+![Image of hud](https://github.com/N129BZ/adahrs-hud/blob/master/docs/Screenshot20200418.png)
 
 # UNDER CONSTRUCTION...
 ## Instructions for an installation of Buster Lite on the Raspberry Pi. 
@@ -13,4 +13,4 @@ If you need to tweak the view of the HUD screen, the div.hud class in css/hud.cs
 
 ![Image of ScaleSetting](https://github.com/N129BZ/adahrs-hud/blob/master/docs/hudcss2.png)
 
-![Image of UpsideDown](https://github.com/N129BZ/adahrs-hud/blob/master/docs/20200330_ud.png)
+![Image of UpsideDown](https://github.com/N129BZ/adahrs-hud/blob/master/docs/Screenshot20200418_ud.png)
