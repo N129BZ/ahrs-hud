@@ -101,7 +101,6 @@ var attitude = $.attitudeIndicator('#attitude', 'attitude', {roll:50, pitch:-20,
 var wind = $('.windindicator');
 var aoa = $('.aoa');
 var avgVspeed = new Array();
-var avgAltitude = new Array();
 var isGarmin = false;
 
 // offsets, in pixels per unit of measure
@@ -150,18 +149,13 @@ function onSerialData(e) {
     attitude.setRoll(data.roll * -1);
     attitude.setPitch(data.pitch * pitch_offset);
 
-    // set these values to a reasonable precision
-    var gnumber = data.gLoad;
-    var slipskid = data.slipskid;
-    var strdalt = data.dalt >= 0 ? "+" + data.dalt : "-" + data.dalt;
-
     speedbox.textContent = data.airspeed;
     headingbox.textContent = data.heading;
     arrowbox.textContent = data.vertspeed < 0 ? "▼" : "▲";
     barobox.textContent = "BARO " + data.baropressure.toFixed(2);
     oatbox.textContent = "OAT " + data.oatF + " F";
     tasbox.textContent = "TAS " + data.tas + " kt";
-    daltbox.textContent = "DALT " + strdalt;
+    daltbox.textContent = "DALT " + data.dalt >= 0 ? "+" + data.dalt : "-" + data.dalt;
     windspeed.textContent = isNaN(data.windkts) ? "-- kt" : data.windkts + " kt";
     altitudebox.textContent = data.baltitude;
 
@@ -191,11 +185,10 @@ function onSerialData(e) {
     alttape.css('transform', 'translateY(' + altticks + 'px)');
     headingtape.css('transform', 'translateX('+ hdgticks + 'px)');
 
-    var tmpgnumber = gnumber >= 0 ? "+" + gnumber : "-" + gnumber;
-    gbox.textContent =  tmpgnumber + " g";
-
+    gbox.textContent = (data.gLoad >= 0 ? "+" + data.gLoad : "-" + data.gLoad) + " g";
+    
     // set the skid-slip ball position
-    let ballposition = ball_center + (slipskid * ball_offset);
+    let ballposition = ball_center + (data.slipskid * ball_offset);
     ball.css('left', ballposition + 'px');
   
     // set the wind speed & direction
@@ -285,7 +278,7 @@ class HudData {
         this.pitch = (parseInt(this.str.substr(11, 4)) / 10);
         this.roll = (parseInt(this.str.substr(15, 5)) / 10);
         this.heading = parseInt(this.str.substr(20, 3));
-        this.airspeed = 85; //Math.trunc(parseInt(this.str.substr(23, 4)) / 10);
+        this.airspeed = Math.trunc(parseInt(this.str.substr(23, 4)) / 10);
         this.altitude = parseInt(this.str.substr(27, 6));
         this.turnrate = (parseInt(this.str.substr(33, 4)) / 10);
         this.slipskid = (parseInt(this.str.substr(37, 3)) / 10);
@@ -321,10 +314,9 @@ class HudData {
 function round10(number)
 {
     return (Math.round(number / 10) * 10);
-    //return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
 }
-// TAS
 
+// TAS
 var tascalculator = {
     tas: function(ias, msl) {
         var ias2 = ias * .02;
