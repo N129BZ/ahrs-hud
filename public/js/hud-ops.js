@@ -1,3 +1,4 @@
+'use strict';
 
 var host;
 var websock;
@@ -150,9 +151,9 @@ function onSerialData(e) {
     attitude.setPitch(data.pitch * pitch_offset);
 
     // set these values to a reasonable precision
-    gnumber = data.gLoad;
-    slipskid = data.slipskid;
-    strdalt = data.dalt >= 0 ? "+" + data.dalt : "-" + data.dalt;
+    var gnumber = data.gLoad;
+    var slipskid = data.slipskid;
+    var strdalt = data.dalt >= 0 ? "+" + data.dalt : "-" + data.dalt;
 
     speedbox.textContent = data.airspeed;
     headingbox.textContent = data.heading;
@@ -162,14 +163,7 @@ function onSerialData(e) {
     tasbox.textContent = "TAS " + data.tas + " kt";
     daltbox.textContent = "DALT " + strdalt;
     windspeed.textContent = isNaN(data.windkts) ? "-- kt" : data.windkts + " kt";
-
-    if (avgAltitude.length < 3) {
-        avgAltitude.push(data.baltitude);
-    }
-    else {
-        altitudebox.textContent = GetAverage(avgAltitude);
-        avgAltitude.splice(0, avgAltitude.length);
-    }
+    altitudebox.textContent = data.baltitude;
 
     if (avgVspeed.length < 3) {
         avgVspeed.push(Math.abs(data.vertspeed));
@@ -235,7 +229,7 @@ function GetAverage(arrayToAverage) {
     header:     =11         00 - 02  3 chars   =  3
     time:       HHMMSSMS    03 - 10  8 chars   = 11
     pitch:      +100        11 - 14  4 chars   = 15
-    roll:       +0300       15 - 19  5 chars   = 20
+    roll:       +0300       15 - 19  5 chars   = 20GetAverage(avgAltitude);
     heading:    180         20 - 22  3 chars   = 23
     airspeed:   1400        23 - 26  4 chars   = 27
     altitude:   004760      27 - 32  6 chars   = 33
@@ -319,11 +313,16 @@ class HudData {
         }
 
         this.baropressure = ((this.baro / 100) + 27.5);
-        let baltfactor = -1000 * (29.92 - this.baropressure);
-        this.baltitude = Math.round(this.altitude + baltfactor);
+        let baltfactor = -917 * (29.92 - this.baropressure);
+        this.baltitude = round10(this.altitude + baltfactor);
     }
 }
 
+function round10(number)
+{
+    return (Math.round(number / 10) * 10);
+    //return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
+}
 // TAS
 
 var tascalculator = {

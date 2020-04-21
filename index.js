@@ -1,3 +1,4 @@
+'use strict'
 
 const express = require('express');
 const http = require('http');
@@ -9,6 +10,7 @@ const exec = require('child_process').exec;
 const protobuf = require("protobufjs");
 const lineReader = require('line-by-line');
 
+var wss;
 var websocketPort = 9696; 
 var httpPort = 8686; 
 var serialPort;
@@ -55,7 +57,7 @@ catch (error) {
 }
 
 function ReadDebugFile() {
-    lr = new lineReader(__dirname + "/adahrsdata.log");
+    var lr = new lineReader(__dirname + "/adahrsdata.log");
 
     lr.on('error', function (err) {
         // 'err' contains error object
