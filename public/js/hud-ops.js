@@ -155,7 +155,7 @@ function onSerialData(e) {
     barobox.textContent = "BARO " + data.baropressure.toFixed(2);
     oatbox.textContent = "OAT " + data.oatF + " F";
     tasbox.textContent = "TAS " + data.tas + " kt";
-    daltbox.textContent = "DALT " + data.dalt >= 0 ? "+" + data.dalt : "-" + data.dalt;
+    daltbox.textContent = "DALT " + (data.dalt >= 0 ? "+" + data.dalt : "-" + data.dalt);
     windspeed.textContent = isNaN(data.windkts) ? "-- kt" : data.windkts + " kt";
     altitudebox.textContent = data.baltitude;
 

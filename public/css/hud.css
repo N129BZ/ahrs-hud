@@ -109,7 +109,7 @@
 #altmask {
     position: absolute;
     top: -97px;
-    left: 31px;
+    left: 33px;
     width: 245px;
     height: 790px;
     display: inline-block;
@@ -322,7 +322,7 @@
     height: 100%;
     width: 100%;
     position: absolute;
-    top: -5px;
+    top: -6px;
     left: 1px;
     visibility: visible;
     z-index: 200;
