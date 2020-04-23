@@ -285,7 +285,7 @@ class HudData {
         this.gLoad = (parseInt(this.str.substr(40, 3)) / 10).toFixed(1);
         this.aoa = parseInt(this.str.substr(43, 2));
         this.vertspeed = Math.trunc(parseInt(this.str.substr(45, 4)) * 10);
-        this.oatF = (parseInt(this.str.substr(49, 3)) * 1.8 + 32);
+        this.oatF = Math.ceil(parseInt(this.str.substr(49, 3)) * 1.8 + 32);
         this.oatC = parseInt(this.str.substr(49,3));
 
         if (this.client == "dynon") {   // Dynon furnishes these extra fields
