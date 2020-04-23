@@ -1,5 +1,5 @@
 {
-  "name": "hudserver",
+  "name": "adahrs-hud",
   "version": "1.0.0",
   "description": "Heads Up Display server using Dynon or Garmin Efis serial data",
   "main": "index.js",
