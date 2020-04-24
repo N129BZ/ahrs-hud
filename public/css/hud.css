@@ -83,7 +83,7 @@
 #spanaltbox {
     position: absolute;
     top: -4px;
-    left: -1px;
+    left: -5px;
     width: 99px;
     height: 40px;
     font-family: 'monacob2bold';
@@ -109,7 +109,7 @@
 #altmask {
     position: absolute;
     top: -97px;
-    left: 33px;
+    left: 31px;
     width: 245px;
     height: 790px;
     display: inline-block;
