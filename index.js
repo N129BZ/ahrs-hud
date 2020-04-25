@@ -42,7 +42,7 @@ try {
         connections.push(connection);
         
         if (debug) {
-            ReadDebugFile();
+            DebugPlayback();
         }
 
         connection.on('close', function () {
@@ -56,7 +56,7 @@ catch (error) {
     console.log(error);
 }
 
-function ReadDebugFile() {
+function DebugPlayback() {
     var lr = new lineReader(__dirname + "/adahrsdata.log");
 
     lr.on('error', function (err) {
@@ -69,8 +69,10 @@ function ReadDebugFile() {
 
         // ...do asynchronous line processing..
         var dataline = new String(line);
-        sendDataToBrowser("!" + dataline.substr(1));
-
+        if (line.substr(0, 1) == "!") {
+            sendDataToBrowser("!" + dataline.substr(1));
+        }
+        
         setTimeout(function () {
             // ...and continue emitting lines.
             lr.resume();
