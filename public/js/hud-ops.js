@@ -4,8 +4,8 @@ var host;
 var websock;
 
 try {
-    let host = "ws://" + location.hostname + ":9696";
-    let websock = new WebSocket(host);
+    host = "ws://" + location.hostname + ":9696";
+    websock = new WebSocket(host);
     
     websock.onopen = openSocket;
     websock.onmessage = onSerialData;
