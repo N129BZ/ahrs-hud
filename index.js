@@ -18,6 +18,7 @@ var speedtape;
 var baudrate;
 var viewer;
 var debug = false;
+var inPlayback = false;
 
 readSettingsFile();
 
@@ -57,6 +58,13 @@ catch (error) {
 }
 
 function DebugPlayback() {
+
+    if (inPlayback) {
+        return;
+    }
+    
+    inPlayback = true;
+
     var lr = new lineReader(__dirname + "/adahrsdata.log");
 
     lr.on('error', function (err) {
@@ -74,13 +82,12 @@ function DebugPlayback() {
         }
         
         setTimeout(function () {
-            // ...and continue emitting lines.
             lr.resume();
         }, 100);
     });
 
     lr.on('end', function () {
-    // All lines are read, file is closed now.
+        inPlayback = false;
     });
 }
 
