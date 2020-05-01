@@ -19,6 +19,7 @@ var baudrate;
 var viewer;
 var debug = false;
 var inPlayback = false;
+var stopPlayback = false;
 
 readSettingsFile();
 
@@ -72,6 +73,14 @@ function DebugPlayback() {
     });
 
     lr.on('line', function (line) {
+        
+        if (stopPlayback) {
+            inPlayback = false;
+            stopPlayback = false;
+            lr.close();
+            return;
+        }
+
         // pause emitting of lines...
         lr.pause();
 
@@ -130,6 +139,7 @@ try {
         let newserialport = req.body.serialPort;
         let newbaudrate =  parseInt(req.body.baudrate);
         let newspeedtape = req.body.selectedspeedtape;
+        let newdebug = req.body.debugchecked;
         let writefile = false;
         let reopenport = false;
         let reboot = false;
@@ -151,7 +161,6 @@ try {
             writefile = true;
             reopenport = true;
         }
-
         if (newspeedtape != speedtape) {
             var workingtape = __dirname + "/public/img/speed_tape.png";
             var tapename = __dirname + "/public/img/speed_tapes/speed_tape_";
@@ -160,6 +169,16 @@ try {
             writefile = true;
         }
         
+        if (debug && newdebug == "false") {
+            stopPlayback = true;
+            debug = false;
+            writefile = true;
+        }
+        else if (!debug && newdebug == "true") {
+            debug = true;
+            writefile = true;
+        }
+
         if (writefile) {
             let filename = __dirname + '/settings.json';
             fs.unlinkSync(filename);
@@ -172,7 +191,7 @@ try {
             fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
 
             if (reboot) {
-                exec("sudo shutdown -r now", function (msg) { console.log(msg) });
+                exec("sudo reboot", function (msg) { console.log(msg) });
                 res.end();
                 return;
             }
@@ -246,13 +265,16 @@ function showError(error) {
 }
 
 function buildSettingsWebPage() {
-    const regex1 = /##VIEWER##/gi;
+    const regex1 =/##VIEWER##/gi;
     const regex2 = /##SERIALPORT##/gi;
     const regex3 = /##BAUDRATE##/gi;
     const regex4 = /##SPEEDTAPE##/gi;
+    const regex5 = /##DEBUGVALUE##/gi;
+    var dbg = debug ? "true" : "false";
     var rawdata = String(fs.readFileSync(__dirname + '/setup.html'));
     return rawdata.replace(regex1, viewer)
                   .replace(regex2, serialPort)
                   .replace(regex3, baudrate)
-                  .replace(regex4, speedtape);
+                  .replace(regex4, speedtape)
+                  .replace(regex5, dbg);
 }

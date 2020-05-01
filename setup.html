@@ -23,7 +23,7 @@
         color: black;
         font-family: Arial;
         font-weight: bold;
-        font-size: larger;
+        font-size: 26px;
     }
     .selectlist {
         background-color: white;
@@ -97,6 +97,18 @@
         <option value="Zenith650">Zenith 601/650</option>
         <option value="Zenith750">Zenith 750</option>
     </select>
+    <br>
+    <p>
+    <br>
+    <br>
+    <br>
+    <div class="form-field">
+        <input type="checkbox" id="debug" name="debug" style="height: 30px; width: 30px;" onClick="updateDebugChecked(this.checked);">
+        <label class="label" for="debug">&nbsp&nbspDebug mode - this will make the application run a data log file</label>
+    </div>
+    <div class="form-field">
+        <input type="text" id="debugchecked" name="debugchecked" style="visibility: hidden;">
+    </div>
     <div class="form-field"> 
         <input type="text" id="selectedspeedtape" name="selectedspeedtape" style="visibility: hidden;">
     </div>
@@ -118,6 +130,12 @@
       document.getElementById("selectedspeedtape").value="##SPEEDTAPE##";
       document.getElementById("viewer").value="##VIEWER##";
       document.getElementById("selectedviewer").value="##VIEWER##";
+      document.getElementById("debug").checked = ##DEBUGVALUE##;
+      document.getElementById("debugchecked").value = "##DEBUGVALUE##";
+
+      function updateDebugChecked(newvalue) {
+        document.getElementById("debugchecked").value = newvalue ? "true" : "false";
+      }
       function updateSelectedTape(newvalue) {
          document.getElementById("speedtape").value=newvalue; 
          document.getElementById("selectedspeedtape").value=newvalue;
