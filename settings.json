@@ -1,1 +1,1 @@
-{"viewer":"Hudly","serialPort":"/dev/ttyAMA0","baudrate":9600,"speedtape":"RV9","debug":false}
+{"viewer":"Hudly","serialPort":"/dev/ttyAMA0","baudrate":9600,"speedtape":"RV9","debug":true}

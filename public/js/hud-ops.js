@@ -306,7 +306,111 @@ class HudData {
         }
 
         this.baropressure = ((this.baro / 100) + 27.5);
-        let baltfactor = -917 * (29.92 - this.baropressure);
+    
+        var pafactor = 0;
+        switch (true) {
+          case (this.baropressure <= 28.0):
+            pafactor = 1824;
+            break;
+          case (this.baropressure <= 28.1):
+            pafactor = 1727;
+            break;
+          case (this.baropressure <= 28.2): 
+            pafactor = 1630;
+            break;
+          case (this.baropressure <= 28.3):
+            pafactor = 1533;
+            break;
+          case (this.baropressure <= 28.4):
+            pafactor = 1436;
+            break;
+          case (this.baropressure <= 28.5):
+            pafactor = 1340;
+            break;
+          case (this.baropressure <= 28.6):
+            pafactor = 1244;
+            break;
+          case (this.baropressure <= 28.7):
+            pafactor = 1148;
+            break;
+          case (this.baropressure <= 28.8):
+            pafactor = 1053;
+            break;
+          case (this.baropressure <= 28.9):
+            pafactor = 957;
+            break;
+          case (this.baropressure <= 29.0):
+            pafactor = 863;
+            break;
+          case (this.baropressure <= 29.1):
+            pafactor = 768;
+            break;
+          case (this.baropressure <= 29.2):
+            pafactor = 673;
+            break;
+          case (this.baropressure <= 29.3): 
+            pafactor = 579;
+            break;
+          case (this.baropressure <= 29.4):
+            pafactor = 485;
+            break;
+          case (this.baropressure <= 29.5):
+            pafactor = 392;
+            break;
+          case (this.baropressure <= 29.6):
+            pafactor = 298;
+            break;
+          case (this.baropressure <= 29.7):
+            pafactor = 205;
+            break;
+          case (this.baropressure <= 29.8):
+            pafactor = 112;
+            break;
+          case (this.baropressure <= 29.9):
+            pafactor = 20;
+            break;
+          case (this.baropressure <= 29.92):
+            pafactor = 0;
+            break;
+          case (this.baropressure <= 30.0):
+            pafactor = -73;
+            break;
+          case (this.baropressure <= 30.1):
+            pafactor = -165;
+            break;
+          case (this.baropressure <= 30.2):
+            pafactor = -257;
+            break;
+          case (this.baropressure <= 30.3):
+            pafactor = -348;
+            break;
+          case (this.baropressure <= 30.4):
+            pafactor = -440;
+            break;
+          case (this.baropressure <= 30.5):
+            pafactor = -531;
+            break;
+          case (this.baropressure <= 30.6):
+            pafactor = -622;
+            break;
+          case (this.baropressure <= 30.7):
+            pafactor = -712;
+            break;
+          case (this.baropressure <= 30.8):
+            pafactor = -803;
+            break;
+          case (this.baropressure <= 30.9):
+            pafactor = -893;
+            break;
+          case (this.baropressure <= 31.0):
+            pafactor = -983;
+            break;
+          default:
+            pafactor = 0;
+            break;
+        }
+
+        let baltfactor = pafactor * (29.92 - this.baropressure);
         this.baltitude = round10(this.altitude + baltfactor);
     }
 }
