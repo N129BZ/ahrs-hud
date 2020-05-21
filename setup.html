@@ -1,6 +1,10 @@
   
 <html>
 <head>
+  <meta http-equiv="Cache-Control: no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma: no-cache">
+  <meta http-equiv="Expires: 0">
+  <meta charset="utf-8">
   <title>ADAHRS-HUD SETTINGS</title>
   <style>
       input[type=submit], input[type=cancel] {
@@ -103,7 +107,7 @@
     <br>
     <br>
     <div class="form-field">
-        <input type="checkbox" id="debug" name="debug" style="height: 30px; width: 30px;" onClick="updateDebugChecked(this.checked);">
+        <input type="checkbox" id="debug" name="debug" style="height: 30px; width: 30px;" onClick="updateDebugChecked(this.checked);" ##CHECKED##>
         <label class="label" for="debug">&nbsp&nbspDebug mode - this will make the application run a data log file</label>
     </div>
     <div class="form-field">
@@ -130,7 +134,6 @@
       document.getElementById("selectedspeedtape").value="##SPEEDTAPE##";
       document.getElementById("viewer").value="##VIEWER##";
       document.getElementById("selectedviewer").value="##VIEWER##";
-      document.getElementById("debug").checked = ##DEBUGVALUE##;
       document.getElementById("debugchecked").value = "##DEBUGVALUE##";
 
       function updateDebugChecked(newvalue) {

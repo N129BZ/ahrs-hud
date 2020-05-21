@@ -125,7 +125,7 @@ try {
     });
 
     webserver.get("/setup", (req,res) => {
-        var chunk = buildSettingsWebPage();
+        var chunk = buildSetupPage();
         res.write(chunk);           
     });
 
@@ -264,17 +264,21 @@ function showError(error) {
     console.log('Serial port error: ' + error);
 }
 
-function buildSettingsWebPage() {
+function buildSetupPage() {
     const regex1 =/##VIEWER##/gi;
     const regex2 = /##SERIALPORT##/gi;
     const regex3 = /##BAUDRATE##/gi;
     const regex4 = /##SPEEDTAPE##/gi;
     const regex5 = /##DEBUGVALUE##/gi;
+    const regex6 = /##CHECKED##/gi;
     var dbg = debug ? "true" : "false";
+    var checked = debug ? "checked" : "";
+
     var rawdata = String(fs.readFileSync(__dirname + '/setup.html'));
     return rawdata.replace(regex1, viewer)
                   .replace(regex2, serialPort)
                   .replace(regex3, baudrate)
                   .replace(regex4, speedtape)
-                  .replace(regex5, dbg);
+                  .replace(regex5, dbg)
+                  .replace(regex6, checked);
 }
