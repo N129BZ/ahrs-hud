@@ -4,7 +4,7 @@
 ![Image of hud](https://github.com/N129BZ/adahrs-hud/blob/master/docs/Screenshot20200418.png)
 
 # UNDER CONSTRUCTION...
-## Instructions for an installation of Buster Lite on the Raspberry Pi. 
+ 
 
 ###### NOTE:
 If you need to tweak the view of the HUD screen, the div.hud class in css/hud.css can be edited at the setting transform: scale(x, y) to scale the 2 dimensions to your liking, or even rotate 180° if mounting the HUD from the top of the windscreen. It is suggested to not change values for masks and tapes, as they are calibrated by number of pixels to offset based on the speed, altitude, or heading values being applied.
