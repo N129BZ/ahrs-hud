@@ -191,6 +191,7 @@ try {
             vno = newvno;
             vs1 = newvs1;
             vs0 = newvs0;
+            reboot = true;
             writefile = true;
         }
 
@@ -207,7 +208,7 @@ try {
                          "debug" : debug
                         };
             fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
-
+            
             if (reboot) {
                 exec("sudo reboot", function (msg) { console.log(msg) });
                 res.end();
@@ -226,7 +227,6 @@ try {
 catch (error) {
     console.log(error);
 }
-
 
 openSerialPort(false);
 
