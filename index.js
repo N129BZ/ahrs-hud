@@ -9,13 +9,12 @@ const fs = require('fs');
 const exec = require('child_process').exec;
 const protobuf = require("protobufjs");
 const lineReader = require('line-by-line');
-const { createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage, Canvas } = require('canvas');
 
 var wss;
 var websocketPort = 9696; 
 var httpPort = 8686; 
 var serialPort;
-var speedtape;
 var baudrate;
 var viewer;
 var vne;
@@ -25,12 +24,13 @@ var vs0;
 var stW = 85;
 var stH = 1844;
 var debug = false;
+var firstrun = false;
 var inPlayback = false;
 var stopPlayback = false;
+var tapeimage;
 
 const cvs = createCanvas(stW, stH);
 const ctx = cvs.getContext('2d');
-
 
 readSettingsFile();
 
@@ -122,12 +122,16 @@ try {
     if (viewer == "VuFine") {
         webserver.use(express.static(__dirname + "/public", {index: "vufine.html"}));
     }
-    else {
+    else if (!firstrun) {
         webserver.use(express.static(__dirname + "/public", {index: "index.html"}));
     }
 
     webserver.get("/", (req, res) => {
-        if (viewer == "VuFine") {
+        if (firstrun) {
+            var chunk = buildSetupPage();
+            res.write(chunk);
+        }
+        else if (viewer == "VuFine") {
             res.sendFile(__dirname + "/public/vufine.html");
         }
         else {
@@ -141,7 +145,9 @@ try {
     });
 
     webserver.get("/shutdown", (req,res) => {
-        exec('sudo shutdown -h now', function (msg) { console.log(msg) });
+        systemShutdown(function(output){
+            console.log(output);
+        });
     });    
     
     webserver.post("/setup", (req, res) => {
@@ -157,6 +163,7 @@ try {
         let writefile = false;
         let reopenport = false;
         let reboot = false;
+        let redrawTape = false;
         
         if (newviewer != viewer) {
             viewer = newviewer;
@@ -191,10 +198,15 @@ try {
             vno = newvno;
             vs1 = newvs1;
             vs0 = newvs0;
-            reboot = true;
+            redrawTape = true;
             writefile = true;
         }
 
+        if (firstrun) {
+            reboot = true;
+            fs.unlinkSync(__dirname + "/firstrun.html");
+        }
+        
         if (writefile) {
             let filename = __dirname + '/settings.json';
             fs.unlinkSync(filename);
@@ -205,12 +217,15 @@ try {
                          "vno" : vno,
                          "vs1" : vs1,
                          "vs0" : vs0,
-                         "debug" : debug
+                         "debug" : debug,
+                         "firstrun" : false
                         };
             fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
             
             if (reboot) {
-                exec("sudo reboot", function (msg) { console.log(msg) });
+                systemReboot(function(output){
+                    console.log(output);
+                });
                 res.end();
                 return;
             }
@@ -220,12 +235,22 @@ try {
             openSerialPort(true);
         }
         
+        if (redrawTape) {
+            buildSpeedTapeImage(tapeimage);
+        }
         res.redirect('/'); 
         res.end();
     });
 }
 catch (error) {
     console.log(error);
+}
+
+function systemReboot(callback){
+    exec('shutdown -r now', function(error, stdout, stderr){ callback(stdout); });
+}
+function systemShutdown(callback){
+    exec('shutdown -h now', function(error, stdout, stderr){ callback(stdout); });
 }
 
 openSerialPort(false);
@@ -263,6 +288,7 @@ function readSettingsFile() {
     vs1 = JSON.parse(rawdata).vs1;
     vs0 = JSON.parse(rawdata).vs0;
     debug = JSON.parse(rawdata).debug;
+    firstrun = JSON.parse(rawdata).firstrun;
 }
 
 // ------------------------ Serial event functions:
@@ -285,35 +311,42 @@ function showError(error) {
 }
 
 function buildSetupPage() {
-    const regex1 =/##VIEWER##/gi;
+    const regex1 = /##VIEWER##/gi;
     const regex2 = /##SERIALPORT##/gi;
     const regex3 = /##BAUDRATE##/gi;
-    const regex4 = /##SPEEDTAPE##/gi;
-    const regex5 = /##DEBUGVALUE##/gi;
-    const regex6 = /##CHECKED##/gi;
-    const regex7 = /##VNE##/gi;
-    const regex8 = /##VNO##/gi;
-    const regex9 = /##VS1##/gi;
-    const regex10 = /##VS0##/gi;
+    const regex4 = /##DEBUGVALUE##/gi;
+    const regex5 = /##CHECKED##/gi;
+    const regex6 = /##VNE##/gi;
+    const regex7 = /##VNO##/gi;
+    const regex8 = /##VS1##/gi;
+    const regex9 = /##VS0##/gi;
     
     var dbg = debug ? "true" : "false";
     var checked = debug ? "checked" : "";
-
-    var rawdata = String(fs.readFileSync(__dirname + '/setup.html'));
-    return rawdata.replace(regex1, viewer)
-                  .replace(regex2, serialPort)
-                  .replace(regex3, baudrate)
-                  .replace(regex4, speedtape)
-                  .replace(regex5, dbg)
-                  .replace(regex6, checked)
-                  .replace(regex7, vne)
-                  .replace(regex8, vno)
-                  .replace(regex9, vs1)
-                  .replace(regex10, vs0);
+    
+    var rawdata = String(fs.readFileSync(__dirname + "/setup.html"));
+    var output = rawdata.replace(regex1, viewer)
+                        .replace(regex2, serialPort)
+                        .replace(regex3, baudrate)
+                        .replace(regex4, dbg)
+                        .replace(regex5, checked)
+                        .replace(regex6, vne)
+                        .replace(regex7, vno)
+                        .replace(regex8, vs1)
+                        .replace(regex9, vs0)
+    if (firstrun)
+    {
+        fs.writeFileSync(__dirname + "/firstrun.html", output);
+    }
+    return output;
 }
 
 loadImage(__dirname + "/public/img/speed_tape_template.png").then(image => { 
-    
+    buildSpeedTapeImage(image);
+})
+
+function buildSpeedTapeImage(image) {
+    tapeimage = image;
     readSettingsFile();
 
     var mphfactor = 4.796875;  // = image height divided by 320 mph
@@ -327,7 +360,7 @@ loadImage(__dirname + "/public/img/speed_tape_template.png").then(image => {
 
     var greenTop = yellowTop + yellowHeight;
     var greenHeight = (vno - vs1) * mphfactor;
-
+    
     var whiteTop = greenTop + greenHeight;
     var whiteHeight = (vs1 - vs0) * mphfactor;
 
@@ -346,5 +379,5 @@ loadImage(__dirname + "/public/img/speed_tape_template.png").then(image => {
 
     const buffer = cvs.toBuffer('image/png')
     fs.writeFileSync(__dirname + "/public/img/speed_tape.png", buffer);
-})
+}
 
