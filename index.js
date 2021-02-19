@@ -208,8 +208,6 @@ try {
         }
         
         if (writefile) {
-            let filename = __dirname + '/settings.json';
-            fs.unlinkSync(filename);
             let data = { "viewer" : viewer, 
                          "serialPort" : serialPort, 
                          "baudrate" : baudrate, 
@@ -220,7 +218,7 @@ try {
                          "debug" : debug,
                          "firstrun" : false
                         };
-            fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
+            fs.writeFileSync(__dirname + "/settings.json", JSON.stringify(data),{flag: 'w+'});
             
             if (reboot) {
                 systemReboot(function(output){
