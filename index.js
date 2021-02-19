@@ -9,6 +9,7 @@ const fs = require('fs');
 const exec = require('child_process').exec;
 const protobuf = require("protobufjs");
 const lineReader = require('line-by-line');
+const { createCanvas, loadImage } = require('canvas');
 
 var wss;
 var websocketPort = 9696; 
@@ -17,9 +18,19 @@ var serialPort;
 var speedtape;
 var baudrate;
 var viewer;
+var vne;
+var vno;
+var vs1;
+var vs0;
+var stW = 85;
+var stH = 1844;
 var debug = false;
 var inPlayback = false;
 var stopPlayback = false;
+
+const cvs = createCanvas(stW, stH);
+const ctx = cvs.getContext('2d');
+
 
 readSettingsFile();
 
@@ -138,12 +149,15 @@ try {
         let newviewer = req.body.selectedviewer;
         let newserialport = req.body.serialPort;
         let newbaudrate =  parseInt(req.body.baudrate);
-        let newspeedtape = req.body.selectedspeedtape;
         let newdebug = req.body.debugchecked;
+        let newvne = parseInt(req.body.vne);
+        let newvno = parseInt(req.body.vno);
+        let newvs1 = parseInt(req.body.vs1);
+        let newvs0 = parseInt(req.body.vs0);
         let writefile = false;
         let reopenport = false;
         let reboot = false;
-
+        
         if (newviewer != viewer) {
             viewer = newviewer;
             writefile = true;
@@ -161,13 +175,6 @@ try {
             writefile = true;
             reopenport = true;
         }
-        if (newspeedtape != speedtape) {
-            var workingtape = __dirname + "/public/img/speed_tape.png";
-            var tapename = __dirname + "/public/img/speed_tapes/speed_tape_";
-            fs.copyFileSync(tapename + newspeedtape + ".png", workingtape);
-            speedtape = newspeedtape;
-            writefile = true;
-        }
         
         if (debug && newdebug == "false") {
             stopPlayback = true;
@@ -178,6 +185,14 @@ try {
             debug = true;
             writefile = true;
         }
+        
+        if (newvne != vne || newvno != vno || newvs1 != vs1 || newvs0 != vs0) {
+            vne = newvne;
+            vno = newvno;
+            vs1 = newvs1;
+            vs0 = newvs0;
+            writefile = true;
+        }
 
         if (writefile) {
             let filename = __dirname + '/settings.json';
@@ -185,7 +200,10 @@ try {
             let data = { "viewer" : viewer, 
                          "serialPort" : serialPort, 
                          "baudrate" : baudrate, 
-                         "speedtape" : speedtape,
+                         "vne" : vne,
+                         "vno" : vno,
+                         "vs1" : vs1,
+                         "vs0" : vs0,
                          "debug" : debug
                         };
             fs.writeFileSync(filename, JSON.stringify(data),{flag: 'w+'});
@@ -209,7 +227,6 @@ catch (error) {
     console.log(error);
 }
 
-readSettingsFile();
 
 openSerialPort(false);
 
@@ -241,7 +258,10 @@ function readSettingsFile() {
     viewer = JSON.parse(rawdata).viewer;
     serialPort = JSON.parse(rawdata).serialPort;
     baudrate = parseInt(JSON.parse(rawdata).baudrate);
-    speedtape = JSON.parse(rawdata).speedtape;
+    vne = JSON.parse(rawdata).vne;
+    vno = JSON.parse(rawdata).vno;
+    vs1 = JSON.parse(rawdata).vs1;
+    vs0 = JSON.parse(rawdata).vs0;
     debug = JSON.parse(rawdata).debug;
 }
 
@@ -271,6 +291,11 @@ function buildSetupPage() {
     const regex4 = /##SPEEDTAPE##/gi;
     const regex5 = /##DEBUGVALUE##/gi;
     const regex6 = /##CHECKED##/gi;
+    const regex7 = /##VNE##/gi;
+    const regex8 = /##VNO##/gi;
+    const regex9 = /##VS1##/gi;
+    const regex10 = /##VS0##/gi;
+    
     var dbg = debug ? "true" : "false";
     var checked = debug ? "checked" : "";
 
@@ -280,5 +305,46 @@ function buildSetupPage() {
                   .replace(regex3, baudrate)
                   .replace(regex4, speedtape)
                   .replace(regex5, dbg)
-                  .replace(regex6, checked);
+                  .replace(regex6, checked)
+                  .replace(regex7, vne)
+                  .replace(regex8, vno)
+                  .replace(regex9, vs1)
+                  .replace(regex10, vs0);
 }
+
+loadImage(__dirname + "/public/img/speed_tape_template.png").then(image => { 
+    
+    readSettingsFile();
+
+    var mphfactor = 4.796875;  // = image height divided by 320 mph
+
+    var maxSpeed = 320;
+    var redTop = 45;
+    var redHeight = 1536;
+
+    var yellowTop = redTop + ((maxSpeed - vne) * mphfactor);
+    var yellowHeight = (vne - vno) * mphfactor;
+
+    var greenTop = yellowTop + yellowHeight;
+    var greenHeight = (vno - vs1) * mphfactor;
+
+    var whiteTop = greenTop + greenHeight;
+    var whiteHeight = (vs1 - vs0) * mphfactor;
+
+    ctx.drawImage(image, 0, 0, stW, stH);
+    ctx.fillStyle = "red";
+    ctx.fillRect(71, redTop, 9.5, redHeight);
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(71, whiteTop, 9.5, whiteHeight);
+
+    ctx.fillStyle = "#2dff00";
+    ctx.fillRect(71, greenTop, 9.5, greenHeight);
+
+    ctx.fillStyle = "yellow";
+    ctx.fillRect(71, yellowTop, 9.5, yellowHeight);
+
+    const buffer = cvs.toBuffer('image/png')
+    fs.writeFileSync(__dirname + "/public/img/speed_tape.png", buffer);
+})
+

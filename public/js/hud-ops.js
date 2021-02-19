@@ -130,10 +130,7 @@ function pad(num, size) {
     while (s.length < size) s = "0" + s;
     return s;
 }
-
-
-////////////////////////////////////////////////////////////////////////////////
-  // Extract data from the serial data stream (string)
+var svgns = "http://www.w3.org/2000/svg";
   //---------------------------------------------------------------------------
   // example data:
   // !1121144703-014+00003310811+01736+003-03+1013-033+110831245+01650023176C
@@ -470,5 +467,7 @@ function clear_field(field) {
         field.value = ''
     }
 }
+
+
 
 

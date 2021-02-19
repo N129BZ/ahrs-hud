@@ -9,13 +9,13 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="85"
-   height="1844"
-   viewBox="0 0 22.49 487.892"
+   height="1843.9651"
+   viewBox="0 0 22.49 487.88276"
    version="1.1"
    id="svg8"
    sodipodi:docname="speed_tape.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   inkscape:export-filename="/home/bro/dynon-hud/public/img/speed_tape.png"
+   inkscape:version="1.0.1 (0767f8302a, 2020-10-17)"
+   inkscape:export-filename="/home/bro/adahrs-hud/public/img/speed_tape.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <metadata
@@ -26,6 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -39,16 +40,21 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1005"
+     inkscape:window-height="1002"
      id="namedview173"
      showgrid="false"
      inkscape:zoom="4.0954447"
-     inkscape:cx="9.0481995"
-     inkscape:cy="1794.6118"
+     inkscape:cx="-34.414724"
+     inkscape:cy="845.75199"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="29"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg8" />
+     inkscape:current-layer="svg8"
+     inkscape:document-rotation="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <defs
      id="defs2">
     <linearGradient
@@ -67,39 +73,39 @@
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient951"
-       x1="3.561"
-       y1="301.956"
+       x1="3.5610001"
+       y1="301.95599"
        x2="14.431"
-       y2="301.956"
+       y2="301.95599"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient953"
-       x1="3.495"
-       y1="289.256"
+       x1="3.4949999"
+       y1="289.25601"
        x2="14.365"
-       y2="289.256"
+       y2="289.25601"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient955"
-       x1="3.693"
-       y1="277.217"
+       x1="3.6930001"
+       y1="277.21701"
        x2="14.563"
-       y2="277.217"
+       y2="277.21701"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient957"
-       x1="3.759"
-       y1="263.525"
+       x1="3.7590001"
+       y1="263.52499"
        x2="14.629"
-       y2="263.525"
+       y2="263.52499"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient959"
-       x1="3.627"
+       x1="3.6270001"
        y1="250.825"
        x2="14.497"
        y2="250.825"
@@ -107,15 +113,15 @@
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient961"
-       x1="3.495"
-       y1="238.059"
+       x1="3.4949999"
+       y1="238.05901"
        x2="14.365"
-       y2="238.059"
+       y2="238.05901"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient963"
-       x1="3.693"
+       x1="3.6930001"
        y1="225.623"
        x2="14.563"
        y2="225.623"
@@ -123,15 +129,15 @@
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient965"
-       x1="3.627"
-       y1="212.725"
+       x1="3.6270001"
+       y1="212.72501"
        x2="14.497"
-       y2="212.725"
+       y2="212.72501"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient967"
-       x1="3.649"
+       x1="3.6489999"
        y1="199.959"
        x2="14.519"
        y2="199.959"
@@ -155,7 +161,7 @@
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient973"
-       x1="7.778"
+       x1="7.7779999"
        y1="161.925"
        x2="14.982"
        y2="161.925"
@@ -163,15 +169,15 @@
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient975"
-       x1="7.419"
-       y1="149.225"
+       x1="7.4190001"
+       y1="149.22501"
        x2="14.651"
-       y2="149.225"
+       y2="149.22501"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient977"
-       x1="7.571"
+       x1="7.5710001"
        y1="136.922"
        x2="14.717"
        y2="136.922"
@@ -195,15 +201,15 @@
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient983"
-       x1="7.582"
-       y1="98.822"
+       x1="7.5819998"
+       y1="98.821999"
        x2="14.717"
-       y2="98.822"
+       y2="98.821999"
        gradientUnits="userSpaceOnUse" />
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient985"
-       x1="7.731"
+       x1="7.7309999"
        y1="85.791"
        x2="14.676"
        y2="85.791"
@@ -211,7 +217,7 @@
     <linearGradient
        xlink:href="#linearGradient949"
        id="linearGradient987"
-       x1="7.731"
+       x1="7.7309999"
        y1="85.791"
        x2="14.676"
        y2="85.791"
@@ -220,275 +226,267 @@
        xlink:href="#linearGradient949"
        id="linearGradient989"
        x1="11.113"
-       y1="73.352"
+       y1="73.351997"
        x2="14.5"
-       y2="73.352"
+       y2="73.351997"
        gradientUnits="userSpaceOnUse" />
   </defs>
   <g
      id="g5053"
-     transform="matrix(1 0 0 1.54958 -.384 .243)"
-     style="">
+     transform="matrix(1,0,0,1.54958,-0.384,0.23892979)">
     <path
        id="rect10"
        display="inline"
-       d="M.384-.157h22.49v314.854H.384z"
-       style=""
+       d="m 0.384,-0.157 h 22.49 V 314.697 H 0.384 Z"
        image-rendering="auto"
-       stroke-width=".327"
-       fill="#000" />
+       stroke-width="0.327"
+       fill="#000000" />
   </g>
   <path
-     d="M18.892 214.97V11.87h2.347v406.202h-2.347z"
+     d="m 18.892,214.96593 v -203.1 h 2.347 v 406.202 h -2.347 z"
      id="path386"
      display="inline"
-     fill="#fff"
-     stroke-width=".282" />
+     fill="#ffffff"
+     stroke-width="0.282" />
   <path
      id="rect388"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 11.869h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,11.86493 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 24.559h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,24.55493 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 37.249h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,37.24493 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 49.939h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,49.93493 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-8"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 62.629h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,62.62493 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-3"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 75.319h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,75.31493 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-80"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 88.01h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,88.00593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-4"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 100.7h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,100.69593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-0"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 113.39h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,113.38593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-9"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 126.08h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,126.07593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-1"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 138.77h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,138.76593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-96"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 151.46h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,151.45593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-2"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 164.15h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,164.14593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-5"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 176.84h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,176.83593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-44"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 189.53h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,189.52593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-99"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 202.22h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,202.21593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-36"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 214.91h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,214.90593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-05"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 227.6h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,227.59593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-02"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 240.289h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,240.28493 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-3"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 18.222h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,18.21793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-5"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 30.927h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,30.92293 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-1"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 43.632h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,43.62793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-7"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 56.292h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,56.28793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-4"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 68.982h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,68.97793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-3"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 81.672h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,81.66793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-14"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 94.362h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,94.35793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-6"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 107.052h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,107.04793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-9"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 119.742h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,119.73793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-42"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 132.432h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,132.42793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-2"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 145.122h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,145.11793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-64"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 157.812h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,157.80793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-12"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 170.502h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,170.49793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-8"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 183.192h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,183.18793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-89"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 195.883h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,195.87893 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-28"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 208.572h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,208.56793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-88"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 221.262h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,221.25793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-68"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 233.952h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,233.94793 h 3.99 v 0.529 h -3.99 z" />
   <path
-     id="redVneBar"
-     display="inline"
-     fill="red"
-     stroke-width=".394"
-     d="M18.892 161.71h2.347v79.109h-2.347z" />
-  <path
-     d="M16.232 240.253c.491-.016 1.294-.016 1.785 0 .49.017.089.03-.893.03-.98 0-1.382-.013-.892-.03z"
+     d="m 16.232,240.24893 c 0.491,-0.016 1.294,-0.016 1.785,0 0.49,0.017 0.089,0.03 -0.893,0.03 -0.98,0 -1.382,-0.013 -0.892,-0.03 z"
      id="path794"
      display="inline"
-     fill="red"
-     stroke-width=".088" />
+     fill="#ff0000"
+     stroke-width="0.088" />
   <path
-     d="M17.687 221.725c.242-.019.615-.018.83 0 .215.02.018.035-.438.035-.457 0-.633-.016-.392-.035z"
+     d="m 17.687,221.72093 c 0.242,-0.019 0.615,-0.018 0.83,0 0.215,0.02 0.018,0.035 -0.438,0.035 -0.457,0 -0.633,-0.016 -0.392,-0.035 z"
      id="path802"
      display="inline"
-     fill="red"
-     stroke-width=".088" />
+     fill="#ff0000"
+     stroke-width="0.088" />
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.383"
-     y="14.18"
+     y="14.17593"
      id="text4846"
      font-style="normal"
      font-variant="normal"
@@ -500,18 +498,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan180"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">320</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">320</tspan></text>
   <text
      id="text4880"
-     y="26.87742"
+     y="26.87335"
      x="14.382926"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35011765px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;letter-spacing:0;word-spacing:0;writing-mode:lr;text-anchor:end;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.26499999;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;letter-spacing:0;word-spacing:0;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.265"
      xml:space="preserve"
      font-style="normal"
      font-variant="normal"
@@ -521,12 +519,12 @@
      letter-spacing="0"
      word-spacing="0"><tspan
        id="tspan182"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35011765px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr;text-anchor:end;">310</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">310</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.601"
-     y="39.65"
+     y="39.645931"
      id="text4846-4-9"
      font-style="normal"
      font-variant="normal"
@@ -538,18 +536,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan184"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">300</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">300</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.535"
-     y="52.284"
+     y="52.27993"
      id="text4846-4-6"
      font-style="normal"
      font-variant="normal"
@@ -561,18 +559,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan186"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">290</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">290</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.468"
-     y="64.719"
+     y="64.714935"
      id="text4846-4-5"
      font-style="normal"
      font-variant="normal"
@@ -584,18 +582,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan188"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">280</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">280</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.601"
-     y="77.75"
+     y="77.745934"
      id="text4846-4-2"
      font-style="normal"
      font-variant="normal"
@@ -607,18 +605,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan190"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">270</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">270</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.535"
-     y="90.053"
+     y="90.048935"
      id="text4846-4-4"
      font-style="normal"
      font-variant="normal"
@@ -630,18 +628,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan192"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">260</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">260</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.865"
-     y="102.754"
+     y="102.74993"
      id="text4846-4-51"
      font-style="normal"
      font-variant="normal"
@@ -653,18 +651,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan194"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">250</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">250</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.799"
-     y="115.85"
+     y="115.84593"
      id="text4846-4-43"
      font-style="normal"
      font-variant="normal"
@@ -676,18 +674,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan196"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">240</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">240</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.667"
-     y="128.087"
+     y="128.08293"
      id="text4846-4-46"
      font-style="normal"
      font-variant="normal"
@@ -699,18 +697,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan198"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">230</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">230</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.402"
-     y="140.788"
+     y="140.78392"
      id="text4846-4-42"
      font-style="normal"
      font-variant="normal"
@@ -722,18 +720,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan200"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">220</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">220</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.38"
-     y="153.554"
+     y="153.54993"
      id="text4846-4-42-6"
      font-style="normal"
      font-variant="normal"
@@ -745,18 +743,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan202"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">210</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">210</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.446"
-     y="166.452"
+     y="166.44792"
      id="text4846-4-42-1"
      font-style="normal"
      font-variant="normal"
@@ -768,18 +766,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan204"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">200</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">200</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.248"
-     y="178.888"
+     y="178.88393"
      id="text4846-4-42-8"
      font-style="normal"
      font-variant="normal"
@@ -791,18 +789,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan206"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">190</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">190</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.38"
-     y="191.654"
+     y="191.64993"
      id="text4846-4-42-9"
      font-style="normal"
      font-variant="normal"
@@ -814,18 +812,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan208"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">180</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">180</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.513"
-     y="204.354"
+     y="204.34993"
      id="text4846-4-42-88"
      font-style="normal"
      font-variant="normal"
@@ -837,18 +835,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan210"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">170</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">170</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end;stroke-width:0.26511741;stroke-miterlimit:4;stroke-dasharray:none"
      x="14.446"
-     y="218.045"
+     y="218.04092"
      id="text4846-4-42-68"
      font-style="normal"
      font-variant="normal"
@@ -860,41 +858,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan212"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">160</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end;stroke-width:0.26511741;stroke-miterlimit:4;stroke-dasharray:none">160</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'Monaco, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:Monaco;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
-     x="14.248"
-     y="230.084"
-     id="text4846-4-42-83"
-     font-style="normal"
-     font-variant="normal"
-     font-weight="700"
-     font-stretch="normal"
-     font-size="5.644"
-     font-family="sans-serif"
-     letter-spacing="0"
-     word-spacing="0"
-     writing-mode="lr"
-     text-anchor="end"
-     fill="#fff"
-     fill-opacity="1"
-     fill-rule="nonzero"
-     stroke="none"
-     stroke-width=".265"><tspan
-       id="tspan214"
-       style="-inkscape-font-specification:'Monaco, Normal';font-family:Monaco;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">150</tspan></text>
-  <text
-     xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.314"
-     y="242.784"
+     y="242.77992"
      id="text4846-4-42-3"
      font-style="normal"
      font-variant="normal"
@@ -906,192 +881,192 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan216"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">140</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">140</tspan></text>
   <path
      id="rect388-9-8"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.382 252.718h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.382,252.71393 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-7"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.382 265.408h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.382,265.40393 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-7"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.382 278.098h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.382,278.09393 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-8-8"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.382 290.788h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.382,290.78393 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-3-5"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.382 303.478h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.382,303.47393 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-80-3"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.382 316.168h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.382,316.16393 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-4-5"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.382 328.858h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.382,328.85393 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-0-6"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.382 341.548h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.382,341.54393 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-3-31"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.259 246.38h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.259,246.37593 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-5-2"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.259 259.085h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.259,259.08093 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-1-6"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.259 271.79h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.259,271.78593 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-7-9"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.259 284.45h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.259,284.44593 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-4-5"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.259 297.14h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.259,297.13593 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-3-6"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.259 309.83h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.259,309.82593 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-14-8"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.259 322.52h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.259,322.51593 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-6-5"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.259 335.21h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.259,335.20593 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-6"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 341.42h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,341.41593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-6"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 354.11h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,354.10593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-9"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 366.8h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,366.79593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-45"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 379.49h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,379.48593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-8-2"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 392.18h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,392.17593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-3-51"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 404.87h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,404.86593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-9-0-2-80-5"
      display="inline"
-     fill="#fff"
-     stroke-width=".394"
-     d="M15.372 417.56h5.868v.529h-5.868z" />
+     fill="#ffffff"
+     stroke-width="0.394"
+     d="m 15.372,417.55593 h 5.868 v 0.529 h -5.868 z" />
   <path
      id="rect388-3-44"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 347.772h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,347.76793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-5-5"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 360.477h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,360.47293 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-1-5"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 373.182h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,373.17793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-7-0"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 385.842h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,385.83793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-4-7"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 398.532h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,398.52793 h 3.99 v 0.529 h -3.99 z" />
   <path
      id="rect388-3-3-4"
      display="inline"
-     fill="#fff"
-     stroke-width=".325"
-     d="M17.249 411.222h3.99v.529h-3.99z" />
+     fill="#ffffff"
+     stroke-width="0.325"
+     d="m 17.249,411.21793 h 3.99 v 0.529 h -3.99 z" />
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.419"
-     y="254.846"
+     y="254.84192"
      id="text4846-4-42-88-1"
      font-style="normal"
      font-variant="normal"
@@ -1103,18 +1078,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan218"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">130</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">130</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.353"
-     y="268.538"
+     y="268.53394"
      id="text4846-4-42-68-0"
      font-style="normal"
      font-variant="normal"
@@ -1126,18 +1101,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan220"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">120</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">120</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.154"
-     y="280.577"
+     y="280.57294"
      id="text4846-4-42-83-7"
      font-style="normal"
      font-variant="normal"
@@ -1149,18 +1124,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan222"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">110</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">110</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.22"
-     y="293.277"
+     y="293.27295"
      id="text4846-4-42-3-6"
      font-style="normal"
      font-variant="normal"
@@ -1172,18 +1147,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan240"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">100</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">100</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.419"
-     y="305.646"
+     y="305.64194"
      id="text4846-4-42-88-4"
      font-style="normal"
      font-variant="normal"
@@ -1195,18 +1170,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan242"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">90</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">90</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.353"
-     y="319.338"
+     y="319.33395"
      id="text4846-4-42-68-8"
      font-style="normal"
      font-variant="normal"
@@ -1218,18 +1193,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan244"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">80</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">80</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.154"
-     y="331.377"
+     y="331.37296"
      id="text4846-4-42-83-6"
      font-style="normal"
      font-variant="normal"
@@ -1241,18 +1216,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan246"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">70</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">70</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;fill:#ffffff;fill-opacity:1;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1"
      x="14.22"
-     y="344.077"
+     y="344.07294"
      id="text4846-4-42-3-4"
      font-style="normal"
      font-variant="normal"
@@ -1268,14 +1243,14 @@
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan248"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;fill:#ffffff;fill-opacity:1;">60</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1">60</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.419"
-     y="355.785"
+     y="355.78094"
      id="text4846-4-42-88-3"
      font-style="normal"
      font-variant="normal"
@@ -1287,18 +1262,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan250"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">50</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">50</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.353"
-     y="369.477"
+     y="369.47293"
      id="text4846-4-42-68-3"
      font-style="normal"
      font-variant="normal"
@@ -1310,18 +1285,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan252"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">40</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">40</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.154"
-     y="381.516"
+     y="381.51193"
      id="text4846-4-42-83-0"
      font-style="normal"
      font-variant="normal"
@@ -1333,18 +1308,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan254"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">30</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">30</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.22"
-     y="394.216"
+     y="394.21194"
      id="text4846-4-42-3-9"
      font-style="normal"
      font-variant="normal"
@@ -1356,18 +1331,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan256"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">20</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">20</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.417"
-     y="407.043"
+     y="407.03894"
      id="text4846-4-42-83-0-2"
      font-style="normal"
      font-variant="normal"
@@ -1379,18 +1354,18 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan258"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">10</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">10</tspan></text>
   <text
      xml:space="preserve"
-     style="line-height:1.25;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;writing-mode:lr;"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end"
      x="14.483"
-     y="419.743"
+     y="419.73895"
      id="text4846-4-42-3-9-9"
      font-style="normal"
      font-variant="normal"
@@ -1402,46 +1377,34 @@
      word-spacing="0"
      writing-mode="lr"
      text-anchor="end"
-     fill="#fff"
+     fill="#ffffff"
      fill-opacity="1"
      fill-rule="nonzero"
      stroke="none"
-     stroke-width=".265"><tspan
+     stroke-width="0.265"><tspan
        id="tspan260"
-       style="-inkscape-font-specification:'MonacoB, Bold';font-family:MonacoB;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:6.35011765px;text-anchor:end;text-align:end;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;">0</tspan></text>
-  <path
-     id="belowStallBar"
-     opacity="1"
-     fill="red"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:end;writing-mode:lr-tb;text-anchor:end">0</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.35012px;line-height:1.25;font-family:MonacoB;-inkscape-font-specification:'MonacoB, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-align:end;writing-mode:lr-tb;text-anchor:end;stroke-width:0.265117;stroke-miterlimit:4;stroke-dasharray:none;font-variant-east-asian:normal;letter-spacing:0;word-spacing:0;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;"
+     x="14.207833"
+     y="230.38629"
+     id="text4846-4-42-68-01"
+     font-style="normal"
+     font-variant="normal"
+     font-weight="700"
+     font-stretch="normal"
+     font-size="5.644"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     writing-mode="lr"
+     text-anchor="end"
+     fill="#ffffff"
      fill-opacity="1"
+     fill-rule="nonzero"
      stroke="none"
-     stroke-width=".721"
-     stroke-linecap="butt"
-     stroke-linejoin="round"
-     stroke-miterlimit="4"
-     stroke-dasharray="none"
-     stroke-opacity="1"
-     paint-order="fill markers stroke"
-     d="M18.858 370.266h2.381v47.785h-2.381z" />
-  <path
-     id="greenBar"
-     display="inline"
-     fill="#2dff00"
-     stroke-width=".3"
-     fill-opacity="1"
-     d="M18.966 281.071h2.284v48.041h-2.284z" />
-  <path
-     id="yellowBar"
-     display="inline"
-     fill="#ff0"
-     stroke-width=".236"
-     fill-opacity="1"
-     d="M18.879 240.841h2.314v40.151h-2.314z" />
-  <path
-     id="rect715-11"
-     display="inline"
-     fill="red"
-     fill-opacity="1"
-     stroke-width=".094"
-     d="M20.223 361.741h1.027v10.536h-1.027z" />
+     stroke-width="0.265"><tspan
+       sodipodi:role="line"
+       id="tspan1025">150</tspan></text>
 </svg>

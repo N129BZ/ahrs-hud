@@ -29,6 +29,22 @@
         font-weight: bold;
         font-size: 26px;
     }
+    .textlabel {
+        background-color:cornsilk;
+        color: black;
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 20px;
+    }
+    .textbox {
+        background-color:white;
+        color: black;
+        width: 70px;
+        padding-left: 20px,;
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 20px;
+    }
     .selectlist {
         background-color: white;
         font-size: 20px;
@@ -91,16 +107,14 @@
     </div>
     <br>
     <p>
-    <h3><label for="speedtape" class="label">Select your aircraft type from the list, this is so the HUD will display the correct speed tape</label></h3>
+    <h3><label for="speedtape" class="label">Enter your V-Speeds, this is so the HUD will correctly color the speed tape</label></h3>
     </p>
-    <select id="speedtape" name=”speedtape” class="selectlist" onClick="updateSelectedTape(this.value);">
-        <option value="RV8">RV8</option>
-        <option value="RV9">RV9</option>
-        <option value="RV10">RV10</option>
-        <option value="Bonanza">Bonanza</option>
-        <option value="Zenith650">Zenith 601/650</option>
-        <option value="Zenith750">Zenith 750</option>
-    </select>
+    <div class="form-field">
+        <label for="vne" class="textlabel">Vne</label><input type="text" id="vne" class="textbox" name="vne" style="font-size: 20px; font-weight: bold;" value="##VNE##">
+        <label for="vno" class="textlabel">Vno</label><input type="text" id="vno" class="textbox" name="vno" style="font-size: 20px; font-weight: bold;" value="##VNO##">
+        <label for="vs1" class="textlabel">Vs1</label><input type="text" id="vs1" class="textbox" name="vs1" style="font-size: 20px; font-weight: bold;" value="##VS1##">
+        <label for="vs0" class="textlabel">Vs0</label><input type="text" id="vs0" class="textbox" name="vs0" style="font-size: 20px; font-weight: bold;" value="##VS0##">
+    </div>
     <br>
     <p>
     <br>
@@ -112,9 +126,6 @@
     </div>
     <div class="form-field">
         <input type="text" id="debugchecked" name="debugchecked" style="visibility: hidden;">
-    </div>
-    <div class="form-field"> 
-        <input type="text" id="selectedspeedtape" name="selectedspeedtape" style="visibility: hidden;">
     </div>
     <div class="form-field"> 
         <input type="text" id="selectedviewer" name="selectedviewer" style="visibility: hidden;">
@@ -135,14 +146,15 @@
       document.getElementById("viewer").value="##VIEWER##";
       document.getElementById("selectedviewer").value="##VIEWER##";
       document.getElementById("debugchecked").value = "##DEBUGVALUE##";
+      document.getElementById("vne").value = "##VNE##";  
+      document.getElementById("vno").value = "##VNO##";
+      document.getElementById("vs1").value = "##VS1##";
+      document.getElementById("vs0").value = "##VS0##";
 
       function updateDebugChecked(newvalue) {
         document.getElementById("debugchecked").value = newvalue ? "true" : "false";
       }
-      function updateSelectedTape(newvalue) {
-         document.getElementById("speedtape").value=newvalue; 
-         document.getElementById("selectedspeedtape").value=newvalue;
-      }
+
       function updateSelectedViewer(newvalue) {
           document.getElementById("viewer").value=newvalue;
           document.getElementById("selectedviewer").value=newvalue;

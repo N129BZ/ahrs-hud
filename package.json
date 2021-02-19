@@ -18,6 +18,7 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "@serialport/parser-readline": "^8.0.6",
+    "canvas": "^2.6.1",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "http": "0.0.0",
