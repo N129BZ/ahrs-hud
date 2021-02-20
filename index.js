@@ -341,7 +341,7 @@ function generateSetupView() {
     var dbg = debug ? "true" : "false";
     var checked = debug ? "checked" : "";
     
-    var rawdata = String(fs.readFileSync(__dirname + "/public/templates/setuptemplate.html"));
+    var rawdata = String(fs.readFileSync(__dirname + "/public/templates/setup_template.html"));
     var output = rawdata.replace(regex1, view)
                         .replace(regex2, serialPort)
                         .replace(regex3, baudrate)
