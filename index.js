@@ -341,7 +341,7 @@ function generateSetupView() {
     var dbg = debug ? "true" : "false";
     var checked = debug ? "checked" : "";
     
-    var rawdata = String(fs.readFileSync(__dirname + "/setuptemplate.html"));
+    var rawdata = String(fs.readFileSync(__dirname + "/public/templates/setuptemplate.html"));
     var output = rawdata.replace(regex1, view)
                         .replace(regex2, serialPort)
                         .replace(regex3, baudrate)
@@ -354,7 +354,7 @@ function generateSetupView() {
     fs.writeFileSync(setupview, output);
 }
 
-loadImage(__dirname + "/public/img/speed_tape_template.png").then(image => { 
+loadImage(__dirname + "/public/templates/speed_tape_template.png").then(image => { 
     buildSpeedTapeImage(image);
 })
 
