@@ -28,6 +28,7 @@ var firstrun = false;
 var inPlayback = false;
 var stopPlayback = false;
 var tapeimage;
+var currentView;
 
 const cvs = createCanvas(stW, stH);
 const ctx = cvs.getContext('2d');
@@ -119,23 +120,17 @@ try {
         console.log("Webserver listening at port " + httpPort);
     });
 
-    if (viewer == "VuFine") {
-        webserver.use(express.static(__dirname + "/public", {index: "vufine.html"}));
-    }
-    else if (!firstrun) {
-        webserver.use(express.static(__dirname + "/public", {index: "index.html"}));
-    }
+    let view = String(viewer).toLowerCase() + ".html";
 
-    webserver.get("/", (req, res) => {
+    webserver.use(express.static(__dirname + "/public", {index: view}));
+    
+    webserver.get('/',(req, res) => {
         if (firstrun) {
             var chunk = buildSetupPage();
             res.write(chunk);
         }
-        else if (viewer == "VuFine") {
-            res.sendFile(__dirname + "/public/vufine.html");
-        }
         else {
-            res.sendFile(__dirname + "/public/index.html");
+            res.sendFile(currentView);
         }
     });
 
@@ -202,11 +197,6 @@ try {
             writefile = true;
         }
 
-        if (firstrun) {
-            reboot = true;
-            fs.unlinkSync(__dirname + "/firstrun.html");
-        }
-        
         if (writefile) {
             let data = { "viewer" : viewer, 
                          "serialPort" : serialPort, 
@@ -236,8 +226,8 @@ try {
         if (redrawTape) {
             buildSpeedTapeImage(tapeimage);
         }
-        res.redirect('/'); 
-        res.end();
+
+        res.redirect("/");
     });
 }
 catch (error) {
@@ -287,6 +277,14 @@ function readSettingsFile() {
     vs0 = JSON.parse(rawdata).vs0;
     debug = JSON.parse(rawdata).debug;
     firstrun = JSON.parse(rawdata).firstrun;
+    var viewToLoad = String(viewer).toLowerCase();
+
+    if (viewToLoad == "vufine") { 
+        currentView = __dirname + "/public/vufine.html";
+    }
+    else {
+        currentView = __dirname + "/public/index.html";
+    }
 }
 
 // ------------------------ Serial event functions:
@@ -332,10 +330,6 @@ function buildSetupPage() {
                         .replace(regex7, vno)
                         .replace(regex8, vs1)
                         .replace(regex9, vs0)
-    if (firstrun)
-    {
-        fs.writeFileSync(__dirname + "/firstrun.html", output);
-    }
     return output;
 }
 
