@@ -29,12 +29,15 @@ var inPlayback = false;
 var stopPlayback = false;
 var tapeimage;
 var currentview;
+
 const setupview = __dirname + "/setup.html";
+const vufineview = __dirname + "/public/viewfine.html";
+const indexview = __dirname + "/public/index.html";
 
 const cvs = createCanvas(stW, stH);
 const ctx = cvs.getContext('2d');
 
-readSettingsFile(); // this also generates the setup.html view
+readSettingsFile(); // this also generates the setup.html and vufine.html views
 
 var server = http.createServer(function (request, response) { });
 try {
@@ -121,8 +124,6 @@ try {
         console.log("Webserver listening at port " + httpPort);
     });
     
-    //let viewHtml = String(view).toLowerCase() == "vufine" ? "vufine.html" : "index.html";
-    
     const options = {
         dotfiles: 'ignore',
         etag: false,
@@ -132,7 +133,7 @@ try {
         setHeaders: function (res, path, stat) {
           res.set('x-timestamp', Date.now())
         }
-    }
+    };
     
     webserver.use(express.static("public", options));
     
@@ -169,15 +170,14 @@ try {
         let reopenport = false;
         let reboot = false;
         let redrawTape = false;
-        let htmlpath = __dirname + "/public/";
-
+        
         if (newview != view) {
             switch(newview) {
                 case "VuFine" :
-                    currentview = htmlpath + "vufine.html";
+                    currentview = vufineview;
                     break;
                 default:
-                    currentview = htmlpath + "index.html";
+                    currentview = indexview;
             };
             view = newview;
             writefile = true;
@@ -301,10 +301,11 @@ function readSettingsFile() {
     
     switch (view) {
         case "VuFine":
-            currentview = __dirname + "/public/vufine.html";
+            generateVuFineView();
+            currentview = vufineview;
             break;
         default:
-            currentview = __dirname + "/public/index.html";
+            currentview = indexview;
     }
 }
 
@@ -325,6 +326,19 @@ function showPortClose() {
 // this is called when the serial port has an error:
 function showError(error) {
     console.log('Serial port error: ' + error);
+}
+
+function generateVuFineView() {
+    const regex1 = /##VNE##/gi;
+    const regex2 = /##VNO##/gi;
+    const regex3 = /##VS1##/gi;
+    const regex4 = /##VS0##/gi;
+    var rawdata = String(fs.readFileSync(__dirname + "/public/templates/vufine_template.html"));
+    var output = rawdata.replace(regex1, vne)
+                        .replace(regex2, vno)
+                        .replace(regex3, vs1)
+                        .replace(regex4, vs0)
+    fs.writeFileSync(vufineview, output);
 }
 
 function generateSetupView() {

@@ -2,6 +2,10 @@
 
 var host;
 var websock;
+var vne = 0;
+var vno = 0;
+var vs1 = 0;
+var vs0 = 0;
 
 try {
     let host = "ws://" + location.hostname + ":9696";
@@ -29,6 +33,13 @@ $(document).keyup(function(e) {
     onSerialData(e);
 });
 
+$(document).ready(function() {
+    vne = document.getElementById('vne').value;
+    vno = document.getElementById('vno').value;
+    vs1 = document.getElementById('vs1').value;
+    vs0 = document.getElementById('vs0').value;
+});
+
 var ball = $('#ball');
 var aoa = $('.aoa');
 
@@ -37,6 +48,7 @@ const ball_center = 68;    // this is "center" of the slip-skid indicator
 
 var speedbox = document.getElementById('spanspeedbox');
 var aoatext = document.getElementById('spanaoa');
+
 
 function pad(num, size) {
     var s = num+"";
@@ -56,7 +68,22 @@ function onSerialData(e) {
 
     slipskid = data.slipskid;
     speedbox.textContent = data.airspeed;
-    
+    if (data.airspeed >= vne) {
+        speedbox.style.color = "red";
+    }
+    else if (data.airspeed > vno && data.airspeed < vne) {
+        speedbox.style.color = "yellow";
+    }
+    else if (data.airspeed > vs1 && data.airspeed < vno) {
+        speedbox.style.color = "#2dff00"
+    }
+    else if (data.airspeed > vs0 && data.airspeed < vs1) {
+        speedbox.style.color = "white";
+    }
+    else {
+        speedbox.style.color = "red";
+    }
+
     // check the AOA
     if (data.aoa >= 99) {
         aoa.css('visibility', 'visible');
