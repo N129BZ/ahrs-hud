@@ -84,10 +84,10 @@
     <form method="post" action="/setup" id="setupform" novalidate>
     <br>
     <p>
-        <h3><label for="viewer" class="label">Select the viewer you are using. Changing this setting will make the machine re-boot after saving</label></h3>
+        <h3><label for="viewer" class="label">Select the view you are using</label></h3>
     </p>
     <p>
-        <select id="viewer" name="viewer" class="selectlist" onClick="updateSelectedViewer(this.value);">
+        <select id="view" name="view" class="selectlist" onClick="updateSelectedView(this.value);">
             <option value="Hudly">Hudly</option>
             <option value="Kivic">Kivic</option>
             <option value="VuFine">VuFine</option>
@@ -130,7 +130,7 @@
         <input type="text" id="debugchecked" name="debugchecked" style="visibility: hidden;">
     </div>
     <div class="form-field"> 
-        <input type="text" id="selectedviewer" name="selectedviewer" style="visibility: hidden;">
+        <input type="text" id="selectedview" name="selectedview" style="visibility: hidden;">
     </div>
     <br>
     <br>
@@ -143,8 +143,8 @@
     </form>
   </div>
   <script>
-      document.getElementById("viewer").value="##VIEWER##";
-      document.getElementById("selectedviewer").value="##VIEWER##";
+      document.getElementById("view").value="##VIEW##";
+      document.getElementById("selectedview").value="##VIEW##";
       document.getElementById("debugchecked").value = "##DEBUGVALUE##";
       document.getElementById("vne").value = "##VNE##";  
       document.getElementById("vno").value = "##VNO##";
@@ -155,9 +155,9 @@
         document.getElementById("debugchecked").value = newvalue ? "true" : "false";
       }
 
-      function updateSelectedViewer(newvalue) {
-          document.getElementById("viewer").value=newvalue;
-          document.getElementById("selectedviewer").value=newvalue;
+      function updateSelectedView(newvalue) {
+          document.getElementById("view").value=newvalue;
+          document.getElementById("selectedview").value=newvalue;
       }
   </script>
 </body>

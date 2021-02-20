@@ -16,7 +16,7 @@ var websocketPort = 9696;
 var httpPort = 8686; 
 var serialPort;
 var baudrate;
-var viewer;
+var view;
 var vne;
 var vno;
 var vs1;
@@ -28,12 +28,13 @@ var firstrun = false;
 var inPlayback = false;
 var stopPlayback = false;
 var tapeimage;
-var currentView;
+var currentview;
+const setupview = __dirname + "/setup.html";
 
 const cvs = createCanvas(stW, stH);
 const ctx = cvs.getContext('2d');
 
-readSettingsFile();
+readSettingsFile(); // this also generates the setup.html view
 
 var server = http.createServer(function (request, response) { });
 try {
@@ -75,7 +76,7 @@ function DebugPlayback() {
     if (inPlayback) {
         return;
     }
-    
+
     inPlayback = true;
 
     var lr = new lineReader(__dirname + "/adahrsdata.log");
@@ -119,24 +120,33 @@ try {
     webserver.listen(httpPort, () => {
         console.log("Webserver listening at port " + httpPort);
     });
-
-    let view = String(viewer).toLowerCase() + ".html";
-
-    webserver.use(express.static(__dirname + "/public", {index: view}));
+    
+    //let viewHtml = String(view).toLowerCase() == "vufine" ? "vufine.html" : "index.html";
+    
+    const options = {
+        dotfiles: 'ignore',
+        etag: false,
+        extensions: ['html'],
+        index: false,
+        redirect: false,
+        setHeaders: function (res, path, stat) {
+          res.set('x-timestamp', Date.now())
+        }
+    }
+    
+    webserver.use(express.static("public", options));
     
     webserver.get('/',(req, res) => {
         if (firstrun) {
-            var chunk = buildSetupPage();
-            res.write(chunk);
+            res.sendFile(setupview);
         }
         else {
-            res.sendFile(currentView);
+            res.sendFile(currentview);
         }
     });
 
     webserver.get("/setup", (req,res) => {
-        var chunk = buildSetupPage();
-        res.write(chunk);           
+        res.sendFile(setupview);           
     });
 
     webserver.get("/shutdown", (req,res) => {
@@ -147,7 +157,7 @@ try {
     
     webserver.post("/setup", (req, res) => {
         console.log(req.body);
-        let newviewer = req.body.selectedviewer;
+        let newview = req.body.selectedview;
         let newserialport = req.body.serialPort;
         let newbaudrate =  parseInt(req.body.baudrate);
         let newdebug = req.body.debugchecked;
@@ -159,11 +169,18 @@ try {
         let reopenport = false;
         let reboot = false;
         let redrawTape = false;
-        
-        if (newviewer != viewer) {
-            viewer = newviewer;
+        let htmlpath = __dirname + "/public/";
+
+        if (newview != view) {
+            switch(newview) {
+                case "VuFine" :
+                    currentview = htmlpath + "vufine.html";
+                    break;
+                default:
+                    currentview = htmlpath + "index.html";
+            };
+            view = newview;
             writefile = true;
-            reboot = true;
         }
 
         if (newserialport != serialPort) {
@@ -198,7 +215,7 @@ try {
         }
 
         if (writefile) {
-            let data = { "viewer" : viewer, 
+            let data = { "view" : view, 
                          "serialPort" : serialPort, 
                          "baudrate" : baudrate, 
                          "vne" : vne,
@@ -227,6 +244,8 @@ try {
             buildSpeedTapeImage(tapeimage);
         }
 
+        generateSetupView();
+        
         res.redirect("/");
     });
 }
@@ -268,7 +287,7 @@ function openSerialPort(needsFileRead) {
 
 function readSettingsFile() {
     var rawdata = fs.readFileSync(__dirname + '/settings.json');
-    viewer = JSON.parse(rawdata).viewer;
+    view = JSON.parse(rawdata).view;
     serialPort = JSON.parse(rawdata).serialPort;
     baudrate = parseInt(JSON.parse(rawdata).baudrate);
     vne = JSON.parse(rawdata).vne;
@@ -277,13 +296,15 @@ function readSettingsFile() {
     vs0 = JSON.parse(rawdata).vs0;
     debug = JSON.parse(rawdata).debug;
     firstrun = JSON.parse(rawdata).firstrun;
-    var viewToLoad = String(viewer).toLowerCase();
-
-    if (viewToLoad == "vufine") { 
-        currentView = __dirname + "/public/vufine.html";
-    }
-    else {
-        currentView = __dirname + "/public/index.html";
+    
+    generateSetupView();
+    
+    switch (view) {
+        case "VuFine":
+            currentview = __dirname + "/public/vufine.html";
+            break;
+        default:
+            currentview = __dirname + "/public/index.html";
     }
 }
 
@@ -306,8 +327,8 @@ function showError(error) {
     console.log('Serial port error: ' + error);
 }
 
-function buildSetupPage() {
-    const regex1 = /##VIEWER##/gi;
+function generateSetupView() {
+    const regex1 = /##VIEW##/gi;
     const regex2 = /##SERIALPORT##/gi;
     const regex3 = /##BAUDRATE##/gi;
     const regex4 = /##DEBUGVALUE##/gi;
@@ -320,8 +341,8 @@ function buildSetupPage() {
     var dbg = debug ? "true" : "false";
     var checked = debug ? "checked" : "";
     
-    var rawdata = String(fs.readFileSync(__dirname + "/setup.html"));
-    var output = rawdata.replace(regex1, viewer)
+    var rawdata = String(fs.readFileSync(__dirname + "/setuptemplate.html"));
+    var output = rawdata.replace(regex1, view)
                         .replace(regex2, serialPort)
                         .replace(regex3, baudrate)
                         .replace(regex4, dbg)
@@ -330,7 +351,7 @@ function buildSetupPage() {
                         .replace(regex7, vno)
                         .replace(regex8, vs1)
                         .replace(regex9, vs0)
-    return output;
+    fs.writeFileSync(setupview, output);
 }
 
 loadImage(__dirname + "/public/img/speed_tape_template.png").then(image => { 
