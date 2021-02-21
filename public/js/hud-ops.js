@@ -2,21 +2,22 @@
 
 var host;
 var websock;
+var wsport = 9696; // default value
 
-try {
-    host = "ws://" + location.hostname + ":9696";
-    websock = new WebSocket(host);
-    
-    websock.onopen = openSocket;
-    websock.onmessage = onSerialData;
-}
-catch(error) {
-    console.log(error);
-}
 
-function openSocket() {
-  console.log("Websocket opened...");
-}
+$(() => {
+    wsport = parseInt(document.getElementById("wsport").value);
+
+    try {
+        let host = "ws://" + location.hostname + ":" + wsport;
+        let websock = new WebSocket(host);
+
+        websock.onmessage = onSerialData;
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 
 (function($) {
   function AttitudeIndicator( placeholder, options ) {

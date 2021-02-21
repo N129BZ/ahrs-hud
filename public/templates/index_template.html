@@ -1,0 +1,58 @@
+<html lang="en" dir="ltr">
+<head>
+    <meta http-equiv="Cache-Control: no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma: no-cache">
+    <meta http-equiv="Expires: 0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/classes.css" />
+    <link rel="stylesheet" type="text/css" href="css/hud.css" />
+</head>
+<body>
+<div class="hud">
+    <div class="lhblocker"></div>
+    <div class="rhblocker"></div>
+    <div class="aoa"><span id="spanaoa"></span></div>
+    <div class="speedbox"><span id="spanspeedbox">000</span></div>
+    <div class="scrollspeed">
+        <img src="img/speed_mask.png" id="speedmask"> 
+        <img src="img/speed_tape.png" id="speedtape">
+        <span id="ktlabel">KT</span>
+    </div>
+    <span id="attitude"></span>
+    <div class="altbox"><span id="spanaltbox">0000</span></div>
+    <div class="scrollaltitude">
+        <img src="img/altitude_mask.png" id="altmask">
+        <img src="img/altitude_tape.png" id="alttape">
+        <span id="msllabel">MSL</span>
+    </div>
+    <div class='headingbox'><span id="spanheadingbox">000</span></div>
+    <div class="scrollheading">
+        <img src="img/heading_mask.png" id="headingmask">
+        <img src="img/heading_tape.png" id="headingtape">
+    </div>
+    <div>
+        <div class="windindicator">
+            <span id="spanwindlabel">WIND</span>
+            <span id="spanwindspeed">0 kt</span>
+            <img id="windcircle" src="img/windcircle.png">
+            <img id="windarrow" src="img/windarrow.png">
+        </div>
+        <div class="gmeterbox"><span id="spangmeter">+1.0 g</span></div> 
+        <div class="daltbox"><span id="spandalt">DALT 0</span></div> 
+        <div class="oatbox"><span id="spanoat">OAT 59 F</span></div> 
+        <div class="tasbox"><span id="spantas">TAS 0 kt</span></div> 
+        <div class="barobox"><span id="spanbaro">BARO 29.92</span></div>
+        <div class="vsarrowbox"><span id="spanvsarrow">▲</span></div>
+        <div class="vsbox"><span id="spanvspeed">0 fpm</span></div>
+        <img src="img/yawbackground.png" id="yawbackground">
+        <div class="yawindicator">
+            <img src="img/slipskidbar.png" id="leftbar">
+            <img src="img/slipskidbar.png" id="rightbar">
+            <img src="img/ball.png" id="ball">
+        </div>
+    </div>
+</div>
+<script src="js/jquery-min.js"></script>
+<script src="js/hud-ops.js"></script>
+<input type="text" id="wsport" type="text" style="visibility:hidden;" value="##WSPORT##">
+</body>

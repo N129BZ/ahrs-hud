@@ -29,6 +29,7 @@ var inPlayback = false;
 var stopPlayback = false;
 var tapeimage;
 var currentview;
+var stylesheet;
 
 const setupview = __dirname + "/setup.html";
 const vufineview = __dirname + "/public/viewfine.html";
@@ -108,7 +109,7 @@ function DebugPlayback() {
         
         setTimeout(function () {
             lr.resume();
-        }, 100);
+        }, 150);
     });
 
     lr.on('end', function () {
@@ -169,15 +170,17 @@ try {
         let writefile = false;
         let reopenport = false;
         let reboot = false;
-        let redrawTape = false;
         
         if (newview != view) {
+            stylesheet = String(newview).toLowerCase();
             switch(newview) {
                 case "VuFine" :
                     currentview = vufineview;
+                    generateVuFineView();
                     break;
                 default:
                     currentview = indexview;
+                    generateIndexView();
             };
             view = newview;
             writefile = true;
@@ -204,18 +207,19 @@ try {
             debug = true;
             writefile = true;
         }
-        
+
         if (newvne != vne || newvno != vno || newvs1 != vs1 || newvs0 != vs0) {
             vne = newvne;
             vno = newvno;
             vs1 = newvs1;
             vs0 = newvs0;
-            redrawTape = true;
             writefile = true;
         }
 
         if (writefile) {
             let data = { "view" : view, 
+                         "httpPort" : httpPort,
+                         "wsPort" : websocketPort,
                          "serialPort" : serialPort, 
                          "baudrate" : baudrate, 
                          "vne" : vne,
@@ -240,10 +244,7 @@ try {
             openSerialPort(true);
         }
         
-        if (redrawTape) {
-            buildSpeedTapeImage(tapeimage);
-        }
-
+        buildSpeedTapeImage(tapeimage);
         generateSetupView();
         
         res.redirect("/");
@@ -289,6 +290,8 @@ function readSettingsFile() {
     var rawdata = fs.readFileSync(__dirname + '/settings.json');
     view = JSON.parse(rawdata).view;
     serialPort = JSON.parse(rawdata).serialPort;
+    var hport = JSON.parse(rawdata).httpPort;
+    var wsPort = JSON.parse(rawdata).wsPort;
     baudrate = parseInt(JSON.parse(rawdata).baudrate);
     vne = JSON.parse(rawdata).vne;
     vno = JSON.parse(rawdata).vno;
@@ -297,15 +300,31 @@ function readSettingsFile() {
     debug = JSON.parse(rawdata).debug;
     firstrun = JSON.parse(rawdata).firstrun;
     
+    if (httpPort != hport) {
+        httpPort = hport;
+    }
+
+    if (websocketPort != wsPort) {
+        websocketPort = wsPort;
+    }
+
     generateSetupView();
     
     switch (view) {
         case "VuFine":
-            generateVuFineView();
+            generateVuFineView(wsPort);
             currentview = vufineview;
+            stylesheet = "vufine";
             break;
+        case "Kivic":
+            stylesheet = "kivic";
+        case "Hudly":
+            stylesheet = "hudly";
         default:
+            generateHudStylesheet(stylesheet);
+            generateIndexView(wsPort);
             currentview = indexview;
+
     }
 }
 
@@ -328,43 +347,57 @@ function showError(error) {
     console.log('Serial port error: ' + error);
 }
 
+function generateHudStylesheet(sourcename) {
+    var output = String(fs.readFileSync(__dirname + "/public/templates/" + sourcename + "_template.css"));
+    fs.writeFileSync(__dirname + "/public/css/classes.css", output);
+}
+
 function generateVuFineView() {
-    const regex1 = /##VNE##/gi;
-    const regex2 = /##VNO##/gi;
-    const regex3 = /##VS1##/gi;
-    const regex4 = /##VS0##/gi;
+    const regex0 = /##VNE##/gi;
+    const regex1 = /##VNO##/gi;
+    const regex2 = /##VS1##/gi;
+    const regex3 = /##VS0##/gi;
+    const regex4 = /##WSPORT##/gi;
     var rawdata = String(fs.readFileSync(__dirname + "/public/templates/vufine_template.html"));
-    var output = rawdata.replace(regex1, vne)
-                        .replace(regex2, vno)
-                        .replace(regex3, vs1)
-                        .replace(regex4, vs0)
+    var output = rawdata.replace(regex0, vne)
+                        .replace(regex1, vno)
+                        .replace(regex2, vs1)
+                        .replace(regex3, vs0)
+                        .replace(regex4, websocketPort);
     fs.writeFileSync(vufineview, output);
 }
 
-function generateSetupView() {
-    const regex1 = /##VIEW##/gi;
-    const regex2 = /##SERIALPORT##/gi;
-    const regex3 = /##BAUDRATE##/gi;
-    const regex4 = /##DEBUGVALUE##/gi;
-    const regex5 = /##CHECKED##/gi;
-    const regex6 = /##VNE##/gi;
-    const regex7 = /##VNO##/gi;
-    const regex8 = /##VS1##/gi;
-    const regex9 = /##VS0##/gi;
+function generateIndexView() {
+    const regex0 = /##WSPORT##/gi;
+    var rawdata = String(fs.readFileSync(__dirname + "/public/templates/index_template.html"));
+    var output = rawdata.replace(regex0, websocketPort);
+    fs.writeFileSync(indexview, output);
+}
+
+function generateSetupView(port) {
+    const regex0 = /##VIEW##/gi;
+    const regex1 = /##SERIALPORT##/gi;
+    const regex2 = /##BAUDRATE##/gi;
+    const regex3 = /##DEBUGVALUE##/gi;
+    const regex4 = /##CHECKED##/gi;
+    const regex5 = /##VNE##/gi;
+    const regex6 = /##VNO##/gi;
+    const regex7 = /##VS1##/gi;
+    const regex8 = /##VS0##/gi;
     
     var dbg = debug ? "true" : "false";
     var checked = debug ? "checked" : "";
     
     var rawdata = String(fs.readFileSync(__dirname + "/public/templates/setup_template.html"));
-    var output = rawdata.replace(regex1, view)
-                        .replace(regex2, serialPort)
-                        .replace(regex3, baudrate)
-                        .replace(regex4, dbg)
-                        .replace(regex5, checked)
-                        .replace(regex6, vne)
-                        .replace(regex7, vno)
-                        .replace(regex8, vs1)
-                        .replace(regex9, vs0)
+    var output = rawdata.replace(regex0, view)
+                        .replace(regex1, serialPort)
+                        .replace(regex2, baudrate)
+                        .replace(regex3, dbg)
+                        .replace(regex4, checked)
+                        .replace(regex5, vne)
+                        .replace(regex6, vno)
+                        .replace(regex7, vs1)
+                        .replace(regex8, vs0)
     fs.writeFileSync(setupview, output);
 }
 
@@ -373,9 +406,9 @@ loadImage(__dirname + "/public/templates/speed_tape_template.png").then(image =>
 })
 
 function buildSpeedTapeImage(image) {
+    
     tapeimage = image;
-    readSettingsFile();
-
+    
     var mphfactor = 4.796875;  // = image height divided by 320 mph
 
     var maxSpeed = 320;

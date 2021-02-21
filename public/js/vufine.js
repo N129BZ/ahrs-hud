@@ -6,38 +6,26 @@ var vne = 0;
 var vno = 0;
 var vs1 = 0;
 var vs0 = 0;
+var wsport = 9696; // default port
 
-try {
-    let host = "ws://" + location.hostname + ":9696";
-    let websock = new WebSocket(host);
-    
-    websock.onopen = openSocket;
-    websock.onmessage = onSerialData;
-}
-catch(error) {
-    console.log(error);
-}
 
-function openSocket() {
-  //console.log("Websocket OPENED!");
-}
 
-$(document).keyup(function(e) {
-    console.log(e.keyCode);
-
-    //   DYNON SAMPLE
-    //   e.data = "!1121144703-014+00003310811+01736+033-15+1013-033+110831245+01650023176C\r\n";
-    //   GARMIN SAMPLE  
-    e.data = "=1121144703-150+03003310811+01736+003+99+1099-033+11245xx\r\n";
-    
-    onSerialData(e);
-});
-
-$(document).ready(function() {
+$(() => {
     vne = document.getElementById('vne').value;
     vno = document.getElementById('vno').value;
     vs1 = document.getElementById('vs1').value;
     vs0 = document.getElementById('vs0').value;
+    wsport = document.getElementById('wsport').value;
+
+    try {
+        let host = "ws://" + location.hostname + ":" + wsport;
+        let websock = new WebSocket(host);
+        
+        websock.onmessage = onSerialData;
+    }
+    catch(error) {
+        console.log(error);
+    }
 });
 
 var ball = $('#ball');
