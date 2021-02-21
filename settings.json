@@ -1,1 +1,1 @@
-{"view":"Hudly","serialPort":"/dev/ttyAMA0","baudrate":9600,"vne":160,"vno":135,"vs1":51,"vs0":44,"debug":true,"firstrun":true}
+{"view":"hudly","httpPort":8686,"wsPort":9696,"serialPort":"/dev/ttyAMA0","baudrate":9600,"vne":160,"vno":135,"vs1":51,"vs0":44,"debug":true,"firstrun":false}

@@ -16,7 +16,6 @@ var websocketPort = 9696;
 var httpPort = 8686; 
 var serialPort;
 var baudrate;
-var view;
 var vne;
 var vno;
 var vs1;
@@ -28,12 +27,13 @@ var firstrun = false;
 var inPlayback = false;
 var stopPlayback = false;
 var tapeimage;
-var currentview;
-var stylesheet;
+var view;
 
 const setupview = __dirname + "/setup.html";
 const vufineview = __dirname + "/public/viewfine.html";
 const indexview = __dirname + "/public/index.html";
+
+//const hudlyview = __dirname + "/public/hudly.html";
 
 const cvs = createCanvas(stW, stH);
 const ctx = cvs.getContext('2d');
@@ -140,14 +140,23 @@ try {
     
     webserver.get('/',(req, res) => {
         if (firstrun) {
+            generateSetupView();
             res.sendFile(setupview);
         }
         else {
-            res.sendFile(currentview);
+            generateHudView();
+            if (view == "vufine") {
+                res.sendFile(vufineview);
+            }
+            else {
+                res.sendFile(indexview);
+            }
+
         }
     });
 
     webserver.get("/setup", (req,res) => {
+        generateSetupView();
         res.sendFile(setupview);           
     });
 
@@ -159,7 +168,7 @@ try {
     
     webserver.post("/setup", (req, res) => {
         console.log(req.body);
-        let newview = req.body.selectedview;
+        let newview = String(req.body.selectedview).toLowerCase();
         let newserialport = req.body.serialPort;
         let newbaudrate =  parseInt(req.body.baudrate);
         let newdebug = req.body.debugchecked;
@@ -172,16 +181,6 @@ try {
         let reboot = false;
         
         if (newview != view) {
-            stylesheet = String(newview).toLowerCase();
-            switch(newview) {
-                case "VuFine" :
-                    currentview = vufineview;
-                    generateVuFineView();
-                    break;
-                default:
-                    currentview = indexview;
-                    generateIndexView();
-            };
             view = newview;
             writefile = true;
         }
@@ -244,8 +243,8 @@ try {
             openSerialPort(true);
         }
         
-        buildSpeedTapeImage(tapeimage);
         generateSetupView();
+        buildSpeedTapeImage(tapeimage);
         
         res.redirect("/");
     });
@@ -288,7 +287,7 @@ function openSerialPort(needsFileRead) {
 
 function readSettingsFile() {
     var rawdata = fs.readFileSync(__dirname + '/settings.json');
-    view = JSON.parse(rawdata).view;
+    view = String(JSON.parse(rawdata).view).toLowerCase();
     serialPort = JSON.parse(rawdata).serialPort;
     var hport = JSON.parse(rawdata).httpPort;
     var wsPort = JSON.parse(rawdata).wsPort;
@@ -306,25 +305,6 @@ function readSettingsFile() {
 
     if (websocketPort != wsPort) {
         websocketPort = wsPort;
-    }
-
-    generateSetupView();
-    
-    switch (view) {
-        case "VuFine":
-            generateVuFineView(wsPort);
-            currentview = vufineview;
-            stylesheet = "vufine";
-            break;
-        case "Kivic":
-            stylesheet = "kivic";
-        case "Hudly":
-            stylesheet = "hudly";
-        default:
-            generateHudStylesheet(stylesheet);
-            generateIndexView(wsPort);
-            currentview = indexview;
-
     }
 }
 
@@ -347,18 +327,13 @@ function showError(error) {
     console.log('Serial port error: ' + error);
 }
 
-function generateHudStylesheet(sourcename) {
-    var output = String(fs.readFileSync(__dirname + "/public/templates/" + sourcename + "_template.css"));
-    fs.writeFileSync(__dirname + "/public/css/classes.css", output);
-}
-
 function generateVuFineView() {
     const regex0 = /##VNE##/gi;
     const regex1 = /##VNO##/gi;
     const regex2 = /##VS1##/gi;
     const regex3 = /##VS0##/gi;
     const regex4 = /##WSPORT##/gi;
-    var rawdata = String(fs.readFileSync(__dirname + "/public/templates/vufine_template.html"));
+    var rawdata = String(fs.readFileSync(__dirname + "/templates/vufine_template.html"));
     var output = rawdata.replace(regex0, vne)
                         .replace(regex1, vno)
                         .replace(regex2, vs1)
@@ -367,11 +342,22 @@ function generateVuFineView() {
     fs.writeFileSync(vufineview, output);
 }
 
-function generateIndexView() {
-    const regex0 = /##WSPORT##/gi;
-    var rawdata = String(fs.readFileSync(__dirname + "/public/templates/index_template.html"));
-    var output = rawdata.replace(regex0, websocketPort);
-    fs.writeFileSync(indexview, output);
+function generateHudView() {
+    if (view == "vufine") {
+        generateVuFineView();
+    }
+    else {
+        generateHudStylesheet();
+        const regex0 = /##WSPORT##/gi;
+        var rawdata = String(fs.readFileSync(__dirname + "/templates/index_template.html"));
+        var output = rawdata.replace(regex0, websocketPort);
+        fs.writeFileSync(indexview, output);
+    }
+}
+
+function generateHudStylesheet() {
+    var output = String(fs.readFileSync(__dirname + "/templates/" + view + "_template.css"));
+    fs.writeFileSync(__dirname + "/public/css/classes.css", output);
 }
 
 function generateSetupView(port) {
@@ -384,12 +370,22 @@ function generateSetupView(port) {
     const regex6 = /##VNO##/gi;
     const regex7 = /##VS1##/gi;
     const regex8 = /##VS0##/gi;
-    
+    var properViewName;
     var dbg = debug ? "true" : "false";
     var checked = debug ? "checked" : "";
     
-    var rawdata = String(fs.readFileSync(__dirname + "/public/templates/setup_template.html"));
-    var output = rawdata.replace(regex0, view)
+    if (view == "vufine") {
+        properViewName = "VuFine";
+    }
+    else if (view == "kivic") {
+        properViewName = "Kivic";
+    }
+    else {
+        properViewName = "Hudly";
+    }
+    
+    var rawdata = String(fs.readFileSync(__dirname + "/templates/setup_template.html"));
+    var output = rawdata.replace(regex0, properViewName)
                         .replace(regex1, serialPort)
                         .replace(regex2, baudrate)
                         .replace(regex3, dbg)
@@ -401,7 +397,7 @@ function generateSetupView(port) {
     fs.writeFileSync(setupview, output);
 }
 
-loadImage(__dirname + "/public/templates/speed_tape_template.png").then(image => { 
+loadImage(__dirname + "/templates/speed_tape_template.png").then(image => { 
     buildSpeedTapeImage(image);
 })
 
