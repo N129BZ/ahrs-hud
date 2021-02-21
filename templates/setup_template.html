@@ -139,22 +139,24 @@
     </form>
   </div>
   <script>
-      document.getElementById("view").value="##VIEW##";
-      document.getElementById("selectedview").value="##VIEW##";
-      document.getElementById("debugchecked").value = "##DEBUGVALUE##";
-      document.getElementById("vne").value = "##VNE##";  
-      document.getElementById("vno").value = "##VNO##";
-      document.getElementById("vs1").value = "##VS1##";
-      document.getElementById("vs0").value = "##VS0##";
-      
+      window.onload = function() {
+          document.getElementById("view").value="##VIEW##";
+          document.getElementById("selectedview").value="##VIEW##";
+          document.getElementById("debugchecked").value = "##DEBUGVALUE##";
+          document.getElementById("vne").value = "##VNE##";  
+          document.getElementById("vno").value = "##VNO##";
+          document.getElementById("vs1").value = "##VS1##";
+          document.getElementById("vs0").value = "##VS0##";
+      };
+
       function updateDebugChecked(newvalue) {
         document.getElementById("debugchecked").value = newvalue ? "true" : "false";
-      }
+      };
 
       function updateSelectedView(newvalue) {
-          document.getElementById("view").value=newvalue;
-          document.getElementById("selectedview").value=newvalue;
-      }
+          document.getElementById("view").value = newvalue;
+          document.getElementById("selectedview").value = newvalue;
+      };
   </script>
 </body>
 </html>

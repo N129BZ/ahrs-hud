@@ -166,12 +166,18 @@ try {
         });
     });    
     
+    webserver.get("/reboot", (req,res) => {
+        systemReboot(function(output){
+            console.log(output);
+        });
+    });    
+
     webserver.post("/setup", (req, res) => {
         console.log(req.body);
-        let newview = String(req.body.selectedview).toLowerCase();
+        let viewProperName = req.body.selectedview;
         let newserialport = req.body.serialPort;
         let newbaudrate =  parseInt(req.body.baudrate);
-        let newdebug = req.body.debugchecked;
+        let newdebug = req.body.debugchecked == "true" ? true : false;
         let newvne = parseInt(req.body.vne);
         let newvno = parseInt(req.body.vno);
         let newvs1 = parseInt(req.body.vs1);
@@ -179,7 +185,8 @@ try {
         let writefile = false;
         let reopenport = false;
         let reboot = false;
-        
+        var newview = String(viewProperName).toLowerCase();
+
         if (newview != view) {
             view = newview;
             writefile = true;
@@ -197,12 +204,12 @@ try {
             reopenport = true;
         }
         
-        if (debug && newdebug == "false") {
+        if (debug && !newdebug) {
             stopPlayback = true;
             debug = false;
             writefile = true;
         }
-        else if (!debug && newdebug == "true") {
+        else if (!debug && newdebug) {
             debug = true;
             writefile = true;
         }
@@ -216,7 +223,7 @@ try {
         }
 
         if (writefile) {
-            let data = { "view" : view, 
+            let data = { "view" : viewProperName, 
                          "httpPort" : httpPort,
                          "wsPort" : websocketPort,
                          "serialPort" : serialPort, 
@@ -374,16 +381,17 @@ function generateSetupView(port) {
     var dbg = debug ? "true" : "false";
     var checked = debug ? "checked" : "";
     
-    if (view == "vufine") {
-        properViewName = "VuFine";
+    switch (view) {
+       case "vufine":
+           properViewName = "VuFine";
+           break;
+       case "kivic" :
+           properViewName = "Kivic";
+           break;
+       default : 
+           properViewName = "Hudly";
     }
-    else if (view == "kivic") {
-        properViewName = "Kivic";
-    }
-    else {
-        properViewName = "Hudly";
-    }
-    
+
     var rawdata = String(fs.readFileSync(__dirname + "/templates/setup_template.html"));
     var output = rawdata.replace(regex0, properViewName)
                         .replace(regex1, serialPort)
