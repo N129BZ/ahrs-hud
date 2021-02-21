@@ -14,12 +14,12 @@ const { createCanvas, loadImage, Canvas } = require('canvas');
 var wss;
 var websocketPort = 9696; 
 var httpPort = 8686; 
-var serialPort;
-var baudrate;
-var vne;
-var vno;
-var vs1;
-var vs0;
+var serialPort = "";
+var baudrate = 0;
+var vne = 0;
+var vno = 0;
+var vs1 = 0;
+var vs0 = 0;
 var stW = 85;
 var stH = 1844;
 var debug = false;
@@ -27,7 +27,7 @@ var firstrun = false;
 var inPlayback = false;
 var stopPlayback = false;
 var tapeimage;
-var view;
+var view = "";
 
 const setupview = __dirname + "/setup.html";
 const vufineview = __dirname + "/public/viewfine.html";
@@ -186,6 +186,8 @@ try {
         let reopenport = false;
         let reboot = false;
         var newview = String(viewProperName).toLowerCase();
+        
+        firstrun = false;
 
         if (newview != view) {
             view = newview;
