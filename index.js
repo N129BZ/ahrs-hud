@@ -7,7 +7,6 @@ const WebSocketServer = require('websocket').server;
 const Readline = require('@serialport/parser-readline');
 const fs = require('fs');
 const exec = require('child_process').exec;
-const protobuf = require("protobufjs");
 const lineReader = require('line-by-line');
 const { createCanvas, loadImage, Canvas } = require('canvas');
 
@@ -28,17 +27,19 @@ var inPlayback = false;
 var stopPlayback = false;
 var tapeimage;
 var view = "";
+var trafficWarnings = false;
+var maxWarnAltitude = 0;
+var maxWarnDistance = 0;
 
 const setupview = __dirname + "/setup.html";
 const vufineview = __dirname + "/public/viewfine.html";
 const indexview = __dirname + "/public/index.html";
 
-//const hudlyview = __dirname + "/public/hudly.html";
-
 const cvs = createCanvas(stW, stH);
 const ctx = cvs.getContext('2d');
 
-readSettingsFile(); // this also generates the setup.html and vufine.html views
+
+readSettingsFile();
 
 var server = http.createServer(function (request, response) { });
 try {
@@ -47,7 +48,8 @@ try {
     wss = new WebSocketServer({
         httpServer: server
     });
-    console.log("Websocket server listening at port " + websocketPort);
+    console.log("Websocket server listening at port " + websocketPort); 
+      
 }
 catch (error) {
     console.log(error);
@@ -186,7 +188,10 @@ try {
         let reopenport = false;
         let reboot = false;
         var newview = String(viewProperName).toLowerCase();
-        
+        let newtw = req.body.twchecked == "true" ? true : false;
+        let newmaxwarnalt = req.body.maxwarnaltitude;
+        let newmaxwarndist = req.body.maxwarndistance;
+                
         firstrun = false;
 
         if (newview != view) {
@@ -216,6 +221,21 @@ try {
             writefile = true;
         }
 
+        if ((newmaxwarnalt != maxWarnAltitude) || (newmaxwarndist != newmaxwarndist)) {
+            maxWarnAltitude = newmaxwarnalt;
+            maxWarnDistance = newmaxwarndist;
+            writefile = true;
+        }
+
+        if (trafficWarnings && !newtw) {
+            trafficWarnings = false;
+            writefile = true;
+        }
+        else if (!trafficWarnings && newtw) {
+            trafficWarnings = true;
+            writefile = true;
+        }
+
         if (newvne != vne || newvno != vno || newvs1 != vs1 || newvs0 != vs0) {
             vne = newvne;
             vno = newvno;
@@ -228,16 +248,20 @@ try {
             let data = { "view" : viewProperName, 
                          "httpPort" : httpPort,
                          "wsPort" : websocketPort,
-                         "serialPort" : serialPort, 
+                         "serialPort" : serialPort,
                          "baudrate" : baudrate, 
                          "vne" : vne,
                          "vno" : vno,
                          "vs1" : vs1,
                          "vs0" : vs0,
+                         "trafficwarnings" : trafficWarnings,
+                         "maxwarnaltitude" : maxWarnAltitude,
+                         "maxwarndistance" : maxWarnDistance,
                          "debug" : debug,
-                         "firstrun" : false
+                         "firstrun" : firstrun
                         };
-            fs.writeFileSync(__dirname + "/settings.json", JSON.stringify(data),{flag: 'w+'});
+            var stringToWrite = JSON.stringify(data, null, '  ').replace(/: "(?:[^"]+|\\")*",?$/gm, ' $&');
+            fs.writeFileSync(__dirname + "/settings.json", stringToWrite,{flag: 'w+'});
             
             if (reboot) {
                 systemReboot(function(output){
@@ -305,6 +329,9 @@ function readSettingsFile() {
     vno = JSON.parse(rawdata).vno;
     vs1 = JSON.parse(rawdata).vs1;
     vs0 = JSON.parse(rawdata).vs0;
+    trafficWarnings = JSON.parse(rawdata).trafficwarnings;
+    maxWarnAltitude = JSON.parse(rawdata).maxwarnaltitude;
+    maxWarnDistance = JSON.parse(rawdata).maxwarndistance;
     debug = JSON.parse(rawdata).debug;
     firstrun = JSON.parse(rawdata).firstrun;
     
@@ -357,9 +384,18 @@ function generateHudView() {
     }
     else {
         generateHudStylesheet();
+
         const regex0 = /##WSPORT##/gi;
+        const regex1 = /##TRAFFIC_WARN##/gi;
+        const regex2 = /##MAX_WARN_ALTITUDE##/gi;
+        const regex3 = /##MAX_WARN_DISTANCE##/gi;
+
         var rawdata = String(fs.readFileSync(__dirname + "/templates/index_template.html"));
-        var output = rawdata.replace(regex0, websocketPort);
+        var output = rawdata.replace(regex0, websocketPort)
+                            .replace(regex1, trafficWarnings)
+                            .replace(regex2, maxWarnAltitude)
+                            .replace(regex3, maxWarnDistance);
+
         fs.writeFileSync(indexview, output);
     }
 }
@@ -370,19 +406,26 @@ function generateHudStylesheet() {
 }
 
 function generateSetupView(port) {
-    const regex0 = /##VIEW##/gi;
-    const regex1 = /##SERIALPORT##/gi;
-    const regex2 = /##BAUDRATE##/gi;
-    const regex3 = /##DEBUGVALUE##/gi;
-    const regex4 = /##CHECKED##/gi;
-    const regex5 = /##VNE##/gi;
-    const regex6 = /##VNO##/gi;
-    const regex7 = /##VS1##/gi;
-    const regex8 = /##VS0##/gi;
+    const regex00 = /##VIEW##/gi;
+    const regex01 = /##TWVALUE##/gi;
+    const regex02 = /##TWCHECKED##/gi;
+    const regex03 = /##SERIALPORT##/gi;
+    const regex04 = /##BAUDRATE##/gi;
+    const regex05 = /##DEBUGVALUE##/gi;
+    const regex06 = /##CHECKED##/gi;
+    const regex07 = /##VNE##/gi;
+    const regex08 = /##VNO##/gi;
+    const regex09 = /##VS1##/gi;
+    const regex10 = /##VS0##/gi;
+    const regex11 = /##MAX_WARN_ALTITUDE##/gi;
+    const regex12 = /##MAX_WARN_DISTANCE##/gi;
+    
     var properViewName;
     var dbg = debug ? "true" : "false";
     var checked = debug ? "checked" : "";
-    
+    var tw = trafficWarnings ? "true" : "false";
+    var twchecked = trafficWarnings ? "checked" : "";
+
     switch (view) {
        case "vufine":
            properViewName = "VuFine";
@@ -395,15 +438,19 @@ function generateSetupView(port) {
     }
 
     var rawdata = String(fs.readFileSync(__dirname + "/templates/setup_template.html"));
-    var output = rawdata.replace(regex0, properViewName)
-                        .replace(regex1, serialPort)
-                        .replace(regex2, baudrate)
-                        .replace(regex3, dbg)
-                        .replace(regex4, checked)
-                        .replace(regex5, vne)
-                        .replace(regex6, vno)
-                        .replace(regex7, vs1)
-                        .replace(regex8, vs0)
+    var output = rawdata.replace(regex00, properViewName)
+                        .replace(regex01, tw)
+                        .replace(regex02, twchecked)
+                        .replace(regex03, serialPort)
+                        .replace(regex04, baudrate)
+                        .replace(regex05, dbg)
+                        .replace(regex06, checked)
+                        .replace(regex07, vne)
+                        .replace(regex08, vno)
+                        .replace(regex09, vs1)
+                        .replace(regex10, vs0)
+                        .replace(regex11, maxWarnAltitude)
+                        .replace(regex12, maxWarnDistance)
     fs.writeFileSync(setupview, output);
 }
 
