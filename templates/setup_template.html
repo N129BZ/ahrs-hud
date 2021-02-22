@@ -115,6 +115,17 @@
     </div>
     <br>
     <p>
+        <h3><label for="speedstyle" class="label">Select the speed indicator (KT or MPH) to use</label></h3>
+    </p>
+    <p>
+       <select id="speedstyle" name="speedstyle" class="selectlist" onClick="updateSpeedStyle(this.value);">
+           <option value="KT">KT</option>
+           <option value="MPH">MPH</option>
+           <option value="KPH">KPH</option>
+       </select>
+    </p>
+    <br>
+    <p>
         <h3><label for="warnings" class="label">Enter your ADSB warning aircraft proximity values</label></h3>
     </p>
     <div class="form-field">
@@ -147,6 +158,9 @@
     <div class="form-field"> 
         <input type="text" id="selectedview" name="selectedview" style="visibility: hidden;">
     </div>
+    <div class="form-field"> 
+        <input type="text" id="selectedspeedstyle" name="selectedspeedstyle" style="visibility: hidden;">
+    </div>
     <br>
     <br>
     <br>
@@ -169,6 +183,8 @@
           document.getElementById("vs0").value = "##VS0##";
           document.getElementById("maxwarnaltitude").value = "##MAX_WARN_ALTITUDE##";
           document.getElementById("maxwarndistance").value = "##MAX_WARN_DISTANCE##";
+          document.getElementById("selectedspeedstyle").value = "##SPEEDSTYLE##";
+          document.getElementById("speedstyle").value = "##SPEEDSTYLE##";
       };
 
       function updateTrafficWarning(newvalue) {
@@ -182,6 +198,11 @@
       function updateSelectedView(newvalue) {
           document.getElementById("view").value = newvalue;
           document.getElementById("selectedview").value = newvalue;
+      };
+
+      function updateSpeedStyle(newvalue) {
+          document.getElementById("speedstyle").value = newvalue;
+          document.getElementById("selectedspeedstyle").value = newvalue;
       };
   </script>
 </body>

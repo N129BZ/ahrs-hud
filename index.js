@@ -8,7 +8,25 @@ const Readline = require('@serialport/parser-readline');
 const fs = require('fs');
 const exec = require('child_process').exec;
 const lineReader = require('line-by-line');
+const dgram = require('dgram')
+const dgServer = dgram.createSocket('udp4');
 const { createCanvas, loadImage, Canvas } = require('canvas');
+
+dgServer.on('error', (err) => {
+    console.log(`server error:\n${err.stack}`);
+    server.close();
+});
+  
+dgServer.on('message', (msg, rinfo) => {
+    console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+});
+  
+dgServer.on('listening', () => {
+    const address = server.address();
+    console.log(`server listening ${address.address}:${address.port}`);
+});
+
+dgServer.bind(4000);
 
 var wss;
 var websocketPort = 9696; 
@@ -22,6 +40,7 @@ var vs0 = 0;
 var stW = 85;
 var stH = 1844;
 var debug = false;
+var speedStyle = "KT";
 var firstrun = false;
 var inPlayback = false;
 var stopPlayback = false;
@@ -191,9 +210,15 @@ try {
         let newtw = req.body.twchecked == "true" ? true : false;
         let newmaxwarnalt = req.body.maxwarnaltitude;
         let newmaxwarndist = req.body.maxwarndistance;
-                
+        let newspeedstyle = req.body.speedstyle;  
+
         firstrun = false;
 
+        if (newspeedstyle != speedStyle) {
+            speedStyle = newspeedstyle;
+            writefile = true;
+        }
+        
         if (newview != view) {
             view = newview;
             writefile = true;
@@ -257,6 +282,7 @@ try {
                          "trafficwarnings" : trafficWarnings,
                          "maxwarnaltitude" : maxWarnAltitude,
                          "maxwarndistance" : maxWarnDistance,
+                         "speedstyle" : speedStyle,
                          "debug" : debug,
                          "firstrun" : firstrun
                         };
@@ -320,20 +346,22 @@ function openSerialPort(needsFileRead) {
 
 function readSettingsFile() {
     var rawdata = fs.readFileSync(__dirname + '/settings.json');
-    view = String(JSON.parse(rawdata).view).toLowerCase();
-    serialPort = JSON.parse(rawdata).serialPort;
-    var hport = JSON.parse(rawdata).httpPort;
-    var wsPort = JSON.parse(rawdata).wsPort;
-    baudrate = parseInt(JSON.parse(rawdata).baudrate);
-    vne = JSON.parse(rawdata).vne;
-    vno = JSON.parse(rawdata).vno;
-    vs1 = JSON.parse(rawdata).vs1;
-    vs0 = JSON.parse(rawdata).vs0;
-    trafficWarnings = JSON.parse(rawdata).trafficwarnings;
-    maxWarnAltitude = JSON.parse(rawdata).maxwarnaltitude;
-    maxWarnDistance = JSON.parse(rawdata).maxwarndistance;
-    debug = JSON.parse(rawdata).debug;
-    firstrun = JSON.parse(rawdata).firstrun;
+    var parsedData = JSON.parse(rawdata);
+    view = String(parsedData.view).toLowerCase();
+    serialPort = parsedData.serialPort;
+    var hport = parsedData.httpPort;
+    var wsPort = parsedData.wsPort;
+    baudrate = parseInt(parsedData.baudrate);
+    vne = parsedData.vne;
+    vno = parsedData.vno;
+    vs1 = parsedData.vs1;
+    vs0 = parsedData.vs0;
+    trafficWarnings = parsedData.trafficwarnings;
+    maxWarnAltitude = parsedData.maxwarnaltitude;
+    maxWarnDistance = parsedData.maxwarndistance;
+    speedStyle = parsedData.speedstyle;
+    debug = parsedData.debug;
+    firstrun = parsedData.firstrun;
     
     if (httpPort != hport) {
         httpPort = hport;
@@ -389,12 +417,13 @@ function generateHudView() {
         const regex1 = /##TRAFFIC_WARN##/gi;
         const regex2 = /##MAX_WARN_ALTITUDE##/gi;
         const regex3 = /##MAX_WARN_DISTANCE##/gi;
-
+        const regex4 = /##SPEEDSTYLE##/gi;
         var rawdata = String(fs.readFileSync(__dirname + "/templates/index_template.html"));
         var output = rawdata.replace(regex0, websocketPort)
                             .replace(regex1, trafficWarnings)
                             .replace(regex2, maxWarnAltitude)
-                            .replace(regex3, maxWarnDistance);
+                            .replace(regex3, maxWarnDistance)
+                            .replace(regex4, speedStyle);
 
         fs.writeFileSync(indexview, output);
     }
@@ -419,6 +448,7 @@ function generateSetupView(port) {
     const regex10 = /##VS0##/gi;
     const regex11 = /##MAX_WARN_ALTITUDE##/gi;
     const regex12 = /##MAX_WARN_DISTANCE##/gi;
+    const regex13 = /##SPEEDSTYLE##/gi;
     
     var properViewName;
     var dbg = debug ? "true" : "false";
@@ -451,6 +481,7 @@ function generateSetupView(port) {
                         .replace(regex10, vs0)
                         .replace(regex11, maxWarnAltitude)
                         .replace(regex12, maxWarnDistance)
+                        .replace(regex13, speedStyle);
     fs.writeFileSync(setupview, output);
 }
 

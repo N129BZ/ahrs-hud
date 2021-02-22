@@ -19,6 +19,7 @@
   "dependencies": {
     "@serialport/parser-readline": "^8.0.6",
     "canvas": "^2.6.1",
+    "dgram": "^1.0.1",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "http": "0.0.0",

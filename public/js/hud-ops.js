@@ -12,17 +12,19 @@ var lastIdent = "";
 var lastAlt = 0;
 var lastDist = 0;
 var lastBrng = 0;
+var lastSpd = 0;
 var rcvCount = 0;
 var clrCount = 0;
 var countCycle = 0;
 var myAlt = 0;
 var warning_altitude = 0;
 var warning_distance = 0; 
+var speedStyle = "KT";
 var isWarning = false;
 var warningIdentity;
 var warningAltitude;
 var warningDistance;
-var warningBearing;
+var warningCourse;
 
 const urlTraffic = "ws://192.168.10.1/traffic";
 
@@ -32,14 +34,15 @@ svg.addEventListener("load",function() {
     // get the inner DOM of alpha.svg
     var svgDoc = svg.contentDocument;
     // get the inner element by id
-    warningIdentity = svgDoc.getElementById("tspanWarnIdentity"); 
-    warningAltitude = svgDoc.getElementById("tspanWarnAltitude");
-    warningDistance = svgDoc.getElementById("tspanWarnDistance");
-    warningBearing = svgDoc.getElementById("tspanWarnBearing");
+    warningIdentity = svgDoc.getElementById("ident"); 
+    warningAltitude = svgDoc.getElementById("alt");
+    warningDistance = svgDoc.getElementById("dist");
+    warningCourse = svgDoc.getElementById("crs");
 }, false);
 
 $(() => {
     wsport = parseInt(document.getElementById("wsport").value);
+    speedStyle = document.getElementById("speedstyle").value;
 
     try {
         let host = "ws://" + location.hostname + ":" + wsport;
@@ -58,10 +61,10 @@ $(() => {
 
     if (trafficWarnings) {
         trafficWebSocket = new WebSocket(urlTraffic);
-        trafficWebSocket.onopen = function(evt) { onTrafficOpen(evt) };
-        trafficWebSocket.onclose = function(evt) { onTrafficClose(evt) };
-        trafficWebSocket.onmessage = function(evt) { onTrafficMessage(evt) };
-        trafficWebSocket.onerror = function(evt) { onTrafficError(evt) };
+        trafficWebSocket.onopen = function(evt) {onTrafficOpen(evt)};
+        trafficWebSocket.onclose = function(evt) {onTrafficClose(evt)};
+        trafficWebSocket.onmessage = function(evt) {onTrafficMessage(evt)};
+        trafficWebSocket.onerror = function(evt) {onTrafficError(evt)};
     }
 });
 
@@ -506,8 +509,6 @@ function zerosPad(rndVal, decPlaces) {
     return valStrg
 }
 
-// send the value in as "num" in a variable
-
 // clears field of default value
 
 function clear_field(field) {
@@ -516,26 +517,34 @@ function clear_field(field) {
     }
 }
 
-function onTrafficOpen(evt) {
-    console.log("Traffic warning websocket successfully connected to Stratux!");
-    wsOpen = true;
-    setInterval(runHeartbeatRoutine, 14000);
-}
-
 function runHeartbeatRoutine() {
-    if (isWarning) {
-        isWarning = false;
-        svg.setAttribute("style", "visibility:hidden");
-    }
     var now = new Date();
-        var date = now.getFullYear() + "-" + (now.getMonth() +1)+ "-" + now.getDate();
-        var time = now.getHours() +":" + now.getMinutes() + ":" + now.getSeconds();
-        var timestamp = date + " " + time;
+    var date = now.getFullYear() + "-" + (now.getMonth() +1)+ "-" + now.getDate();
+    var time = now.getHours() +":" + now.getMinutes() + ":" + now.getSeconds();
+    var timestamp = date + " " + time;
     sendKeepAlive(timestamp);
 }
 
+function sendKeepAlive(data) {
+    var rs = trafficWebSocket.readyState;
+    if (rs == 1) {
+        trafficWebSocket.send(data);
+        console.log("Sent keepalive to Stratux at " + data);
+    }
+}
+
+function onError(evt) {
+    console.log("Traffic websocket ERROR: " + evt.data);
+}
+
+function onTrafficOpen(evt) {
+    console.log("Traffic warning websocket successfully connected to Stratux!");
+    wsOpen = true;
+    setInterval(runHeartbeatRoutine, 20000);
+}
+
 function onTrafficClose(evt) {
-    console.log("Websocket CLOSED.");
+    console.log("Traffic warning Websocket CLOSED.");
     wsOpen = false;
 }
             
@@ -559,37 +568,43 @@ function onTrafficMessage(evt) {
     var brng = Number(Math.round(obj.Bearing.toFixed(0)));
     var reg = obj.Reg != "" ? obj.Reg : obj.Tail;
     var alt = Number(obj.Alt);
+    var spd = Number(obj.Speed);
+   
     myAlt = Number(altitudebox.textContent);
+
     isWarning = false;
 
-      
-    // we're only going to consider traffic that has been continuously reported for 20 cycles (1 second)
-    if (rcvCount < 20) {
+    // we're only going to consider traffic that has been continuously reported for 30 cycles
+    if (rcvCount < 60) {
         rcvCount = rcvCount + 1;
     }
-    else if (rcvCount >= 10) {
-        console.log("Show Warning = " + showWarning + ", " +  reg + " - Brg: " + brng + ", Dist: " + dist + ", Alt: " +  alt);
-        rcvCount = 0;
+    else { 
+        var course = spd + " " + speedStyle +" @ " + brng + "\xB0";
+        console.log("Traffic detected: " +  reg + " - Course: " + course + ", Dist: " + dist + ", Alt: " +  alt);
         if (dist > warning_distance && reg == lastIdent) {
             isWarning = false;
             lastIdent = "";
             lastAlt = 0;
             lastDist = 0;
             lastBrng = 0;
+            lastSpd = 0;
             svg.setAttribute("style", "visibility:hidden");
         }
         else if (dist <= warning_distance) {
             if (alt <= myAlt + warning_altitude && alt >= myAlt - warning_altitude) {
-                if (brng != 0 ) { 
+                rcvCount = 0;
+
+                if (brng != 0 && spd != 0) { 
                     isWarning = true;
                     warningIdentity.textContent = reg;
                     warningAltitude.textContent = alt;
                     warningDistance.textContent = dist;
-                    warningBearing.textContent = brng;
+                    warningCourse.textContent = course;
                     lastIdent = reg;
                     lastAlt = alt;
                     lastDist = dist;
                     lastBrng = brng;
+                    lastSpd = spd;
                 }
             }
         }
@@ -602,17 +617,3 @@ function onTrafficMessage(evt) {
         }
     }
 }
-
-function sendKeepAlive(data) {
-    var rs = trafficWebSocket.readyState;
-    if (rs == 1) {
-        trafficWebSocket.send(data);
-        console.log("Sent keepalive to Stratux at " + data);
-    }
-}
-
-function onError(evt) {
-    console.log("Websocket ERROR: " + evt.data);
-}
-
-

@@ -1,1 +1,17 @@
-{"view":"Hudly","httpPort":8686,"wsPort":9696,"serialPort":"/dev/ttyAMA0","baudrate":9600,"vne":160,"vno":140,"vs1":51,"vs0":44,"debug":true,"firstrun":true}
+{
+  "view" : "Hudly",
+  "httpPort": 8686,
+  "wsPort": 9696,
+  "serialPort" : "/dev/ttyAMA0",
+  "baudrate": 9600,
+  "vne": 160,
+  "vno": 140,
+  "vs1": 51,
+  "vs0": 44,
+  "trafficwarnings": true,
+  "maxwarnaltitude" : "6000",
+  "maxwarndistance" : "6",
+  "speedstyle" : "MPH",
+  "debug": true,
+  "firstrun": false
+}

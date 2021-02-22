@@ -1,30 +1,218 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="320" height="230" viewBox="0 0 78.828 60.854">
-  <path fill="#ff0" stroke="#00f" stroke-width="1.555" stroke-linejoin="round" paint-order="fill markers stroke" d="M-2.142.627H80.97v59.45H-2.142z"/>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="7.199" y="277.417" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="red" stroke-width=".361">
-    <tspan x="7.199" y="277.417">Identity:</tspan>
-  </text>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="7.695" y="286.667" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="red" stroke-width=".361">
-    <tspan x="7.695" y="286.667">Altitude:</tspan>
-  </text>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="5.711" y="296.504" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="red" stroke-width=".361">
-    <tspan x="5.711" y="296.504">Distance:</tspan>
-  </text>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="8.191" y="305.677" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="red" stroke-width=".361">
-    <tspan x="8.191" y="305.677">Bearing:</tspan>
-  </text>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center" x="48.098" y="204.808" transform="matrix(.82815 0 0 1.20752 0 -236.146)" font-weight="700" font-size="7.122" font-family="sans-serif" letter-spacing="0" word-spacing="0" text-anchor="middle" fill="red" stroke-width=".411">
-    <tspan x="48.098" y="204.808" style="-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center">PROXIMITY WARNING!</tspan>
-  </text>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="38.892" y="277.724" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#00f" stroke-width=".361">
-    <tspan id="tspanWarnIdentity" x="38.892" y="277.724">Identity</tspan>
-  </text>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="38.892" y="286.974" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#00f" stroke-width=".361">
-    <tspan id="tspanWarnAltitude" x="38.892" y="286.974">Altitude</tspan>
-  </text>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="38.892" y="296.812" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#00f" stroke-width=".361">
-    <tspan id="tspanWarnDistance" x="38.892" y="296.812">Distance</tspan>
-  </text>
-  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="38.892" y="305.984" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#00f" stroke-width=".361">
-    <tspan id="tspanWarnBearing" x="38.892" y="305.984">Bearing</tspan>
-  </text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="320"
+   height="230"
+   viewBox="0 0 78.828 60.854"
+   version="1.1"
+   id="svg36"
+   sodipodi:docname="trafficWarn.svg"
+   inkscape:version="1.0.1 (0767f8302a, 2020-10-17)">
+  <metadata
+     id="metadata42">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs40" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="989"
+     id="namedview38"
+     showgrid="false"
+     inkscape:zoom="3.6130435"
+     inkscape:cx="160"
+     inkscape:cy="115"
+     inkscape:window-x="0"
+     inkscape:window-y="42"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg36"
+     inkscape:document-rotation="0" />
+  <path
+     fill="#ff0"
+     stroke="#00f"
+     stroke-width="1.555"
+     stroke-linejoin="round"
+     paint-order="fill markers stroke"
+     d="M-2.142.627H80.97v59.45H-2.142z"
+     id="path2"
+     style="fill:#000000;fill-opacity:1" />
+  <text
+     style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;fill:#ff0000;fill-opacity:1"
+     x="6.6178517"
+     y="25.217985"
+     transform="scale(1.0666633,0.93750295)"
+     font-weight="700"
+     font-size="5.29298px"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     fill="#ff0000"
+     stroke-width="0.360999"
+     id="text6"><tspan
+       x="6.6178517"
+       y="25.217985"
+       id="tspan4"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:0.360999">Identity:</tspan></text>
+  <text
+     style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;fill:#ff0000;fill-opacity:1"
+     x="6.2066946"
+     y="33.648933"
+     transform="scale(1.0666633,0.93750295)"
+     font-weight="700"
+     font-size="5.29298px"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     fill="#ff0000"
+     stroke-width="0.360999"
+     id="text10"><tspan
+       x="6.2066946"
+       y="33.648933"
+       id="tspan8"
+       style="fill:#ff0000;fill-opacity:1;stroke-width:0.360999">Altitude:</tspan></text>
+  <text
+     style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start"
+     x="4.2227011"
+     y="42.357025"
+     transform="scale(1.0666633,0.93750295)"
+     font-weight="700"
+     font-size="5.29298px"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     fill="#ff0000"
+     stroke-width="0.360999"
+     id="text14"><tspan
+       x="4.2227011"
+       y="42.357025"
+       id="tspan12"
+       style="stroke-width:0.360999">Distance:</tspan></text>
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ff0000;stroke-width:0.360999"
+     x="9.6792555"
+     y="50.965561"
+     transform="scale(1.0666633,0.93750295)"
+     font-weight="700"
+     font-size="5.29298px"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     fill="#ff0000"
+     stroke-width="0.360999"
+     id="text18"><tspan
+       sodipodi:role="line"
+       id="tspan854"
+       x="9.6792555"
+       y="50.965561">Course:</tspan></text>
+  <text
+     style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center"
+     x="48.098"
+     y="204.808"
+     transform="matrix(.82815 0 0 1.20752 0 -236.146)"
+     font-weight="700"
+     font-size="7.122"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     text-anchor="middle"
+     fill="red"
+     stroke-width=".411"
+     id="text22"><tspan
+       x="48.098"
+       y="204.808"
+       style="-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center"
+       id="tspan20">PROXIMITY WARNING!</tspan></text>
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ffff00;fill-opacity:1;stroke-width:0.360999"
+     x="35.419216"
+     y="25.270411"
+     transform="scale(1.0666633,0.93750295)"
+     font-weight="700"
+     font-size="5.29298px"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     fill="#0000ff"
+     stroke-width="0.360999"
+     id="text25"
+     inkscape:label="identity"><tspan
+       sodipodi:role="line"
+       id="ident"
+       x="35.419216"
+       y="25.270411">ident</tspan></text>
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ffff00;fill-opacity:1;stroke-width:0.360999"
+     x="35.419216"
+     y="33.95594"
+     transform="scale(1.0666633,0.93750295)"
+     font-weight="700"
+     font-size="5.29298px"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     fill="#0000ff"
+     stroke-width="0.360999"
+     id="text28"
+     inkscape:label="altitude"><tspan
+       sodipodi:role="line"
+       id="alt"
+       x="35.419216"
+       y="33.95594">alt</tspan></text>
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ffff00;fill-opacity:1;stroke-width:0.360999"
+     x="35.419216"
+     y="42.665039"
+     transform="scale(1.0666633,0.93750295)"
+     font-weight="700"
+     font-size="5.29298px"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     fill="#0000ff"
+     stroke-width="0.360999"
+     id="text31"
+     inkscape:label="distance"><tspan
+       sodipodi:role="line"
+       id="dist"
+       x="35.419216"
+       y="42.665039">dist</tspan></text>
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ffff00;fill-opacity:1;stroke-width:0.360999"
+     x="35.419216"
+     y="51.272564"
+     transform="scale(1.0666633,0.93750295)"
+     font-weight="700"
+     font-size="5.29298px"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     fill="#0000ff"
+     stroke-width="0.360999"
+     id="text34"
+     inkscape:label="course"><tspan
+       sodipodi:role="line"
+       id="crs"
+       x="35.419216"
+       y="51.272564">course</tspan></text>
 </svg>
