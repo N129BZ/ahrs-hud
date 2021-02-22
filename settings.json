@@ -11,7 +11,7 @@
   "trafficwarnings": true,
   "maxwarnaltitude" : "6000",
   "maxwarndistance" : "6",
-  "speedstyle" : "MPH",
+  "speedstyle" : "KT",
   "debug": true,
-  "firstrun": false
+  "firstrun": true
 }
