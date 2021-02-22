@@ -1,5 +1,5 @@
 
-Copyright (c) 2020, Brian Manlove
+Copyright (c) 2021, Brian Manlove
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
