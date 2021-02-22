@@ -315,6 +315,16 @@ body {
     height: 100%;
 }
 
+.trafficwarn {
+    width: 940px;
+    height: 480px;
+    top: 36px;
+    left: 9px;
+    position: absolute;
+    transform: scale(1, .8);
+    z-index: 500;
+}
+
 div.instrument.attitude div.roll {
     transform: rotate(0deg);
 }

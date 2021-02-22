@@ -404,3 +404,15 @@
     z-index: 200;
     transform: scale(.4, .3);
 }
+
+#trafficwarn {
+    visibility: hidden;
+    width: 940px;
+    height: 480px;
+    top: 36px;
+    left: 9px;
+    position: absolute;
+    transform: scale(1, .8);
+    z-index: 500;
+}
+

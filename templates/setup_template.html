@@ -23,14 +23,14 @@
         vertical-align: middle;
     }
     .label {
-        background-color:cornsilk;
+        background-color:white;
         color: black;
         font-family: Arial;
         font-weight: bold;
         font-size: 26px;
     }
     .textlabel {
-        background-color:cornsilk;
+        background-color:white;
         color: black;
         font-family: Arial;
         font-weight: bold;
@@ -115,6 +115,25 @@
     </div>
     <br>
     <p>
+        <h3><label for="warnings" class="label">Enter your ADSB warning aircraft proximity values</label></h3>
+    </p>
+    <div class="form-field">
+        <label for="warningAltitude" class="textlabel">Maximum or minium altitude difference from me (in feet) to generate a warning</label>
+        <input type="text" id="maxwarnaltitude" class="textbox" name="maxwarnaltitude" style="font-size: 20px; font-weight: bold;" value="##MAX_WARN_ALTITUDE##">
+        <br>
+        <label for="WarningDistance" class="textlabel">Maximum distance away from me (in miles) to generate a warning</label>
+        <input type="text" id="maxwarndistance" class="textbox" name="maxwarndistance" style="font-size: 20px; font-weight: bold;" value="##MAX_WARN_DISTANCE##">
+    </div>
+    <br>
+    <p>
+    <div class="form-field">
+        <input type="checkbox" id="trafficwarnings" name="trafficwarnings" style="height: 30px; width: 30px;" onClick="updateTrafficWarning(this.checked);" ##TWCHECKED##>
+        <label class="label" for="debug">&nbsp&nbspEnable ADSB Traffic Warnings from Stratux</label>
+    </div>
+    <div class="form-field">
+        <input type="text" id="twchecked" name="twchecked" style="visibility: hidden;">
+    </div>
+    <p>
     <br>
     <br>
     <br>
@@ -142,12 +161,19 @@
       window.onload = function() {
           document.getElementById("view").value="##VIEW##";
           document.getElementById("selectedview").value="##VIEW##";
+          document.getElementById("twchecked").value="##TWVALUE##";
           document.getElementById("debugchecked").value = "##DEBUGVALUE##";
           document.getElementById("vne").value = "##VNE##";  
           document.getElementById("vno").value = "##VNO##";
           document.getElementById("vs1").value = "##VS1##";
           document.getElementById("vs0").value = "##VS0##";
+          document.getElementById("maxwarnaltitude").value = "##MAX_WARN_ALTITUDE##";
+          document.getElementById("maxwarndistance").value = "##MAX_WARN_DISTANCE##";
       };
+
+      function updateTrafficWarning(newvalue) {
+        document.getElementById("twchecked").value = newvalue ? "true" : "false";
+      }
 
       function updateDebugChecked(newvalue) {
         document.getElementById("debugchecked").value = newvalue ? "true" : "false";

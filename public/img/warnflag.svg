@@ -1,0 +1,6 @@
+<svg id="warningflag" xmlns="http://www.w3.org/2000/svg" width="40" height="35" viewBox="0 0 10.583 9.26">
+  <path stroke-miterlimit="10" d="M.453.453h9.677v8.354H.453z" stroke="red" stroke-width=".907" stroke-linejoin="round" paint-order="fill markers stroke"/>
+  <text transform="scale(.95762 1.04426)" y="7.045" x="5.508" style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center" font-weight="700" font-size="6.595" letter-spacing="0" word-spacing="0" font-family="sans-serif" text-anchor="middle" fill="#fff" stroke-width=".38">
+    <tspan style="-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center" y="7.045" x="5.508">W</tspan>
+  </text>
+</svg>

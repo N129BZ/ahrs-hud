@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="230" viewBox="0 0 78.828 60.854">
+  <path fill="#ff0" stroke="#00f" stroke-width="1.555" stroke-linejoin="round" paint-order="fill markers stroke" d="M-2.142.627H80.97v59.45H-2.142z"/>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="7.199" y="277.417" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="red" stroke-width=".361">
+    <tspan x="7.199" y="277.417">Identity:</tspan>
+  </text>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="7.695" y="286.667" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="red" stroke-width=".361">
+    <tspan x="7.695" y="286.667">Altitude:</tspan>
+  </text>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="5.711" y="296.504" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="red" stroke-width=".361">
+    <tspan x="5.711" y="296.504">Distance:</tspan>
+  </text>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="8.191" y="305.677" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="red" stroke-width=".361">
+    <tspan x="8.191" y="305.677">Bearing:</tspan>
+  </text>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center" x="48.098" y="204.808" transform="matrix(.82815 0 0 1.20752 0 -236.146)" font-weight="700" font-size="7.122" font-family="sans-serif" letter-spacing="0" word-spacing="0" text-anchor="middle" fill="red" stroke-width=".411">
+    <tspan x="48.098" y="204.808" style="-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center">PROXIMITY WARNING!</tspan>
+  </text>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="38.892" y="277.724" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#00f" stroke-width=".361">
+    <tspan id="tspanWarnIdentity" x="38.892" y="277.724">Identity</tspan>
+  </text>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="38.892" y="286.974" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#00f" stroke-width=".361">
+    <tspan id="tspanWarnAltitude" x="38.892" y="286.974">Altitude</tspan>
+  </text>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="38.892" y="296.812" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#00f" stroke-width=".361">
+    <tspan id="tspanWarnDistance" x="38.892" y="296.812">Distance</tspan>
+  </text>
+  <text style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start" x="38.892" y="305.984" transform="matrix(1.06666 0 0 .9375 0 -236.146)" font-weight="700" font-size="5.293" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#00f" stroke-width=".361">
+    <tspan id="tspanWarnBearing" x="38.892" y="305.984">Bearing</tspan>
+  </text>
+</svg>

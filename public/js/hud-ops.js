@@ -3,7 +3,40 @@
 var host;
 var websock;
 var wsport = 9696; // default value
+var trafficWebSocket;
+var wsOpen = false;
 
+// variables for proximity warning calculations
+var showWarning = true;
+var lastIdent = "";
+var lastAlt = 0;
+var lastDist = 0;
+var lastBrng = 0;
+var rcvCount = 0;
+var clrCount = 0;
+var countCycle = 0;
+var myAlt = 0;
+var warning_altitude = 0;
+var warning_distance = 0; 
+var isWarning = false;
+var warningIdentity;
+var warningAltitude;
+var warningDistance;
+var warningBearing;
+
+const urlTraffic = "ws://192.168.10.1/traffic";
+
+var svg = document.getElementById("trafficwarning");
+
+svg.addEventListener("load",function() {
+    // get the inner DOM of alpha.svg
+    var svgDoc = svg.contentDocument;
+    // get the inner element by id
+    warningIdentity = svgDoc.getElementById("tspanWarnIdentity"); 
+    warningAltitude = svgDoc.getElementById("tspanWarnAltitude");
+    warningDistance = svgDoc.getElementById("tspanWarnDistance");
+    warningBearing = svgDoc.getElementById("tspanWarnBearing");
+}, false);
 
 $(() => {
     wsport = parseInt(document.getElementById("wsport").value);
@@ -16,6 +49,19 @@ $(() => {
     }
     catch (error) {
         console.log(error);
+    }
+
+    var twelement = document.getElementById("trafficwarnings");
+    var trafficWarnings = (twelement.value == "true");
+    warning_altitude = parseInt(document.getElementById("maxwarnaltitude").value);
+    warning_distance = parseInt(document.getElementById("maxwarndistance").value);
+
+    if (trafficWarnings) {
+        trafficWebSocket = new WebSocket(urlTraffic);
+        trafficWebSocket.onopen = function(evt) { onTrafficOpen(evt) };
+        trafficWebSocket.onclose = function(evt) { onTrafficClose(evt) };
+        trafficWebSocket.onmessage = function(evt) { onTrafficMessage(evt) };
+        trafficWebSocket.onerror = function(evt) { onTrafficError(evt) };
     }
 });
 
@@ -168,6 +214,7 @@ function onSerialData(e) {
     var speedticks = (data.airspeed * spd_offset);
     var altticks = (data.baltitude * alt_offset);
     var hdgticks = (data.heading * hdg_offset) * -1;
+    myAlt = data.baltitude;
     
     // check the AOA
     if (data.aoa >= 99) {
@@ -469,6 +516,100 @@ function clear_field(field) {
     }
 }
 
+function onTrafficOpen(evt) {
+    console.log("Traffic warning websocket successfully connected to Stratux!");
+    wsOpen = true;
+    setInterval(runHeartbeatRoutine, 14000);
+}
 
+function runHeartbeatRoutine() {
+    if (isWarning) {
+        isWarning = false;
+        svg.setAttribute("style", "visibility:hidden");
+    }
+    var data = new Date().getTime();
+    sendKeepAlive(data);
+}
+
+function onTrafficClose(evt) {
+    console.log("Websocket CLOSED.");
+    wsOpen = false;
+}
+            
+function onTrafficMessage(evt) {
+    /*-----------------------------------------------------------------------------------------    
+                                 Traffic JSON sample 
+    -------------------------------------------------------------------------------------------
+        {"Icao_addr":11316589,"Reg":"N916EV","Tail":"N916EV","Emitter_category":0,
+        "OnGround":false,"Addr_type":0,"TargetType":0,"SignalLevel":-28.00244822746525,
+        "Squawk":0,"Position_valid":false,"Lat":0,"Lng":0,"Alt":5550,"GnssDiffFromBaroAlt":0,
+        "AltIsGNSS":false,"NIC":0,"NACp":0,"Track":0,"Speed":0,"Speed_valid":false,"Vvel":0,
+        "Timestamp":"2019-03-12T13:32:30.563Z","PriorityStatus":0,"Age":18.2,"AgeLastAlt":1.83,
+        "Last_seen":"0001-01-01T00:39:27.49Z","Last_alt":"0001-01-01T00:39:43.86Z",
+        "Last_GnssDiff":"0001-01-01T00:00:00Z","Last_GnssDiffAlt":0,"Last_speed":"0001-01-01T00:00:00Z",
+        "Last_source":1,"ExtrapolatedPosition":false,"BearingDist_valid":true,
+        "Bearing":92.7782277589171,"Distance":9.616803034808295e+06}
+    --------------------------------------------------------------------------------------------*/
+    var obj = JSON.parse(evt.data);
+    var meters =  Number(obj.Distance.toFixed(1));
+    var dist = Number(((meters * 3.28084) / 5280).toFixed(1));
+    var brng = Number(Math.round(obj.Bearing.toFixed(0)));
+    var reg = obj.Reg != "" ? obj.Reg : obj.Tail;
+    var alt = Number(obj.Alt);
+    myAlt = Number(altitudebox.textContent);
+    isWarning = false;
+
+      
+    // we're only going to consider traffic that has been continuously reported for 20 cycles (1 second)
+    if (rcvCount < 20) {
+        rcvCount = rcvCount + 1;
+    }
+    else if (rcvCount >= 10) {
+        console.log("Show Warning = " + showWarning + ", " +  reg + " - Brg: " + brng + ", Dist: " + dist + ", Alt: " +  alt);
+        rcvCount = 0;
+        if (dist > warning_distance && reg == lastIdent) {
+            isWarning = false;
+            lastIdent = "";
+            lastAlt = 0;
+            lastDist = 0;
+            lastBrng = 0;
+            svg.setAttribute("style", "visibility:hidden");
+        }
+        else if (dist <= warning_distance) {
+            if (alt <= myAlt + warning_altitude && alt >= myAlt - warning_altitude) {
+                if (brng != 0 ) { 
+                    isWarning = true;
+                    warningIdentity.textContent = reg;
+                    warningAltitude.textContent = alt;
+                    warningDistance.textContent = dist;
+                    warningBearing.textContent = brng;
+                    lastIdent = reg;
+                    lastAlt = alt;
+                    lastDist = dist;
+                    lastBrng = brng;
+                }
+            }
+        }
+        
+        if (isWarning) {
+            svg.setAttribute("style", "visibility: visible");
+        }
+        else {
+            svg.setAttribute("style", "visibility: hidden;");
+        }
+    }
+}
+
+function sendKeepAlive(data) {
+    var rs = trafficWebSocket.readyState;
+    if (rs == 1) {
+        trafficWebSocket.send(data);
+        console.log("Sent keepalive to Stratux");
+    }
+}
+
+function onError(evt) {
+    console.log("Websocket ERROR: " + evt.data);
+}
 
 
