@@ -527,8 +527,11 @@ function runHeartbeatRoutine() {
         isWarning = false;
         svg.setAttribute("style", "visibility:hidden");
     }
-    var data = new Date().getTime();
-    sendKeepAlive(data);
+    var now = new Date();
+        var date = now.getFullYear() + "-" + (now.getMonth() +1)+ "-" + now.getDate();
+        var time = now.getHours() +":" + now.getMinutes() + ":" + now.getSeconds();
+        var timestamp = date + " " + time;
+    sendKeepAlive(timestamp);
 }
 
 function onTrafficClose(evt) {
@@ -604,7 +607,7 @@ function sendKeepAlive(data) {
     var rs = trafficWebSocket.readyState;
     if (rs == 1) {
         trafficWebSocket.send(data);
-        console.log("Sent keepalive to Stratux");
+        console.log("Sent keepalive to Stratux at " + data);
     }
 }
 
