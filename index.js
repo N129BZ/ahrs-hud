@@ -32,6 +32,7 @@ var tapeimage;
 var view = "";
 var trafficWarnings = false;
 var stratuxAHRS = false;
+var stratuxIPaddress = "192.168.10.1"; // default, changeable in setup
 var maxWarnAltitude = 0;
 var maxWarnDistance = 0;
 
@@ -85,7 +86,7 @@ try {
         console.log("New Connection");
         connections.push(connection);
         
-        if (debug && !stratuxAHRS) {
+        if (debug) {
             DebugPlayback();
         }
 
@@ -216,12 +217,19 @@ try {
         let newmaxwarnalt = req.body.maxwarnaltitude;
         let newmaxwarndist = req.body.maxwarndistance;
         let newspeedstyle = req.body.speedstyle;  
-        let newstxahrs = req.body.stxchecked = "true" ? true : false;
-        
+        let newstxahrs = req.body.stxchecked == "true" ? true : false;
+        let newstxipaddr = req.body.stxipaddr;
+        let doPlayback = false;
+
         firstrun = false;
 
         if (newstxahrs != stratuxAHRS) {
             stratuxAHRS = newstxahrs;
+            writefile = true;
+        }
+        
+        if (newstxipaddr != stratuxIPaddress) {
+            stratuxIPaddress = newstxipaddr;
             writefile = true;
         }
 
@@ -295,6 +303,7 @@ try {
                          "maxwarndistance" : maxWarnDistance,
                          "speedstyle" : speedStyle,
                          "stratuxahrs" : stratuxAHRS,
+                         "stratuxipaddress" : stratuxIPaddress,
                          "debug" : debug,
                          "firstrun" : firstrun
                         };
@@ -373,6 +382,7 @@ function readSettingsFile() {
     maxWarnDistance = parsedData.maxwarndistance;
     speedStyle = parsedData.speedstyle;
     stratuxAHRS = parsedData.stratuxahrs;
+    stratuxIPaddress = parsedData.stratuxipaddress;
     debug = parsedData.debug;
     firstrun = parsedData.firstrun;
     
@@ -431,6 +441,7 @@ function generateHudView() {
         const regex3 = /##MAXWARNDIST##/gi;
         const regex4 = /##SPEEDSTYLE##/gi;
         const regex5 = /##STXAHRS##/gi;
+        const regex6 = /##STXIPADDR##/gi;
 
         var rawdata = String(fs.readFileSync(__dirname + "/templates/index_template.html"));
         var output = rawdata.replace(regex0, websocketPort)
@@ -438,7 +449,8 @@ function generateHudView() {
                             .replace(regex2, maxWarnAltitude)
                             .replace(regex3, maxWarnDistance)
                             .replace(regex4, speedStyle)
-                            .replace(regex5, stratuxAHRS);
+                            .replace(regex5, stratuxAHRS)
+                            .replace(regex6, stratuxIPaddress);
 
         fs.writeFileSync(indexview, output);
     }
@@ -466,6 +478,7 @@ function generateSetupView(port) {
     const regex13 = /##SPEEDSTYLE##/gi;
     const regex14 = /##STXVALUE##/gi;
     const regex15 = /##STXCHECKED##/gi;
+    const regex16 = /##STXIPADDR##/gi;
 
     var properViewName;
     var dbg = debug ? "true" : "false";
@@ -502,7 +515,8 @@ function generateSetupView(port) {
                         .replace(regex12, maxWarnDistance)
                         .replace(regex13, speedStyle)
                         .replace(regex14, stx)
-                        .replace(regex15, stxchecked);
+                        .replace(regex15, stxchecked)
+                        .replace(regex16, stratuxIPaddress);
     fs.writeFileSync(setupview, output);
 }
 

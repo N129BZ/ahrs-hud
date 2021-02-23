@@ -153,9 +153,14 @@
         <br>
         <label class="label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(If not checked, will use Dynon or Garmin serial port)</label>
     </div>
+    <br>
+    <p>
+        <h3><label class="label" id="stxiplabel">Enter the IP address for Stratux traffic and AHRS data</label></h3>
+    </p>
     <div class="form-field">
-        <input type="text" id="stxchecked" name="stxhecked" style="visibility: hidden;">
+        <input type="text" id="stxipaddr" name="stxipaddr" style="font-size: 20px; font-weight: bold;" value="##STXIPADDR##">
     </div>
+    <br>
     <br>
     <br>
     <br>
@@ -174,6 +179,9 @@
     <div class="form-field"> 
         <input type="text" id="selectedspeedstyle" name="selectedspeedstyle" style="visibility: hidden;">
     </div>
+    <div class="form-field">
+        <input type="text" id="stxchecked" name="stxchecked" style="visibility: hidden;">
+    </div>
     <br>
     <br>
     <br>
@@ -185,29 +193,30 @@
     </form>
   </div>
   <script>
-      window.onload = function() {
-          document.getElementById("view").value="##VIEW##";
-          document.getElementById("selectedview").value="##VIEW##";
-          document.getElementById("twchecked").value="##TWVALUE##";
-          document.getElementById("stxchecked").value = "##STXVALUE##";
-          document.getElementById("dbgchecked").value = "##DBGVALUE##";
-          document.getElementById("vne").value = "##VNE##";  
-          document.getElementById("vno").value = "##VNO##";
-          document.getElementById("vs1").value = "##VS1##";
-          document.getElementById("vs0").value = "##VS0##";
-          document.getElementById("maxwarnaltitude").value = "##MAXWARNALT##";
-          document.getElementById("maxwarndistance").value = "##MAXWARNDIST##";
-          document.getElementById("speedstyle").value = "##SPEEDSTYLE##";
-          document.getElementById("selectedspeedstyle").value = "##SPEEDSTYLE##";
-      };
+     window.onload = function() {
+        document.getElementById("view").value = "##VIEW##";
+        document.getElementById("selectedview").value ="##VIEW##";
+        document.getElementById("twchecked").value ="##TWVALUE##";
+        document.getElementById("stxchecked").value = "##STXVALUE##"
+        document.getElementById("dbgchecked").value = "##DBGVALUE##";
+        document.getElementById("stxipaddr").value = "##STXIPADDR##";
+        document.getElementById("vne").value = "##VNE##";  
+        document.getElementById("vno").value = "##VNO##";
+        document.getElementById("vs1").value = "##VS1##";
+        document.getElementById("vs0").value = "##VS0##";
+        document.getElementById("maxwarnaltitude").value = "##MAXWARNALT##";
+        document.getElementById("maxwarndistance").value = "##MAXWARNDIST##";
+        document.getElementById("speedstyle").value = "##SPEEDSTYLE##";
+        document.getElementById("selectedspeedstyle").value = "##SPEEDSTYLE##";
+    };
 
       function updateTrafficWarning(newvalue) {
         document.getElementById("twchecked").value = newvalue ? "true" : "false";
-      }
+      };
       
-      function updateStratuxAhrs(newvalue) {
+    function updateStratuxAhrs(newvalue) {
         document.getElementById("stxchecked").value = newvalue ? "true" : "false";
-      }
+    };
 
       function updateDebugChecked(newvalue) {
         document.getElementById("dbgchecked").value = newvalue ? "true" : "false";

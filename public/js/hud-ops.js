@@ -2,7 +2,7 @@
 
 var host;
 var websock;
-var wsport = 9696; // default value
+//var wsport = 9696; // default value
 var trafficWebSocket;
 var ahrsWebSocket;
 var wsOpen = false;
@@ -28,18 +28,25 @@ var warningDistance;
 var warningCourse;
 var useStratuxAHRS = true;
 
-const urlTraffic = "ws://192.168.10.1/traffic";
-const urlAHRS = "http://192.168.10.1/getSituation";
 
-class SpeedIndications {
-    constructor() {
-    const KT = "KT";
-    const MPH = "MPH";
-    const KPH = "KPH";
-    }
-};
+var ip = document.getElementById("stxipaddr").value;
+var wsp = parseInt(document.getElementById("wsport").value);
+const urlTraffic = "ws://"+ ip + "/traffic";
+const urlAHRS = "http://" + ip + "/getSituation";
+const urlCageAHRS = "http://" + ip + "/cageAHRS";
+const urlSerialData = "ws://localhost:" + wsp;
 
-var SpeedStyles = new SpeedIndications();
+const KT = "KT";
+const MPH = "MPH";
+const KPH = "KPH";
+
+var windindicator = $('.windindicator');
+var tasindicator = $('.tasbox');
+var courseindicator = $('.courseindicator');
+var coursecircle = $('.coursecircle');
+var coursearrow = $('.coursearrow');
+coursecircle.css("visibility", "hidden");
+coursearrow.css("visibility", "hidden");
 
 var svg = document.getElementById("trafficwarning");
 
@@ -53,25 +60,27 @@ svg.addEventListener("load",function() {
     warningCourse = svgDoc.getElementById("crs");
 }, false);
 
-var usestratuxelement = document.getElementById("stxahrs").value;
-useStratuxAHRS = true; //usestratuxelement.value == 'true';
+var usestx= document.getElementById("stxahrs").value;
+useStratuxAHRS = usestx == "true";
 
 $(() => {
     if (!useStratuxAHRS) {
-        wsport = parseInt(document.getElementById("wsport").value);
+        
         speedStyle = document.getElementById("speedstyle").value;
 
         try {
-            let host = "ws://" + location.hostname + ":" + wsport;
+            let host = urlSerialData;
             let websock = new WebSocket(host);
 
-            websock.onmessage = onSerialData;
+            websock.onmessage = onHostData;
         }
         catch (error) {
             console.log(error);
         }
     }
     else {
+        windindicator.css("left", "-1000");
+        tasindicator.css("left", "-1000");
         runStratuxAhrs();
     }
 
@@ -87,11 +96,6 @@ $(() => {
         trafficWebSocket.onclose = function(evt) {onTrafficClose(evt)};
         trafficWebSocket.onmessage = function(evt) {onTrafficMessage(evt)};
         trafficWebSocket.onerror = function(evt) {onTrafficError(evt)};
-    }
-    
-
-    if (useStratuxAHRS) {
-
     }
 });
 
@@ -175,7 +179,6 @@ var alttape = $('#alttape');
 var headingtape = $('#headingtape');
 var ball = $('#ball');
 var attitude = $.attitudeIndicator('#attitude', 'attitude', {roll:50, pitch:-20, size:600, showBox : true});
-var wind = $('.windindicator');
 var aoa = $('.aoa');
 var avgVspeed = new Array();
 var isGarmin = false;
@@ -198,7 +201,9 @@ var tasbox = document.getElementById("spantas");
 var oatbox = document.getElementById("spanoat");
 var daltbox = document.getElementById("spandalt");
 var windarrow = document.getElementById("windarrow");
+var windcircle = document.getElementById("windcircle");
 var windspeed = document.getElementById("spanwindspeed");
+var windlabel = document.getElementById("spanwindlabel");
 var barobox = document.getElementById("spanbaro");
 var aoatext = document.getElementById('spanaoa');
 
@@ -208,16 +213,19 @@ function pad(num, size) {
     return s;
 }
 var svgns = "http://www.w3.org/2000/svg";
-  //---------------------------------------------------------------------------
-  // example data:
-  // !1121144703-014+00003310811+01736+003-03+1013-033+110831245+01650023176C
-  //////////////////////////////////////////////////////////////////////////////
-function onSerialData(e) {
-    var data = new HudData(e.data);
 
+  
+function onHostData(e) {
+
+    var data = new HudData(e.data);
+    //////////////////////////////////////////////////////////////////////////////
+    //---------------------------------------------------------------------------
+    // example data:
+    // !1121144703-014+00003310811+01736+003-03+1013-033+110831245+01650023176C
+    //////////////////////////////////////////////////////////////////////////////
     if (!isGarmin && data.client == "garmin") {
         isGarmin = true;
-        wind.css('left', '-1000');
+        windindicator.css('left', '-1000');
     }
 
     attitude.setRoll(data.roll * -1);
@@ -226,7 +234,7 @@ function onSerialData(e) {
     speedbox.textContent = data.airspeed;
     headingbox.textContent = data.heading;
     arrowbox.textContent = data.vertspeed < 0 ? "▼" : "▲";
-    barobox.textContent = "BARO " + data.baropressure.toFixed(2);
+    barobox.textContent = "BARO " + data.baropressure.toFixed("2");
     oatbox.textContent = "OAT " + data.oatF + " F";
     tasbox.textContent = "TAS " + data.tas + " kt";
     daltbox.textContent = "DALT " + (data.dalt >= 0 ? "+" + data.dalt : "-" + data.dalt);
@@ -379,7 +387,114 @@ class HudData {
             this.winddirection = 0;
             this.windkts = 0;
         }
-        this.baltitude = calculateBarometer(baro, altitude);
+
+        this.baropressure = ((this.baro / 100) + 27.5);
+    
+        var pafactor = 0;
+        switch (true) {
+          case (this.baropressure <= 28.0):
+            pafactor = 1824;
+            break;
+          case (this.baropressure <= 28.1):
+            pafactor = 1727;
+            break;
+          case (this.baropressure <= 28.2): 
+            pafactor = 1630;
+            break;
+          case (this.baropressure <= 28.3):
+            pafactor = 1533;
+            break;
+          case (this.baropressure <= 28.4):
+            pafactor = 1436;
+            break;
+          case (this.baropressure <= 28.5):
+            pafactor = 1340;
+            break;
+          case (this.baropressure <= 28.6):
+            pafactor = 1244;
+            break;
+          case (this.baropressure <= 28.7):
+            pafactor = 1148;
+            break;
+          case (this.baropressure <= 28.8):
+            pafactor = 1053;
+            break;
+          case (this.baropressure <= 28.9):
+            pafactor = 957;
+            break;
+          case (this.baropressure <= 29.0):
+            pafactor = 863;
+            break;
+          case (this.baropressure <= 29.1):
+            pafactor = 768;
+            break;
+          case (this.baropressure <= 29.2):
+            pafactor = 673;
+            break;
+          case (this.baropressure <= 29.3): 
+            pafactor = 579;
+            break;
+          case (this.baropressure <= 29.4):
+            pafactor = 485;
+            break;
+          case (this.baropressure <= 29.5):
+            pafactor = 392;
+            break;
+          case (this.baropressure <= 29.6):
+            pafactor = 298;
+            break;
+          case (this.baropressure <= 29.7):
+            pafactor = 205;
+            break;
+          case (this.baropressure <= 29.8):
+            pafactor = 112;
+            break;
+          case (this.baropressure <= 29.9):
+            pafactor = 20;
+            break;
+          case (this.baropressure <= 29.92):
+            pafactor = 0;
+            break;
+          case (this.baropressure <= 30.0):
+            pafactor = -73;
+            break;
+          case (this.baropressure <= 30.1):
+            pafactor = -165;
+            break;
+          case (this.baropressure <= 30.2):
+            pafactor = -257;
+            break;
+          case (this.baropressure <= 30.3):
+            pafactor = -348;
+            break;
+          case (this.baropressure <= 30.4):
+            pafactor = -440;
+            break;
+          case (this.baropressure <= 30.5):
+            pafactor = -531;
+            break;
+          case (this.baropressure <= 30.6):
+            pafactor = -622;
+            break;
+          case (this.baropressure <= 30.7):
+            pafactor = -712;
+            break;
+          case (this.baropressure <= 30.8):
+            pafactor = -803;
+            break;
+          case (this.baropressure <= 30.9):
+            pafactor = -893;
+            break;
+          case (this.baropressure <= 31.0):
+            pafactor = -983;
+            break;
+          default:
+            pafactor = 0;
+            break;
+        }
+
+        let baltfactor = pafactor * (29.92 - this.baropressure);
+        this.baltitude = round10(this.altitude + baltfactor);
     }
 }
 
@@ -486,7 +601,15 @@ function onTrafficMessage(evt) {
     var reg = obj.Reg != "" ? obj.Reg : obj.Tail;
     var alt = Number(obj.Alt);
     var spd = Number(obj.Speed);
-   
+    var spdOut = spd;
+    
+    if (speedStyle == MPH) {
+        spdOut =  Number(spd * 1.151).toFixed(0);
+    }
+    else if (speedStyle == KPH) {
+        spdOut = Number(spd * 1.852).toFixed(0);
+    }
+
     myAlt = Number(altitudebox.textContent);
 
     isWarning = false;
@@ -496,7 +619,7 @@ function onTrafficMessage(evt) {
         rcvCount = rcvCount + 1;
     }
     else { 
-        var course = spd + " " + speedStyle +" @ " + brng + "\xB0";
+        var course = spdOut + " " + speedStyle +" @ " + brng + "\xB0";
         console.log("Traffic detected: " +  reg + " - Course: " + course + ", Dist: " + dist + ", Alt: " +  alt);
         if (dist > warning_distance && reg == lastIdent) {
             isWarning = false;
@@ -505,12 +628,10 @@ function onTrafficMessage(evt) {
             lastDist = 0;
             lastBrng = 0;
             lastSpd = 0;
-            svg.setAttribute("style", "visibility:hidden");
         }
         else if (dist <= warning_distance) {
             if (alt <= myAlt + warning_altitude && alt >= myAlt - warning_altitude) {
                 rcvCount = 0;
-
                 if (brng != 0 && spd != 0) { 
                     isWarning = true;
                     warningIdentity.textContent = reg;
@@ -525,13 +646,29 @@ function onTrafficMessage(evt) {
                 }
             }
         }
-        
         if (isWarning) {
             svg.setAttribute("style", "visibility: visible");
+            positionAndRotateCourseArrow(brng, true); 
         }
         else {
             svg.setAttribute("style", "visibility: hidden;");
+            positionAndRotateCourseArrow(0, false);
         }
+    }
+}
+
+function positionAndRotateCourseArrow(bearing, visible) {
+    if (visible) {
+        coursearrow.css("visibility", "visible");
+        coursecircle.css("visibility", "visible");
+
+        coursearrow.css("transform", "rotate(" + bearing + "deg)");
+        courseindicator.css("visibility", "visible"); 
+    }
+    else {
+        coursearrow.css("visibility", "hidden");
+        coursecircle.css("visibility", "hidden");
+        courseindicator.css("visibility", "hidden");
     }
 }
 
@@ -569,7 +706,8 @@ function runStratuxAhrs() {
     var altitude = 0;
     var heading = "";
     var vertspeed = 0;
-    const divisor = 5;
+    const divisor = 1;
+
     setInterval(function() {
     
         fetch(urlAHRS)
@@ -580,7 +718,7 @@ function runStratuxAhrs() {
             
             var str = JSON.stringify(myJson)
             var obj = JSON.parse(str);
-    
+            
             // attitude pitch & roll
             attitude.setRoll(obj.AHRSRoll * -1);
             attitude.setPitch(obj.AHRSPitch * pitch_offset);
@@ -588,13 +726,13 @@ function runStratuxAhrs() {
             // set these values to a reasonable precision
             var gnumber = obj.AHRSGLoad.toFixed(1);
             var slipskid = Math.trunc(obj.AHRSSlipSkid);
-            
+            var oat = Math.trunc((obj.BaroTemperature * 1.8) + 32, 0) + "\xB0 F";
             var spdOut = obj.GPSGroundSpeed;
             switch (speedStyle) {
-                case SpeedStyles.MPH:
+                case MPH:
                     spdOut =  parseInt(obj.GPSGroundSpeed * 1.151); // mph multiplier
                     break;
-                case SpeedStyles.KT:
+                case KPH:
                     spdOut = parseInt(obj.GPSGroundSpeed * 1.852); // kph multiplier
                     break;
                 default:
@@ -638,6 +776,7 @@ function runStratuxAhrs() {
                 headingbox.textContent = heading;
                 vspeedbox.textContent = Math.abs(vertspeed) + " FPM";
                 arrowbox.textContent = (vertspeed < 0 ? "▼" : "▲");
+                oatbox.textContent = oat;
                 var speedticks = (speed * spd_offset);
                 var altticks = (altitude * alt_offset);
                 var hdgticks = (heading * hdg_offset) * -1;
@@ -658,118 +797,7 @@ function runStratuxAhrs() {
                 slipskid = 17;
             }
             var ballposition = ball_center + (slipskid * ball_offset);
-            //console.log("slipskid: " + slipskid + ", ball position: " + ballposition)
             ball.css('left', ballposition + 'px');
        }); 
-    }, 50);
-}
-
-function calculateBarometer(baro, altitude) {
-    var baropressure = ((baro / 100) + 27.5);
-    
-    var pafactor = 0;
-    switch (true) {
-      case (baropressure <= 28.0):
-        pafactor = 1824;
-        break;
-      case (baropressure <= 28.1):
-        pafactor = 1727;
-        break;
-      case (baropressure <= 28.2): 
-        pafactor = 1630;
-        break;
-      case (baropressure <= 28.3):
-        pafactor = 1533;
-        break;
-      case (baropressure <= 28.4):
-        pafactor = 1436;
-        break;
-      case (baropressure <= 28.5):
-        pafactor = 1340;
-        break;
-      case (baropressure <= 28.6):
-        pafactor = 1244;
-        break;
-      case (baropressure <= 28.7):
-        pafactor = 1148;
-        break;
-      case (baropressure <= 28.8):
-        pafactor = 1053;
-        break;
-      case (baropressure <= 28.9):
-        pafactor = 957;
-        break;
-      case (baropressure <= 29.0):
-        pafactor = 863;
-        break;
-      case (baropressure <= 29.1):
-        pafactor = 768;
-        break;
-      case (baropressure <= 29.2):
-        pafactor = 673;
-        break;
-      case (baropressure <= 29.3): 
-        pafactor = 579;
-        break;
-      case (baropressure <= 29.4):
-        pafactor = 485;
-        break;
-      case (baropressure <= 29.5):
-        pafactor = 392;
-        break;
-      case (baropressure <= 29.6):
-        pafactor = 298;
-        break;
-      case (baropressure <= 29.7):
-        pafactor = 205;
-        break;
-      case (baropressure <= 29.8):
-        pafactor = 112;
-        break;
-      case (baropressure <= 29.9):
-        pafactor = 20;
-        break;
-      case (baropressure <= 29.92):
-        pafactor = 0;
-        break;
-      case (baropressure <= 30.0):
-        pafactor = -73;
-        break;
-      case (baropressure <= 30.1):
-        pafactor = -165;
-        break;
-      case (baropressure <= 30.2):
-        pafactor = -257;
-        break;
-      case (baropressure <= 30.3):
-        pafactor = -348;
-        break;
-      case (baropressure <= 30.4):
-        pafactor = -440;
-        break;
-      case (baropressure <= 30.5):
-        pafactor = -531;
-        break;
-      case (baropressure <= 30.6):
-        pafactor = -622;
-        break;
-      case (baropressure <= 30.7):
-        pafactor = -712;
-        break;
-      case (baropressure <= 30.8):
-        pafactor = -803;
-        break;
-      case (baropressure <= 30.9):
-        pafactor = -893;
-        break;
-      case (baropressure <= 31.0):
-        pafactor = -983;
-        break;
-      default:
-        pafactor = 0;
-        break;
-    }
-
-    let baltfactor = pafactor * (29.92 - baropressure);
-    return round10(altitude + baltfactor);
+    }, 30);
 }
