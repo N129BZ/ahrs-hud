@@ -91,14 +91,14 @@
     </p>
     <br>
     <p>
-        <h3><label for="serialPort" class="label">Enter the named port for the serial connection, for example: /dev/ttyACM0</label></h3>
+        <h3><label class="label">Enter the named port for the serial connection, for example: /dev/ttyACM0</label></h3>
     </p>
     <div class="form-field">  
         <input type="text" id="serialPort" name="serialPort" style="font-size: 20px; font-weight: bold;" value="##SERIALPORT##">  
     </div>
     <br>
     <p>
-        <h3><label for="baudrate" class="label">Enter the baud rate of your EFIS serial port, default is 9600 baud</label></h3>
+        <h3><label class="label">Enter the baud rate of your EFIS serial port, default is 9600 baud</label></h3>
     </p>
     <div class="form-field">
         <input type="text" id="baudrate" name="baudrate" style="font-size: 20px; font-weight: bold;" value="##BAUDRATE##">
@@ -108,14 +108,14 @@
     <h3><label for="speedtape" class="label">Enter your V-Speeds, this is so the HUD will correctly color the speed tape</label></h3>
     </p>
     <div class="form-field">
-        <label for="vne" class="textlabel">Vne</label><input type="text" id="vne" class="textbox" name="vne" style="font-size: 20px; font-weight: bold;" value="##VNE##">
-        <label for="vno" class="textlabel">Vno</label><input type="text" id="vno" class="textbox" name="vno" style="font-size: 20px; font-weight: bold;" value="##VNO##">
-        <label for="vs1" class="textlabel">Vs1</label><input type="text" id="vs1" class="textbox" name="vs1" style="font-size: 20px; font-weight: bold;" value="##VS1##">
-        <label for="vs0" class="textlabel">Vs0</label><input type="text" id="vs0" class="textbox" name="vs0" style="font-size: 20px; font-weight: bold;" value="##VS0##">
+        <label class="textlabel">Vne</label><input type="text" id="vne" class="textbox" name="vne" style="font-size: 20px; font-weight: bold;" value="##VNE##">
+        <label class="textlabel">Vno</label><input type="text" id="vno" class="textbox" name="vno" style="font-size: 20px; font-weight: bold;" value="##VNO##">
+        <label class="textlabel">Vs1</label><input type="text" id="vs1" class="textbox" name="vs1" style="font-size: 20px; font-weight: bold;" value="##VS1##">
+        <label class="textlabel">Vs0</label><input type="text" id="vs0" class="textbox" name="vs0" style="font-size: 20px; font-weight: bold;" value="##VS0##">
     </div>
     <br>
     <p>
-        <h3><label for="speedstyle" class="label">Select the speed indicator (KT or MPH) to use</label></h3>
+        <h3><label class="label">Select the speed indicator (KT or MPH) to use</label></h3>
     </p>
     <p>
        <select id="speedstyle" name="speedstyle" class="selectlist" onClick="updateSpeedStyle(this.value);">
@@ -126,20 +126,20 @@
     </p>
     <br>
     <p>
-        <h3><label for="warnings" class="label">Enter your ADSB warning aircraft proximity values</label></h3>
+        <h3><label class="label">Enter your ADSB warning aircraft proximity values</label></h3>
     </p>
     <div class="form-field">
-        <label for="warningAltitude" class="textlabel">Maximum or minium altitude difference from me (in feet) to generate a warning</label>
+        <label class="textlabel">Maximum or minium altitude difference from me (in feet) to generate a warning</label>
         <input type="text" id="maxwarnaltitude" class="textbox" name="maxwarnaltitude" style="font-size: 20px; font-weight: bold;" value="##MAX_WARN_ALTITUDE##">
         <br>
-        <label for="WarningDistance" class="textlabel">Maximum distance away from me (in miles) to generate a warning</label>
+        <label class="textlabel">Maximum distance away from me (in miles) to generate a warning</label>
         <input type="text" id="maxwarndistance" class="textbox" name="maxwarndistance" style="font-size: 20px; font-weight: bold;" value="##MAX_WARN_DISTANCE##">
     </div>
     <br>
     <p>
     <div class="form-field">
         <input type="checkbox" id="trafficwarnings" name="trafficwarnings" style="height: 30px; width: 30px;" onClick="updateTrafficWarning(this.checked);" ##TWCHECKED##>
-        <label class="label" for="twchecked">&nbsp&nbspEnable ADSB Traffic Warnings from Stratux</label>
+        <label class="label">&nbsp&nbspEnable ADSB Traffic Warnings from Stratux</label>
     </div>
     <div class="form-field">
         <input type="text" id="twchecked" name="twchecked" style="visibility: hidden;">
@@ -149,7 +149,9 @@
     <p>
     <div class="form-field">
         <input type="checkbox" id="stxahrs" name="stxahrs" style="height: 30px; width: 30px;" onClick="updateStratuxAhrs(this.checked);" ##STXCHECKED##>
-        <label class="label" for="stxahrs">&nbsp&nbspUse Stratux as the AHRS source</label>
+        <label class="label">&nbsp&nbspUse Stratux as the AHRS source</label>
+        <br>
+        <label class="label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(If not checked, will use Dynon or Garmin serial port)</label>
     </div>
     <div class="form-field">
         <input type="text" id="stxchecked" name="stxhecked" style="visibility: hidden;">
@@ -159,10 +161,12 @@
     <br>
     <div class="form-field">
         <input type="checkbox" id="debug" name="debug" style="height: 30px; width: 30px;" onClick="updateDebugChecked(this.checked);" ##DBGCHECKED##>
-        <label class="label" for="debug">&nbsp&nbspDebug mode - this will make the application run a data log file</label>
+        <label class="label">&nbsp&nbspDebug mode - runs "fake" AHRS data from a log file</label>
+        <br>
+        <label class="label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(does not work when using Stratux AHRS)</label>
     </div>
     <div class="form-field">
-        <input type="text" id="dbgchecked" name="debugchecked" style="visibility: hidden;">
+        <input type="text" id="dbgchecked" name="dbgchecked" style="visibility: hidden;">
     </div>
     <div class="form-field"> 
         <input type="text" id="selectedview" name="selectedview" style="visibility: hidden;">
@@ -185,16 +189,16 @@
           document.getElementById("view").value="##VIEW##";
           document.getElementById("selectedview").value="##VIEW##";
           document.getElementById("twchecked").value="##TWVALUE##";
-          document.getElementById("dbgchecked").value = "##DEBUGVALUE##";
+          document.getElementById("stxchecked").value = "##STXVALUE##";
+          document.getElementById("dbgchecked").value = "##DBGVALUE##";
           document.getElementById("vne").value = "##VNE##";  
           document.getElementById("vno").value = "##VNO##";
           document.getElementById("vs1").value = "##VS1##";
           document.getElementById("vs0").value = "##VS0##";
-          document.getElementById("maxwarnaltitude").value = "##MAX_WARN_ALTITUDE##";
-          document.getElementById("maxwarndistance").value = "##MAX_WARN_DISTANCE##";
-          document.getElementById("selectedspeedstyle").value = "##SPEEDSTYLE##";
+          document.getElementById("maxwarnaltitude").value = "##MAXWARNALT##";
+          document.getElementById("maxwarndistance").value = "##MAXWARNDIST##";
           document.getElementById("speedstyle").value = "##SPEEDSTYLE##";
-          document.getElementById("stxchecked").value = "##STXVALUE##";
+          document.getElementById("selectedspeedstyle").value = "##SPEEDSTYLE##";
       };
 
       function updateTrafficWarning(newvalue) {

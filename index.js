@@ -12,22 +12,6 @@ const dgram = require('dgram')
 const dgServer = dgram.createSocket('udp4');
 const { createCanvas, loadImage, Canvas } = require('canvas');
 
-dgServer.on('error', (err) => {
-    console.log(`server error:\n${err.stack}`);
-    server.close();
-});
-  
-dgServer.on('message', (msg, rinfo) => {
-    console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-});
-  
-dgServer.on('listening', () => {
-    const address = server.address();
-    console.log(`server listening ${address.address}:${address.port}`);
-});
-
-dgServer.bind(4000);
-
 var wss;
 var websocketPort = 9696; 
 var httpPort = 8686; 
@@ -61,6 +45,26 @@ const ctx = cvs.getContext('2d');
 
 readSettingsFile();
 
+// if we're going to receive Stratux traffic data...
+if (trafficWarnings) {
+    dgServer.on('error', (err) => {
+        console.log(`server error:\n${err.stack}`);
+        server.close();
+    });
+      
+    dgServer.on('message', (msg, rinfo) => {
+        console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+    });
+      
+    dgServer.on('listening', () => {
+        const address = server.address();
+        console.log(`server listening ${address.address}:${address.port}`);
+    });
+    
+    dgServer.bind(4000);
+}
+
+// http websocket server to forward serial data to browser client
 var server = http.createServer(function (request, response) { });
 try {
     server.listen(websocketPort, function () { });
@@ -81,7 +85,7 @@ try {
         console.log("New Connection");
         connections.push(connection);
         
-        if (debug) {
+        if (debug && !stratuxAHRS) {
             DebugPlayback();
         }
 
@@ -138,6 +142,7 @@ function DebugPlayback() {
     });
 }
 
+// express web server  
 var webserver;
 try {
         webserver = express();
@@ -198,7 +203,7 @@ try {
         let viewProperName = req.body.selectedview;
         let newserialport = req.body.serialPort;
         let newbaudrate =  parseInt(req.body.baudrate);
-        let newdebug = req.body.debugchecked == "true" ? true : false;
+        let newdebug = req.body.dbgchecked == "true" ? true : false;
         let newvne = parseInt(req.body.vne);
         let newvno = parseInt(req.body.vno);
         let newvs1 = parseInt(req.body.vs1);
@@ -420,11 +425,10 @@ function generateHudView() {
     }
     else {
         generateHudStylesheet();
-
         const regex0 = /##WSPORT##/gi;
-        const regex1 = /##TRAFFIC_WARN##/gi;
-        const regex2 = /##MAX_WARN_ALTITUDE##/gi;
-        const regex3 = /##MAX_WARN_DISTANCE##/gi;
+        const regex1 = /##TRAFFICWARN##/gi;
+        const regex2 = /##MAXWARNALT##/gi;
+        const regex3 = /##MAXWARNDIST##/gi;
         const regex4 = /##SPEEDSTYLE##/gi;
         const regex5 = /##STXAHRS##/gi;
 
@@ -451,21 +455,21 @@ function generateSetupView(port) {
     const regex02 = /##TWCHECKED##/gi;
     const regex03 = /##SERIALPORT##/gi;
     const regex04 = /##BAUDRATE##/gi;
-    const regex05 = /##DEBUGVALUE##/gi;
+    const regex05 = /##DBGVALUE##/gi;
     const regex06 = /##DBGCHECKED##/gi;
     const regex07 = /##VNE##/gi;
     const regex08 = /##VNO##/gi;
     const regex09 = /##VS1##/gi;
     const regex10 = /##VS0##/gi;
-    const regex11 = /##MAX_WARN_ALTITUDE##/gi;
-    const regex12 = /##MAX_WARN_DISTANCE##/gi;
+    const regex11 = /##MAXWARNALT##/gi;
+    const regex12 = /##MAXWARNDIST##/gi;
     const regex13 = /##SPEEDSTYLE##/gi;
     const regex14 = /##STXVALUE##/gi;
     const regex15 = /##STXCHECKED##/gi;
 
     var properViewName;
     var dbg = debug ? "true" : "false";
-    var checked = debug ? "checked" : "";
+    var dbgchecked = debug ? "checked" : "";
     var tw = trafficWarnings ? "true" : "false";
     var twchecked = trafficWarnings ? "checked" : "";
     var stx = stratuxAHRS ? "true" : "false";
@@ -489,7 +493,7 @@ function generateSetupView(port) {
                         .replace(regex03, serialPort)
                         .replace(regex04, baudrate)
                         .replace(regex05, dbg)
-                        .replace(regex06, checked)
+                        .replace(regex06, dbgchecked)
                         .replace(regex07, vne)
                         .replace(regex08, vno)
                         .replace(regex09, vs1)
