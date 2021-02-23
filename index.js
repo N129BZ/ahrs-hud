@@ -47,6 +47,7 @@ var stopPlayback = false;
 var tapeimage;
 var view = "";
 var trafficWarnings = false;
+var stratuxAHRS = false;
 var maxWarnAltitude = 0;
 var maxWarnDistance = 0;
 
@@ -68,7 +69,6 @@ try {
         httpServer: server
     });
     console.log("Websocket server listening at port " + websocketPort); 
-      
 }
 catch (error) {
     console.log(error);
@@ -140,9 +140,9 @@ function DebugPlayback() {
 
 var webserver;
 try {
-    webserver = express();
-    webserver.use(express.urlencoded({ extended: true }));
-    webserver.listen(httpPort, () => {
+        webserver = express();
+        webserver.use(express.urlencoded({ extended: true }));
+        webserver.listen(httpPort, () => {
         console.log("Webserver listening at port " + httpPort);
     });
     
@@ -211,8 +211,14 @@ try {
         let newmaxwarnalt = req.body.maxwarnaltitude;
         let newmaxwarndist = req.body.maxwarndistance;
         let newspeedstyle = req.body.speedstyle;  
-
+        let newstxahrs = req.body.stxchecked = "true" ? true : false;
+        
         firstrun = false;
+
+        if (newstxahrs != stratuxAHRS) {
+            stratuxAHRS = newstxahrs;
+            writefile = true;
+        }
 
         if (newspeedstyle != speedStyle) {
             speedStyle = newspeedstyle;
@@ -283,6 +289,7 @@ try {
                          "maxwarnaltitude" : maxWarnAltitude,
                          "maxwarndistance" : maxWarnDistance,
                          "speedstyle" : speedStyle,
+                         "stratuxahrs" : stratuxAHRS,
                          "debug" : debug,
                          "firstrun" : firstrun
                         };
@@ -360,6 +367,7 @@ function readSettingsFile() {
     maxWarnAltitude = parsedData.maxwarnaltitude;
     maxWarnDistance = parsedData.maxwarndistance;
     speedStyle = parsedData.speedstyle;
+    stratuxAHRS = parsedData.stratuxahrs;
     debug = parsedData.debug;
     firstrun = parsedData.firstrun;
     
@@ -418,12 +426,15 @@ function generateHudView() {
         const regex2 = /##MAX_WARN_ALTITUDE##/gi;
         const regex3 = /##MAX_WARN_DISTANCE##/gi;
         const regex4 = /##SPEEDSTYLE##/gi;
+        const regex5 = /##STXAHRS##/gi;
+
         var rawdata = String(fs.readFileSync(__dirname + "/templates/index_template.html"));
         var output = rawdata.replace(regex0, websocketPort)
                             .replace(regex1, trafficWarnings)
                             .replace(regex2, maxWarnAltitude)
                             .replace(regex3, maxWarnDistance)
-                            .replace(regex4, speedStyle);
+                            .replace(regex4, speedStyle)
+                            .replace(regex5, stratuxAHRS);
 
         fs.writeFileSync(indexview, output);
     }
@@ -441,7 +452,7 @@ function generateSetupView(port) {
     const regex03 = /##SERIALPORT##/gi;
     const regex04 = /##BAUDRATE##/gi;
     const regex05 = /##DEBUGVALUE##/gi;
-    const regex06 = /##CHECKED##/gi;
+    const regex06 = /##DBGCHECKED##/gi;
     const regex07 = /##VNE##/gi;
     const regex08 = /##VNO##/gi;
     const regex09 = /##VS1##/gi;
@@ -449,12 +460,16 @@ function generateSetupView(port) {
     const regex11 = /##MAX_WARN_ALTITUDE##/gi;
     const regex12 = /##MAX_WARN_DISTANCE##/gi;
     const regex13 = /##SPEEDSTYLE##/gi;
-    
+    const regex14 = /##STXVALUE##/gi;
+    const regex15 = /##STXCHECKED##/gi;
+
     var properViewName;
     var dbg = debug ? "true" : "false";
     var checked = debug ? "checked" : "";
     var tw = trafficWarnings ? "true" : "false";
     var twchecked = trafficWarnings ? "checked" : "";
+    var stx = stratuxAHRS ? "true" : "false";
+    var stxchecked = stratuxAHRS ? "checked" : "";
 
     switch (view) {
        case "vufine":
@@ -481,7 +496,9 @@ function generateSetupView(port) {
                         .replace(regex10, vs0)
                         .replace(regex11, maxWarnAltitude)
                         .replace(regex12, maxWarnDistance)
-                        .replace(regex13, speedStyle);
+                        .replace(regex13, speedStyle)
+                        .replace(regex14, stx)
+                        .replace(regex15, stxchecked);
     fs.writeFileSync(setupview, output);
 }
 

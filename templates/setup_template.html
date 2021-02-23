@@ -139,21 +139,30 @@
     <p>
     <div class="form-field">
         <input type="checkbox" id="trafficwarnings" name="trafficwarnings" style="height: 30px; width: 30px;" onClick="updateTrafficWarning(this.checked);" ##TWCHECKED##>
-        <label class="label" for="debug">&nbsp&nbspEnable ADSB Traffic Warnings from Stratux</label>
+        <label class="label" for="twchecked">&nbsp&nbspEnable ADSB Traffic Warnings from Stratux</label>
     </div>
     <div class="form-field">
         <input type="text" id="twchecked" name="twchecked" style="visibility: hidden;">
     </div>
     <p>
     <br>
+    <p>
+    <div class="form-field">
+        <input type="checkbox" id="stxahrs" name="stxahrs" style="height: 30px; width: 30px;" onClick="updateStratuxAhrs(this.checked);" ##STXCHECKED##>
+        <label class="label" for="stxahrs">&nbsp&nbspUse Stratux as the AHRS source</label>
+    </div>
+    <div class="form-field">
+        <input type="text" id="stxchecked" name="stxhecked" style="visibility: hidden;">
+    </div>
+    <br>
     <br>
     <br>
     <div class="form-field">
-        <input type="checkbox" id="debug" name="debug" style="height: 30px; width: 30px;" onClick="updateDebugChecked(this.checked);" ##CHECKED##>
+        <input type="checkbox" id="debug" name="debug" style="height: 30px; width: 30px;" onClick="updateDebugChecked(this.checked);" ##DBGCHECKED##>
         <label class="label" for="debug">&nbsp&nbspDebug mode - this will make the application run a data log file</label>
     </div>
     <div class="form-field">
-        <input type="text" id="debugchecked" name="debugchecked" style="visibility: hidden;">
+        <input type="text" id="dbgchecked" name="debugchecked" style="visibility: hidden;">
     </div>
     <div class="form-field"> 
         <input type="text" id="selectedview" name="selectedview" style="visibility: hidden;">
@@ -176,7 +185,7 @@
           document.getElementById("view").value="##VIEW##";
           document.getElementById("selectedview").value="##VIEW##";
           document.getElementById("twchecked").value="##TWVALUE##";
-          document.getElementById("debugchecked").value = "##DEBUGVALUE##";
+          document.getElementById("dbgchecked").value = "##DEBUGVALUE##";
           document.getElementById("vne").value = "##VNE##";  
           document.getElementById("vno").value = "##VNO##";
           document.getElementById("vs1").value = "##VS1##";
@@ -185,14 +194,19 @@
           document.getElementById("maxwarndistance").value = "##MAX_WARN_DISTANCE##";
           document.getElementById("selectedspeedstyle").value = "##SPEEDSTYLE##";
           document.getElementById("speedstyle").value = "##SPEEDSTYLE##";
+          document.getElementById("stxchecked").value = "##STXVALUE##";
       };
 
       function updateTrafficWarning(newvalue) {
         document.getElementById("twchecked").value = newvalue ? "true" : "false";
       }
+      
+      function updateStratuxAhrs(newvalue) {
+        document.getElementById("stxchecked").value = newvalue ? "true" : "false";
+      }
 
       function updateDebugChecked(newvalue) {
-        document.getElementById("debugchecked").value = newvalue ? "true" : "false";
+        document.getElementById("dbgchecked").value = newvalue ? "true" : "false";
       };
 
       function updateSelectedView(newvalue) {

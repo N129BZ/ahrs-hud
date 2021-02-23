@@ -4,6 +4,7 @@ var host;
 var websock;
 var wsport = 9696; // default value
 var trafficWebSocket;
+var ahrsWebSocket;
 var wsOpen = false;
 
 // variables for proximity warning calculations
@@ -25,8 +26,20 @@ var warningIdentity;
 var warningAltitude;
 var warningDistance;
 var warningCourse;
+var useStratuxAHRS = true;
 
 const urlTraffic = "ws://192.168.10.1/traffic";
+const urlAHRS = "http://192.168.10.1/getSituation";
+
+class SpeedIndications {
+    constructor() {
+    const KT = "KT";
+    const MPH = "MPH";
+    const KPH = "KPH";
+    }
+};
+
+var SpeedStyles = new SpeedIndications();
 
 var svg = document.getElementById("trafficwarning");
 
@@ -40,31 +53,45 @@ svg.addEventListener("load",function() {
     warningCourse = svgDoc.getElementById("crs");
 }, false);
 
+var usestratuxelement = document.getElementById("stxahrs").value;
+useStratuxAHRS = true; //usestratuxelement.value == 'true';
+
 $(() => {
-    wsport = parseInt(document.getElementById("wsport").value);
-    speedStyle = document.getElementById("speedstyle").value;
+    if (!useStratuxAHRS) {
+        wsport = parseInt(document.getElementById("wsport").value);
+        speedStyle = document.getElementById("speedstyle").value;
 
-    try {
-        let host = "ws://" + location.hostname + ":" + wsport;
-        let websock = new WebSocket(host);
+        try {
+            let host = "ws://" + location.hostname + ":" + wsport;
+            let websock = new WebSocket(host);
 
-        websock.onmessage = onSerialData;
+            websock.onmessage = onSerialData;
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
-    catch (error) {
-        console.log(error);
+    else {
+        runStratuxAhrs();
     }
 
     var twelement = document.getElementById("trafficwarnings");
     var trafficWarnings = (twelement.value == "true");
-    warning_altitude = parseInt(document.getElementById("maxwarnaltitude").value);
-    warning_distance = parseInt(document.getElementById("maxwarndistance").value);
-
+    
     if (trafficWarnings) {
+        warning_altitude = parseInt(document.getElementById("maxwarnaltitude").value);
+        warning_distance = parseInt(document.getElementById("maxwarndistance").value);
+
         trafficWebSocket = new WebSocket(urlTraffic);
         trafficWebSocket.onopen = function(evt) {onTrafficOpen(evt)};
         trafficWebSocket.onclose = function(evt) {onTrafficClose(evt)};
         trafficWebSocket.onmessage = function(evt) {onTrafficMessage(evt)};
         trafficWebSocket.onerror = function(evt) {onTrafficError(evt)};
+    }
+    
+
+    if (useStratuxAHRS) {
+
     }
 });
 
@@ -352,114 +379,7 @@ class HudData {
             this.winddirection = 0;
             this.windkts = 0;
         }
-
-        this.baropressure = ((this.baro / 100) + 27.5);
-    
-        var pafactor = 0;
-        switch (true) {
-          case (this.baropressure <= 28.0):
-            pafactor = 1824;
-            break;
-          case (this.baropressure <= 28.1):
-            pafactor = 1727;
-            break;
-          case (this.baropressure <= 28.2): 
-            pafactor = 1630;
-            break;
-          case (this.baropressure <= 28.3):
-            pafactor = 1533;
-            break;
-          case (this.baropressure <= 28.4):
-            pafactor = 1436;
-            break;
-          case (this.baropressure <= 28.5):
-            pafactor = 1340;
-            break;
-          case (this.baropressure <= 28.6):
-            pafactor = 1244;
-            break;
-          case (this.baropressure <= 28.7):
-            pafactor = 1148;
-            break;
-          case (this.baropressure <= 28.8):
-            pafactor = 1053;
-            break;
-          case (this.baropressure <= 28.9):
-            pafactor = 957;
-            break;
-          case (this.baropressure <= 29.0):
-            pafactor = 863;
-            break;
-          case (this.baropressure <= 29.1):
-            pafactor = 768;
-            break;
-          case (this.baropressure <= 29.2):
-            pafactor = 673;
-            break;
-          case (this.baropressure <= 29.3): 
-            pafactor = 579;
-            break;
-          case (this.baropressure <= 29.4):
-            pafactor = 485;
-            break;
-          case (this.baropressure <= 29.5):
-            pafactor = 392;
-            break;
-          case (this.baropressure <= 29.6):
-            pafactor = 298;
-            break;
-          case (this.baropressure <= 29.7):
-            pafactor = 205;
-            break;
-          case (this.baropressure <= 29.8):
-            pafactor = 112;
-            break;
-          case (this.baropressure <= 29.9):
-            pafactor = 20;
-            break;
-          case (this.baropressure <= 29.92):
-            pafactor = 0;
-            break;
-          case (this.baropressure <= 30.0):
-            pafactor = -73;
-            break;
-          case (this.baropressure <= 30.1):
-            pafactor = -165;
-            break;
-          case (this.baropressure <= 30.2):
-            pafactor = -257;
-            break;
-          case (this.baropressure <= 30.3):
-            pafactor = -348;
-            break;
-          case (this.baropressure <= 30.4):
-            pafactor = -440;
-            break;
-          case (this.baropressure <= 30.5):
-            pafactor = -531;
-            break;
-          case (this.baropressure <= 30.6):
-            pafactor = -622;
-            break;
-          case (this.baropressure <= 30.7):
-            pafactor = -712;
-            break;
-          case (this.baropressure <= 30.8):
-            pafactor = -803;
-            break;
-          case (this.baropressure <= 30.9):
-            pafactor = -893;
-            break;
-          case (this.baropressure <= 31.0):
-            pafactor = -983;
-            break;
-          default:
-            pafactor = 0;
-            break;
-        }
-
-        let baltfactor = pafactor * (29.92 - this.baropressure);
-        this.baltitude = round10(this.altitude + baltfactor);
+        this.baltitude = calculateBarometer(baro, altitude);
     }
 }
 
@@ -518,11 +438,8 @@ function clear_field(field) {
 }
 
 function runHeartbeatRoutine() {
-    var now = new Date();
-    var date = now.getFullYear() + "-" + (now.getMonth() +1)+ "-" + now.getDate();
-    var time = now.getHours() +":" + now.getMinutes() + ":" + now.getSeconds();
-    var timestamp = date + " " + time;
-    sendKeepAlive(timestamp);
+    var data = new Date().getTime();
+    sendKeepAlive(data);
 }
 
 function sendKeepAlive(data) {
@@ -616,4 +533,243 @@ function onTrafficMessage(evt) {
             svg.setAttribute("style", "visibility: hidden;");
         }
     }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//      JSON output returned by Stratux from a POST to http://192.168.10.1/getSituation (AHRS data)
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// {"GPSLastFixSinceMidnightUTC":0,"GPSLatitude":0,"GPSLongitude":0,"GPSFixQuality":0,"GPSHeightAboveEllipsoid":0,"GPSGeoidSep":0,
+//  "GPSSatellites":0,"GPSSatellitesTracked":0,"GPSSatellitesSeen":2,"GPSHorizontalAccuracy":999999,"GPSNACp":0,"GPSAltitudeMSL":0,
+//  "GPSVerticalAccuracy":999999,"GPSVerticalSpeed":0,"GPSLastFixLocalTime":"0001-01-01T00:00:00Z","GPSTrueCourse":0,"GPSTurnRate":0,
+//  "GPSGroundSpeed":0,"GPSLastGroundTrackTime":"0001-01-01T00:00:00Z","GPSTime":"0001-01-01T00:00:00Z",
+//  "GPSLastGPSTimeStratuxTime":"0001-01-01T00:00:00Z","GPSLastValidNMEAMessageTime":"0001-01-01T00:01:33.5Z",
+//  "GPSLastValidNMEAMessage":"$PUBX,00,000122.90,0000.00000,N,00000.00000,E,0.000,NF,5303302,3750001,0.000,0.00,0.000,,99.99,99.99,99.99,0,0,0*20",
+//  "GPSPositionSampleRate":0,"BaroTemperature":22.1,"BaroPressureAltitude":262.4665,"BaroVerticalSpeed":-0.6568238,
+//  "BaroLastMeasurementTime":"0001-01-01T00:01:33.52Z","AHRSPitch":-1.7250436907060585,"AHRSRoll":1.086912223392926,
+//  "AHRSGyroHeading":3276.7,"AHRSMagHeading":3276.7,"AHRSSlipSkid":-0.6697750324029778,"AHRSTurnRate":3276.7,
+//  "AHRSGLoad":0.9825397416431592,"AHRSGLoadMin":0.9799488522426687,"AHRSGLoadMax":0.9828301105039375,
+//  "AHRSLastAttitudeTime":"0001-01-01T00:01:33.55Z","AHRSStatus":6}
+//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function runStratuxAhrs() {
+    // arrays for averaging displayed values (keeps tapes from jumping around)
+    var avgSpdArray = [0,0,0,0,0,0,0,0,0,0];
+    var avgAltArray = [0,0,0,0,0,0,0,0,0,0];
+    var avgHdgArray = [0,0,0,0,0,0,0,0,0,0];
+    var avgVspArray = [0,0,0,0,0,0,0,0,0,0];
+    var avgCounter = 0;
+    var spd = 0;
+    var alt = 0;
+    var hdg = 0;
+    var vsp = 0;
+    var speed = 0;
+    var altitude = 0;
+    var heading = "";
+    var vertspeed = 0;
+    const divisor = 5;
+    setInterval(function() {
+    
+        fetch(urlAHRS)
+            .then(function(response) {
+            return response.json();
+        })
+        .then(function(myJson) {
+            
+            var str = JSON.stringify(myJson)
+            var obj = JSON.parse(str);
+    
+            // attitude pitch & roll
+            attitude.setRoll(obj.AHRSRoll * -1);
+            attitude.setPitch(obj.AHRSPitch * pitch_offset);
+            
+            // set these values to a reasonable precision
+            var gnumber = obj.AHRSGLoad.toFixed(1);
+            var slipskid = Math.trunc(obj.AHRSSlipSkid);
+            
+            var spdOut = obj.GPSGroundSpeed;
+            switch (speedStyle) {
+                case SpeedStyles.MPH:
+                    spdOut =  parseInt(obj.GPSGroundSpeed * 1.151); // mph multiplier
+                    break;
+                case SpeedStyles.KT:
+                    spdOut = parseInt(obj.GPSGroundSpeed * 1.852); // kph multiplier
+                    break;
+                default:
+                    break; 
+            }
+            
+            if (avgCounter < divisor) {
+                avgSpdArray[avgCounter] = spdOut; 
+                avgAltArray[avgCounter] = parseInt(obj.GPSAltitudeMSL);
+                avgHdgArray[avgCounter] = obj.GPSTrueCourse;
+                avgVspArray[avgCounter] = obj.GPSVerticalSpeed;
+                avgCounter = avgCounter + 1;
+            } 
+            else if (avgCounter >= divisor) {
+                avgCounter = 0;
+                spd = 0;
+                alt = 0;
+                hdg = 0;
+                vsp = 0;
+    
+                for (let i = 0; i < divisor; i++) {
+                    spd = spd + avgSpdArray[i];
+                    alt = alt + avgAltArray[i];
+                    hdg = hdg + avgHdgArray[i];
+                    vsp = vsp + avgVspArray[i];
+    
+                    // reset array elements to zero
+                    avgSpdArray[i] = 0;
+                    avgAltArray[i] = 0;
+                    avgHdgArray[i] = 0
+                    avgVspArray[i] = 0;
+                }
+    
+                // set the speed, altitude, heading, and GMeter values
+                speed = Math.trunc(spd/divisor);
+                altitude = Math.trunc(alt/divisor);
+                heading = pad(Math.trunc(hdg/divisor), 3);
+                vertspeed = Math.trunc(vsp/divisor);
+                speedbox.textContent = speed;
+                altitudebox.textContent = altitude;
+                headingbox.textContent = heading;
+                vspeedbox.textContent = Math.abs(vertspeed) + " FPM";
+                arrowbox.textContent = (vertspeed < 0 ? "▼" : "▲");
+                var speedticks = (speed * spd_offset);
+                var altticks = (altitude * alt_offset);
+                var hdgticks = (heading * hdg_offset) * -1;
+                
+                // set the coordinates of the tapes
+                speedtape.css('transform', 'translateY(' + speedticks + 'px)');
+                alttape.css('transform', 'translateY(' + altticks + 'px');
+                headingtape.css('transform', 'translateX('+ hdgticks + 'px');
+            }
+    
+            gbox.textContent = gnumber + " G";
+
+            // set the skid-slip ball position
+            if (slipskid < -17) {
+                slipskid = -17;
+            }
+            else if (slipskid > 17) {
+                slipskid = 17;
+            }
+            var ballposition = ball_center + (slipskid * ball_offset);
+            //console.log("slipskid: " + slipskid + ", ball position: " + ballposition)
+            ball.css('left', ballposition + 'px');
+       }); 
+    }, 50);
+}
+
+function calculateBarometer(baro, altitude) {
+    var baropressure = ((baro / 100) + 27.5);
+    
+    var pafactor = 0;
+    switch (true) {
+      case (baropressure <= 28.0):
+        pafactor = 1824;
+        break;
+      case (baropressure <= 28.1):
+        pafactor = 1727;
+        break;
+      case (baropressure <= 28.2): 
+        pafactor = 1630;
+        break;
+      case (baropressure <= 28.3):
+        pafactor = 1533;
+        break;
+      case (baropressure <= 28.4):
+        pafactor = 1436;
+        break;
+      case (baropressure <= 28.5):
+        pafactor = 1340;
+        break;
+      case (baropressure <= 28.6):
+        pafactor = 1244;
+        break;
+      case (baropressure <= 28.7):
+        pafactor = 1148;
+        break;
+      case (baropressure <= 28.8):
+        pafactor = 1053;
+        break;
+      case (baropressure <= 28.9):
+        pafactor = 957;
+        break;
+      case (baropressure <= 29.0):
+        pafactor = 863;
+        break;
+      case (baropressure <= 29.1):
+        pafactor = 768;
+        break;
+      case (baropressure <= 29.2):
+        pafactor = 673;
+        break;
+      case (baropressure <= 29.3): 
+        pafactor = 579;
+        break;
+      case (baropressure <= 29.4):
+        pafactor = 485;
+        break;
+      case (baropressure <= 29.5):
+        pafactor = 392;
+        break;
+      case (baropressure <= 29.6):
+        pafactor = 298;
+        break;
+      case (baropressure <= 29.7):
+        pafactor = 205;
+        break;
+      case (baropressure <= 29.8):
+        pafactor = 112;
+        break;
+      case (baropressure <= 29.9):
+        pafactor = 20;
+        break;
+      case (baropressure <= 29.92):
+        pafactor = 0;
+        break;
+      case (baropressure <= 30.0):
+        pafactor = -73;
+        break;
+      case (baropressure <= 30.1):
+        pafactor = -165;
+        break;
+      case (baropressure <= 30.2):
+        pafactor = -257;
+        break;
+      case (baropressure <= 30.3):
+        pafactor = -348;
+        break;
+      case (baropressure <= 30.4):
+        pafactor = -440;
+        break;
+      case (baropressure <= 30.5):
+        pafactor = -531;
+        break;
+      case (baropressure <= 30.6):
+        pafactor = -622;
+        break;
+      case (baropressure <= 30.7):
+        pafactor = -712;
+        break;
+      case (baropressure <= 30.8):
+        pafactor = -803;
+        break;
+      case (baropressure <= 30.9):
+        pafactor = -893;
+        break;
+      case (baropressure <= 31.0):
+        pafactor = -983;
+        break;
+      default:
+        pafactor = 0;
+        break;
+    }
+
+    let baltfactor = pafactor * (29.92 - baropressure);
+    return round10(altitude + baltfactor);
 }

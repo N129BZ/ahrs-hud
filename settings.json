@@ -9,9 +9,10 @@
   "vs1": 51,
   "vs0": 44,
   "trafficwarnings": true,
-  "maxwarnaltitude" : "6000",
+  "maxwarnaltitude" : "1000",
   "maxwarndistance" : "6",
   "speedstyle" : "KT",
+  "stratuxahrs": true,
   "debug": true,
   "firstrun": true
 }
