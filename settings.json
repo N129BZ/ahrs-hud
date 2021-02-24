@@ -13,6 +13,7 @@
   "maxwarndistance" : "6",
   "speedstyle" : "KT",
   "stratuxahrs": true,
-  "debug": true,
+  "stratuxipaddress" : "192.168.10.1",
+  "debug": false,
   "firstrun": true
 }

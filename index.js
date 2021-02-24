@@ -8,7 +8,7 @@ const Readline = require('@serialport/parser-readline');
 const fs = require('fs');
 const exec = require('child_process').exec;
 const lineReader = require('line-by-line');
-const dgram = require('dgram')
+const dgram = require('dgram');
 const dgServer = dgram.createSocket('udp4');
 const { createCanvas, loadImage, Canvas } = require('canvas');
 
@@ -36,12 +36,12 @@ var stratuxIPaddress = "192.168.10.1"; // default, changeable in setup
 var maxWarnAltitude = 0;
 var maxWarnDistance = 0;
 
-const setupview = __dirname + "/setup.html";
-const vufineview = __dirname + "/public/viewfine.html";
-const indexview = __dirname + "/public/index.html";
+var setupview = __dirname + "/setup.html";
+var vufineview = __dirname + "/public/viewfine.html";
+var indexview = __dirname + "/public/index.html";
 
-const cvs = createCanvas(stW, stH);
-const ctx = cvs.getContext('2d');
+var cvs = createCanvas(stW, stH);
+var ctx = cvs.getContext('2d');
 
 
 readSettingsFile();
@@ -58,7 +58,7 @@ if (trafficWarnings) {
     });
       
     dgServer.on('listening', () => {
-        const address = server.address();
+        var address = server.address();
         console.log(`server listening ${address.address}:${address.port}`);
     });
     
@@ -128,7 +128,7 @@ function DebugPlayback() {
         lr.pause();
 
         // ...do asynchronous line processing..
-        var dataline = new String(line);
+        var dataline = String(line);
         if (line.substr(0, 1) == "!") {
             sendDataToBrowser("!" + dataline.substr(1));
         }
@@ -152,14 +152,14 @@ try {
         console.log("Webserver listening at port " + httpPort);
     });
     
-    const options = {
+    var options = {
         dotfiles: 'ignore',
         etag: false,
         extensions: ['html'],
         index: false,
         redirect: false,
         setHeaders: function (res, path, stat) {
-          res.set('x-timestamp', Date.now())
+          res.set('x-timestamp', Date.now());
         }
     };
     
@@ -201,26 +201,25 @@ try {
 
     webserver.post("/setup", (req, res) => {
         console.log(req.body);
-        let viewProperName = req.body.selectedview;
-        let newserialport = req.body.serialPort;
-        let newbaudrate =  parseInt(req.body.baudrate);
-        let newdebug = req.body.dbgchecked == "true" ? true : false;
-        let newvne = parseInt(req.body.vne);
-        let newvno = parseInt(req.body.vno);
-        let newvs1 = parseInt(req.body.vs1);
-        let newvs0 = parseInt(req.body.vs0);
-        let writefile = false;
-        let reopenport = false;
-        let reboot = false;
+        var viewProperName = req.body.selectedview;
+        var newserialport = req.body.serialPort;
+        var newbaudrate =  parseInt(req.body.baudrate);
+        var newdebug = req.body.dbgchecked == "true" ? true : false;
+        var newvne = parseInt(req.body.vne);
+        var newvno = parseInt(req.body.vno);
+        var newvs1 = parseInt(req.body.vs1);
+        var newvs0 = parseInt(req.body.vs0);
+        var writefile = false;
+        var reopenport = false;
+        var reboot = false;
         var newview = String(viewProperName).toLowerCase();
-        let newtw = req.body.twchecked == "true" ? true : false;
-        let newmaxwarnalt = req.body.maxwarnaltitude;
-        let newmaxwarndist = req.body.maxwarndistance;
-        let newspeedstyle = req.body.speedstyle;  
-        let newstxahrs = req.body.stxchecked == "true" ? true : false;
-        let newstxipaddr = req.body.stxipaddr;
-        let doPlayback = false;
-
+        var newtw = req.body.twchecked == "true" ? true : false;
+        var newmaxwarnalt = Number(req.body.maxwarnaltitude);
+        var newmaxwarndist = Number(req.body.maxwarndistance);
+        var newspeedstyle = req.body.speedstyle;  
+        var newstxahrs = req.body.stxchecked == "true" ? true : false;
+        var newstxipaddr = req.body.stxipaddr;
+        
         firstrun = false;
 
         if (newstxahrs != stratuxAHRS) {
@@ -265,7 +264,7 @@ try {
             writefile = true;
         }
 
-        if ((newmaxwarnalt != maxWarnAltitude) || (newmaxwarndist != newmaxwarndist)) {
+        if ((newmaxwarnalt != maxWarnAltitude) || (newmaxwarndist != maxWarnDistance)) {
             maxWarnAltitude = newmaxwarnalt;
             maxWarnDistance = newmaxwarndist;
             writefile = true;
@@ -289,7 +288,7 @@ try {
         }
 
         if (writefile) {
-            let data = { "view" : viewProperName, 
+            var data = { "view" : viewProperName, 
                          "httpPort" : httpPort,
                          "wsPort" : websocketPort,
                          "serialPort" : serialPort,
@@ -342,7 +341,7 @@ function systemShutdown(callback){
 
 openSerialPort(false);
 
-var connections = new Array;
+var connections = new Array(4);
 var port;
 var parser;
 function openSerialPort(needsFileRead) {
@@ -378,8 +377,8 @@ function readSettingsFile() {
     vs1 = parsedData.vs1;
     vs0 = parsedData.vs0;
     trafficWarnings = parsedData.trafficwarnings;
-    maxWarnAltitude = parsedData.maxwarnaltitude;
-    maxWarnDistance = parsedData.maxwarndistance;
+    maxWarnAltitude = Number(parsedData.maxwarnaltitude);
+    maxWarnDistance = Number(parsedData.maxwarndistance);
     speedStyle = parsedData.speedstyle;
     stratuxAHRS = parsedData.stratuxahrs;
     stratuxIPaddress = parsedData.stratuxipaddress;
@@ -415,11 +414,11 @@ function showError(error) {
 }
 
 function generateVuFineView() {
-    const regex0 = /##VNE##/gi;
-    const regex1 = /##VNO##/gi;
-    const regex2 = /##VS1##/gi;
-    const regex3 = /##VS0##/gi;
-    const regex4 = /##WSPORT##/gi;
+    var regex0 = /##VNE##/gi;
+    var regex1 = /##VNO##/gi;
+    var regex2 = /##VS1##/gi;
+    var regex3 = /##VS0##/gi;
+    var regex4 = /##WSPORT##/gi;
     var rawdata = String(fs.readFileSync(__dirname + "/templates/vufine_template.html"));
     var output = rawdata.replace(regex0, vne)
                         .replace(regex1, vno)
@@ -435,13 +434,13 @@ function generateHudView() {
     }
     else {
         generateHudStylesheet();
-        const regex0 = /##WSPORT##/gi;
-        const regex1 = /##TRAFFICWARN##/gi;
-        const regex2 = /##MAXWARNALT##/gi;
-        const regex3 = /##MAXWARNDIST##/gi;
-        const regex4 = /##SPEEDSTYLE##/gi;
-        const regex5 = /##STXAHRS##/gi;
-        const regex6 = /##STXIPADDR##/gi;
+        var regex0 = /##WSPORT##/gi;
+        var regex1 = /##TRAFFICWARN##/gi;
+        var regex2 = /##MAXWARNALT##/gi;
+        var regex3 = /##MAXWARNDIST##/gi;
+        var regex4 = /##SPEEDSTYLE##/gi;
+        var regex5 = /##STXAHRS##/gi;
+        var regex6 = /##STXIPADDR##/gi;
 
         var rawdata = String(fs.readFileSync(__dirname + "/templates/index_template.html"));
         var output = rawdata.replace(regex0, websocketPort)
@@ -462,23 +461,23 @@ function generateHudStylesheet() {
 }
 
 function generateSetupView(port) {
-    const regex00 = /##VIEW##/gi;
-    const regex01 = /##TWVALUE##/gi;
-    const regex02 = /##TWCHECKED##/gi;
-    const regex03 = /##SERIALPORT##/gi;
-    const regex04 = /##BAUDRATE##/gi;
-    const regex05 = /##DBGVALUE##/gi;
-    const regex06 = /##DBGCHECKED##/gi;
-    const regex07 = /##VNE##/gi;
-    const regex08 = /##VNO##/gi;
-    const regex09 = /##VS1##/gi;
-    const regex10 = /##VS0##/gi;
-    const regex11 = /##MAXWARNALT##/gi;
-    const regex12 = /##MAXWARNDIST##/gi;
-    const regex13 = /##SPEEDSTYLE##/gi;
-    const regex14 = /##STXVALUE##/gi;
-    const regex15 = /##STXCHECKED##/gi;
-    const regex16 = /##STXIPADDR##/gi;
+    var regex00 = /##VIEW##/gi;
+    var regex01 = /##TWVALUE##/gi;
+    var regex02 = /##TWCHECKED##/gi;
+    var regex03 = /##SERIALPORT##/gi;
+    var regex04 = /##BAUDRATE##/gi;
+    var regex05 = /##DBGVALUE##/gi;
+    var regex06 = /##DBGCHECKED##/gi;
+    var regex07 = /##VNE##/gi;
+    var regex08 = /##VNO##/gi;
+    var regex09 = /##VS1##/gi;
+    var regex10 = /##VS0##/gi;
+    var regex11 = /##MAXWARNALT##/gi;
+    var regex12 = /##MAXWARNDIST##/gi;
+    var regex13 = /##SPEEDSTYLE##/gi;
+    var regex14 = /##STXVALUE##/gi;
+    var regex15 = /##STXCHECKED##/gi;
+    var regex16 = /##STXIPADDR##/gi;
 
     var properViewName;
     var dbg = debug ? "true" : "false";
@@ -522,7 +521,7 @@ function generateSetupView(port) {
 
 loadImage(__dirname + "/templates/speed_tape_template.png").then(image => { 
     buildSpeedTapeImage(image);
-})
+});
 
 function buildSpeedTapeImage(image) {
     
@@ -556,7 +555,7 @@ function buildSpeedTapeImage(image) {
     ctx.fillStyle = "yellow";
     ctx.fillRect(71, yellowTop, 9.5, yellowHeight);
 
-    const buffer = cvs.toBuffer('image/png')
+    var buffer = cvs.toBuffer('image/png');
     fs.writeFileSync(__dirname + "/public/img/speed_tape.png", buffer);
 }
 
