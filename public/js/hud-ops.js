@@ -27,7 +27,7 @@ var warningAltitude;
 var warningDistance;
 var warningCourse;
 var useStratuxAHRS = true;
-
+var timestamp = new Date();
 
 var ip = document.getElementById("stxipaddr").value;
 var wsp = parseInt(document.getElementById("wsport").value);
@@ -36,11 +36,13 @@ var urlAHRS = "http://" + ip + "/getSituation";
 var urlCageAHRS = "http://" + ip + "/cageAHRS";
 var urlSerialData = "ws://localhost:" + wsp;
 
-var KT = "KT";
+var KNOTS = "KT";
 var MPH = "MPH";
 var KPH = "KPH";
+
 var MILES = "miles";
 var KLIKS = "km";
+var NMILES = "nm";
 var distanceMeasure = MILES;
 
 var windindicator = $('.windindicator');
@@ -71,16 +73,19 @@ svg.addEventListener("load", function () {
 var usestx = document.getElementById("stxahrs").value;
 useStratuxAHRS = usestx == "true";
 speedStyle = document.getElementById("speedstyle").value;
-var speedFactor = 1;
+var speedFactor = 1; // default in traffic messages is KNOTS
+
 switch (speedStyle) {
     case MPH:
-        speedFactor = 1.151;
+        speedFactor = 1.15078;
+        distanceMeasure = MILES;
         break;
     case KPH:
         speedFactor = 1.852;
         distanceMeasure = KLIKS;
         break;
     default:
+        distanceMeasure = NMILES;
         break;
 }
 
@@ -570,6 +575,7 @@ function clear_field(field) {
 function runHeartbeatRoutine() {
     var data = new Date().getTime();
     sendKeepAlive(data);
+    console.log("((💜))")
 }
 
 function sendKeepAlive(data) {
@@ -587,7 +593,7 @@ function onError(evt) {
 function onTrafficOpen(evt) {
     console.log("Traffic warning websocket successfully connected to Stratux!");
     wsOpen = true;
-    //setInterval(runHeartbeatRoutine, 10000);
+    setInterval(runHeartbeatRoutine, 15000);
 }
 
 function onTrafficClose(evt) {
@@ -610,27 +616,46 @@ function onTrafficMessage(evt) {
         "Bearing":92.7782277589171,"Distance":9.616803034808295e+06}
     --------------------------------------------------------------------------------------------*/
     var obj = JSON.parse(evt.data);
-    var meters = Number(obj.Distance.toFixed(1));
-    var dist = Number(((meters * 3.28084) / 5280).toFixed(1));
-    var brng = Number(Math.round(obj.Bearing.toFixed(0)));
+    var meters = Math.round(Number(obj.Distance));
+    var dist = 0;
+    var brng = Math.round(Number(obj.Bearing));
     var reg = obj.Reg != "" ? obj.Reg : obj.Tail;
     var alt = Number(obj.Alt);
     var spd = Number(obj.Speed);
-    var spdOut = spd;
+    var newtimestamp = new Date(obj.Timestamp).getTime();
+    var spdOut = Math.round(spd * speedFactor);
+    var airborne = !obj.OnGround;
+    var threshhold = 10;
+    var distlabel;
 
-    spdOut = Number(spd * speedFactor).toFixed(0);
     myAlt = Number(altitudebox.textContent);
+    
+    // incoming reported speed is in KT, translation factor is 
+    // set at app load depending on user's chosen display type
+    spdOut = Math.round(spd * speedFactor);
+    var course = brng + "\xB0 @ " + spdOut + " " + speedStyle;
+
+    switch (speedStyle) {
+        case KNOTS: // convert to nautical miles 
+            dist =  Math.round(meters * 0.000539957);
+            distlabel = " nm";
+            break;
+        case MPH:
+            dist = Math.round(meters * 0.000621371);
+            distlabel = " mi";
+            break;
+        default: // KLIKS
+            dist = Math.round(meters * 0.001);
+            distlabel = " km";
+    }
 
     isWarning = false;
 
-    // we're only going to consider traffic that has been continuously reported for 30 cycles
-    if (rcvCount < 60) {
-        rcvCount = rcvCount + 1;
-    }
-    else {
-        var course = brng + "\xB0 @ " + spdOut + " " + speedStyle;
-        console.log(evt.data);
-        if (dist > warning_distance && reg == lastIdent) {
+    console.log(reg + ": distance = " + dist + distlabel + ", altitude = " + alt + ", course = " + course);
+    
+    // we're only going to consider traffic that has been continuously reported for 5 cycles
+    if (airborne && rcvCount <= 20) {
+        if (dist > warning_distance) {
             isWarning = false;
             lastIdent = "";
             lastAlt = 0;
@@ -638,30 +663,35 @@ function onTrafficMessage(evt) {
             lastBrng = 0;
             lastSpd = 0;
         }
-        else if (dist <= warning_distance) {
-            if (alt <= myAlt + warning_altitude && alt >= myAlt - warning_altitude) {
+        else if ((dist <= warning_distance && alt != 0 && spdOut != 0) &&
+                 (alt <= myAlt + warning_altitude && alt >= myAlt - warning_altitude) &&
+                 (brng > 0 && spdOut > 0) && (newtimestamp > timestamp)) {
+            rcvCount++;
+            timestamp = newtimestamp;
+            isWarning = true;
+            warningIdentity.textContent = reg;
+            warningAltitude.textContent = alt;
+            warningDistance.textContent = dist + distlabel;
+            warningCourse.textContent = course;
+            lastIdent = reg;
+            lastAlt = alt;
+            lastDist = dist;
+            lastBrng = brng;
+            lastSpd = spd;
+            
+            if (rcvCount >= 20) {
                 rcvCount = 0;
-                if (brng != 0 && spd != 0) {
-                    isWarning = true;
-                    warningIdentity.textContent = reg;
-                    warningAltitude.textContent = alt;
-                    warningDistance.textContent = dist + "mi";
-                    warningCourse.textContent = course;
-                    lastIdent = reg;
-                    lastAlt = alt;
-                    lastDist = dist;
-                    lastBrng = brng;
-                    lastSpd = spd;
-                }
+                isWarning = false;
             }
-        }
-        if (isWarning) {
-            svg.setAttribute("style", "visibility: visible");
-            positionAndRotateCourseArrow(brng, true);
-        }
-        else {
-            svg.setAttribute("style", "visibility: hidden;");
-            positionAndRotateCourseArrow(0, false);
+
+            if (isWarning) {
+                svg.setAttribute("style", "visibility: visible");
+                positionAndRotateCourseArrow(brng, true);
+            }
+            else {
+                svg.setAttribute("style", "visibility: hidden;");
+                positionAndRotateCourseArrow(0, false);
+            }
         }
     }
 }
@@ -701,21 +731,10 @@ function positionAndRotateCourseArrow(bearing, visible) {
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function runStratuxAhrs() {
-    // arrays for averaging displayed values (keeps tapes from jumping around)
-    var avgSpdArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var avgAltArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var avgHdgArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var avgVspArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var avgCounter = 0;
-    var spd = 0;
-    var alt = 0;
-    var hdg = 0;
-    var vsp = 0;
     var speed = 0;
     var altitude = 0;
     var heading = "";
     var vertspeed = 0;
-    var divisor = 1;
     oatindicator.css("left", "-1000");
     baroindicator.css("left", "-1000");
     daltindicator.css("left", "-1000");
@@ -729,7 +748,6 @@ function runStratuxAhrs() {
                 return response.json();
             })
             .then(function (myJson) {
-
                 var str = JSON.stringify(myJson);
                 var obj = JSON.parse(str);
 
@@ -741,57 +759,25 @@ function runStratuxAhrs() {
                 var gnumber = obj.AHRSGLoad.toFixed(1);
                 var slipskid = Math.trunc(obj.AHRSSlipSkid);
                 var oat = Math.trunc((obj.BaroTemperature * 1.8) + 32, 0) + "\xB0 F";
-                var spdOut = obj.GPSGroundSpeed;
-                spdOut = Number(obj.GPSGroundSpeed * speedFactor).toFixed(0); 
-                
-                if (avgCounter < divisor) {
-                    avgSpdArray[avgCounter] = spdOut;
-                    avgAltArray[avgCounter] = Number(obj.GPSAltitudeMSL).toFixed(0);
-                    avgHdgArray[avgCounter] = obj.GPSTrueCourse;
-                    avgVspArray[avgCounter] = obj.GPSVerticalSpeed;
-                    avgCounter = avgCounter + 1;
-                }
-                else if (avgCounter >= divisor) {
-                    avgCounter = 0;
-                    spd = 0;
-                    alt = 0;
-                    hdg = 0;
-                    vsp = 0;
+                speed = Number(obj.GPSGroundSpeed * speedFactor).toFixed(0); 
+                altitude = Math.trunc(obj.GPSAltitudeMSL);
+                heading = pad(Math.trunc(obj.GPSTrueCourse), 3);
+                vertspeed = Math.trunc(obj.GPSVerticalSpeed);
+                // set the speed, altitude, heading, and GMeter values
+                speedbox.textContent = speed;
+                altitudebox.textContent = altitude;
+                headingbox.textContent = heading;
+                vspeedbox.textContent = Math.abs(vertspeed) + " FPM";
+                arrowbox.textContent = (vertspeed < 0 ? "▼" : "▲");
+                oatbox.textContent = oat;
+                var speedticks = (speed * spd_offset);
+                var altticks = (altitude * alt_offset);
+                var hdgticks = (heading * hdg_offset) * -1;
 
-                    for (var i = 0; i < divisor; i++) {
-                        spd = spd + avgSpdArray[i];
-                        alt = alt + avgAltArray[i];
-                        hdg = hdg + avgHdgArray[i];
-                        vsp = vsp + avgVspArray[i];
-
-                        // reset array elements to zero
-                        avgSpdArray[i] = 0;
-                        avgAltArray[i] = 0;
-                        avgHdgArray[i] = 0;
-                        avgVspArray[i] = 0;
-                    }
-
-                    // set the speed, altitude, heading, and GMeter values
-                    speed = Math.trunc(spd / divisor);
-                    altitude = Math.trunc(alt / divisor);
-                    heading = pad(Math.trunc(hdg / divisor), 3);
-                    vertspeed = Math.trunc(vsp / divisor);
-                    speedbox.textContent = speed;
-                    altitudebox.textContent = altitude;
-                    headingbox.textContent = heading;
-                    vspeedbox.textContent = Math.abs(vertspeed) + " FPM";
-                    arrowbox.textContent = (vertspeed < 0 ? "▼" : "▲");
-                    oatbox.textContent = oat;
-                    var speedticks = (speed * spd_offset);
-                    var altticks = (altitude * alt_offset);
-                    var hdgticks = (heading * hdg_offset) * -1;
-
-                    // set the coordinates of the tapes
-                    speedtape.css('transform', 'translateY(' + speedticks + 'px)');
-                    alttape.css('transform', 'translateY(' + altticks + 'px');
-                    headingtape.css('transform', 'translateX(' + hdgticks + 'px');
-                }
-
+                // set the coordinates of the tapes
+                speedtape.css('transform', 'translateY(' + speedticks + 'px)');
+                alttape.css('transform', 'translateY(' + altticks + 'px');
+                headingtape.css('transform', 'translateX(' + hdgticks + 'px');
                 gbox.textContent = gnumber + " G";
 
                 // set the skid-slip ball position

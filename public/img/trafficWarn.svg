@@ -59,7 +59,7 @@
      style="fill:#000000;fill-opacity:1" />
   <text
      style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;fill:#ff0000;fill-opacity:1"
-     x="6.6178517"
+     x="4.6334767"
      y="25.217985"
      transform="scale(1.0666633,0.93750295)"
      font-weight="700"
@@ -70,13 +70,13 @@
      fill="#ff0000"
      stroke-width="0.360999"
      id="text6"><tspan
-       x="6.6178517"
+       x="4.6334767"
        y="25.217985"
        id="tspan4"
        style="fill:#ff0000;fill-opacity:1;stroke-width:0.360999">Identity:</tspan></text>
   <text
      style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;fill:#ff0000;fill-opacity:1"
-     x="6.2066946"
+     x="4.2223196"
      y="33.648933"
      transform="scale(1.0666633,0.93750295)"
      font-weight="700"
@@ -87,13 +87,13 @@
      fill="#ff0000"
      stroke-width="0.360999"
      id="text10"><tspan
-       x="6.2066946"
+       x="4.2223196"
        y="33.648933"
        id="tspan8"
        style="fill:#ff0000;fill-opacity:1;stroke-width:0.360999">Altitude:</tspan></text>
   <text
      style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start"
-     x="4.2227011"
+     x="2.2383251"
      y="42.357025"
      transform="scale(1.0666633,0.93750295)"
      font-weight="700"
@@ -104,13 +104,13 @@
      fill="#ff0000"
      stroke-width="0.360999"
      id="text14"><tspan
-       x="4.2227011"
+       x="2.2383251"
        y="42.357025"
        id="tspan12"
        style="stroke-width:0.360999">Distance:</tspan></text>
   <text
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ff0000;stroke-width:0.360999"
-     x="9.6792555"
+     x="7.6948805"
      y="50.965561"
      transform="scale(1.0666633,0.93750295)"
      font-weight="700"
@@ -123,7 +123,7 @@
      id="text18"><tspan
        sodipodi:role="line"
        id="tspan854"
-       x="9.6792555"
+       x="7.6948805"
        y="50.965561">Course:</tspan></text>
   <text
      style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center"
@@ -145,7 +145,7 @@
        id="tspan20">PROXIMITY WARNING!</tspan></text>
   <text
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ffff00;fill-opacity:1;stroke-width:0.360999"
-     x="35.419216"
+     x="31.94656"
      y="25.270411"
      transform="scale(1.0666633,0.93750295)"
      font-weight="700"
@@ -159,11 +159,11 @@
      inkscape:label="identity"><tspan
        sodipodi:role="line"
        id="ident"
-       x="35.419216"
+       x="31.94656"
        y="25.270411">ident</tspan></text>
   <text
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ffff00;fill-opacity:1;stroke-width:0.360999"
-     x="35.419216"
+     x="31.94656"
      y="33.95594"
      transform="scale(1.0666633,0.93750295)"
      font-weight="700"
@@ -177,11 +177,11 @@
      inkscape:label="altitude"><tspan
        sodipodi:role="line"
        id="alt"
-       x="35.419216"
+       x="31.94656"
        y="33.95594">alt</tspan></text>
   <text
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ffff00;fill-opacity:1;stroke-width:0.360999"
-     x="35.419216"
+     x="31.94656"
      y="42.665039"
      transform="scale(1.0666633,0.93750295)"
      font-weight="700"
@@ -195,11 +195,11 @@
      inkscape:label="distance"><tspan
        sodipodi:role="line"
        id="dist"
-       x="35.419216"
+       x="31.94656"
        y="42.665039">dist</tspan></text>
   <text
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ffff00;fill-opacity:1;stroke-width:0.360999"
-     x="35.419216"
+     x="31.94656"
      y="51.272564"
      transform="scale(1.0666633,0.93750295)"
      font-weight="700"
@@ -213,6 +213,6 @@
      inkscape:label="course"><tspan
        sodipodi:role="line"
        id="crs"
-       x="35.419216"
+       x="31.94656"
        y="51.272564">course</tspan></text>
 </svg>

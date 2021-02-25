@@ -115,7 +115,7 @@
     </div>
     <br>
     <p>
-        <h3><label class="label">Select the speed indicator (KT or MPH) to use</label></h3>
+        <h3><label class="label">Select the speed indicator (KT, MPH, or KPH) to use</label></h3>
     </p>
     <p>
        <select id="speedstyle" name="speedstyle" class="selectlist" onClick="updateSpeedStyle(this.value);">
@@ -129,10 +129,10 @@
         <h3><label class="label">Enter your ADSB warning aircraft proximity values</label></h3>
     </p>
     <div class="form-field">
-        <label class="textlabel">Maximum or minium altitude difference from me (in feet) to generate a warning</label>
+        <label class="textlabel" id="maxalt">Maximum or minium altitude difference from me (in feet) to generate a warning</label>
         <input type="text" id="maxwarnaltitude" class="textbox" name="maxwarnaltitude" style="font-size: 20px; font-weight: bold;" value="##MAX_WARN_ALTITUDE##">
         <br>
-        <label class="textlabel">Maximum distance away from me (in miles) to generate a warning</label>
+        <label class="textlabel" id="maxdist">Maximum distance away from me (in miles) to generate a warning</label>
         <input type="text" id="maxwarndistance" class="textbox" name="maxwarndistance" style="font-size: 20px; font-weight: bold;" value="##MAX_WARN_DISTANCE##">
     </div>
     <br>
@@ -208,6 +208,7 @@
         document.getElementById("maxwarndistance").value = "##MAXWARNDIST##";
         document.getElementById("speedstyle").value = "##SPEEDSTYLE##";
         document.getElementById("selectedspeedstyle").value = "##SPEEDSTYLE##";
+        updateDistanceLabels("##SPEEDSTYLE##");
     };
 
       function updateTrafficWarning(newvalue) {
@@ -230,7 +231,37 @@
       function updateSpeedStyle(newvalue) {
           document.getElementById("speedstyle").value = newvalue;
           document.getElementById("selectedspeedstyle").value = newvalue;
+          updateDistanceLabels(newvalue);
       };
+
+      function updateDistanceLabels(newvalue) {
+          var distfill = document.getElementById("maxdist");
+          var altfill = document.getElementById("maxalt");
+          var phrasealt = "Maximum or minium altitude difference from me (in ##ALT##) to generate a warning";
+          var phrasedist = "Maximum distance away from me (in ##DIST##) to generate a warning";
+          var regexalt = /##ALT##/gi;
+          var regexdist = /##DIST##/gi;
+
+          switch (newvalue) {
+            case "MPH":
+                altfill.textContent = phrasealt.replace(regexalt, "feet");
+                distfill.textContent = phrasedist.replace(regexdist, "miles");
+                break;
+            case "KPH":
+                altfill.textContent = phrasealt.replace(regexalt, "meters");
+                distfill.textContent = phrasedist.replace(regexdist, "kilometers");
+                break;
+            case "KT":
+            default:
+                altfill.textContent = phrasealt.replace(regexalt, "feet");
+                distfill.textContent = phrasedist.replace(regexdist, "nautical miles");
+                break;
+          }
+      }
+
+      function updateAltitudeLabel(newvalue) {
+
+      }
   </script>
 </body>
 </html>

@@ -478,7 +478,7 @@ function generateSetupView(port) {
     var regex14 = /##STXVALUE##/gi;
     var regex15 = /##STXCHECKED##/gi;
     var regex16 = /##STXIPADDR##/gi;
-
+    
     var properViewName;
     var dbg = debug ? "true" : "false";
     var dbgchecked = debug ? "checked" : "";
@@ -497,7 +497,7 @@ function generateSetupView(port) {
        default : 
            properViewName = "Hudly";
     }
-
+    
     var rawdata = String(fs.readFileSync(__dirname + "/templates/setup_template.html"));
     var output = rawdata.replace(regex00, properViewName)
                         .replace(regex01, tw)
