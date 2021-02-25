@@ -36,7 +36,7 @@ var stratuxIPaddress = "192.168.10.1"; // default, changeable in setup
 var maxWarnAltitude = 0;
 var maxWarnDistance = 0;
 
-var setupview = __dirname + "/setup.html";
+var setupview = __dirname + "/public/setup.html";
 var vufineview = __dirname + "/public/viewfine.html";
 var indexview = __dirname + "/public/index.html";
 
