@@ -126,7 +126,7 @@
        x="7.6948805"
        y="50.965561">Course:</tspan></text>
   <text
-     style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center"
+     style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-align:center;font-family:sans-serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:7.122px;font-variant-east-asian:normal;letter-spacing:0;word-spacing:0;text-anchor:middle;fill:#ff0000;stroke-width:0.411;"
      x="48.098"
      y="204.808"
      transform="matrix(.82815 0 0 1.20752 0 -236.146)"
@@ -139,10 +139,8 @@
      fill="red"
      stroke-width=".411"
      id="text22"><tspan
-       x="48.098"
-       y="204.808"
-       style="-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center"
-       id="tspan20">PROXIMITY WARNING!</tspan></text>
+       sodipodi:role="line"
+       id="tspan852">TRAFFIC WARNING</tspan></text>
   <text
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.29298px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#ffff00;fill-opacity:1;stroke-width:0.360999"
      x="31.94656"

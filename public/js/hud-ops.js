@@ -21,19 +21,21 @@ var myAlt = 0;
 var warning_altitude = 0;
 var warning_distance = 0;
 var speedStyle = "KT";
-var isWarning = false;
 var warningIdentity;
 var warningAltitude;
 var warningDistance;
 var warningCourse;
 var useStratuxAHRS = true;
 var timestamp = new Date();
+var isWarning = false;
+var warningVisible = false;
 
 var ip = document.getElementById("stxipaddr").value;
 var wsp = parseInt(document.getElementById("wsport").value);
 var urlTraffic = "ws://" + ip + "/traffic";
 var urlAHRS = "http://" + ip + "/getSituation";
 var urlCageAHRS = "http://" + ip + "/cageAHRS";
+var urlResetGMeter = "http://" + ip + "/resetGMeter";
 var urlSerialData = "ws://localhost:" + wsp;
 
 var KNOTS = "KT";
@@ -59,10 +61,10 @@ coursecircle.css("visibility", "hidden");
 coursearrow.css("visibility", "hidden");
 
 // traffic warning image & elements
-var svg = document.getElementById("trafficwarning");
-svg.addEventListener("load", function () {
+var svgTraffic = document.getElementById("trafficwarning");
+svgTraffic.addEventListener("load", function () {
     // get the inner DOM of alpha.svg
-    var svgDoc = svg.contentDocument;
+    var svgDoc = svgTraffic.contentDocument;
     // get the inner element by id
     warningIdentity = svgDoc.getElementById("ident");
     warningAltitude = svgDoc.getElementById("alt");
@@ -582,7 +584,6 @@ function sendKeepAlive(data) {
     var rs = trafficWebSocket.readyState;
     if (rs == 1) {
         trafficWebSocket.send(data);
-        //("Sent keepalive to Stratux at " + data);
     }
 }
 
@@ -622,10 +623,10 @@ function onTrafficMessage(evt) {
     var reg = obj.Reg != "" ? obj.Reg : obj.Tail;
     var alt = Number(obj.Alt);
     var spd = Number(obj.Speed);
-    var newtimestamp = new Date(obj.Timestamp).getTime();
+    var newtimestamp = new Date(obj.Timestamp);
     var spdOut = Math.round(spd * speedFactor);
     var airborne = !obj.OnGround;
-    var threshhold = 10;
+    var threshhold = 20;
     var distlabel;
 
     myAlt = Number(altitudebox.textContent);
@@ -650,11 +651,16 @@ function onTrafficMessage(evt) {
     }
 
     isWarning = false;
+    
+    var diffsecs = getSeconds(newtimestamp, timestamp);
+    if (diffsecs > 30 && warningVisible) {
+        toggleTrafficWarning(false);
+    }
 
-    console.log(reg + ": distance = " + dist + distlabel + ", altitude = " + alt + ", course = " + course);
+    console.log(evt.data); //reg + ": distance = " + dist + distlabel + ", altitude = " + alt + ", course = " + course);
     
     // we're only going to consider traffic that has been continuously reported for 5 cycles
-    if (airborne && rcvCount <= 20) {
+    if (airborne && rcvCount <= threshhold) {
         if (dist > warning_distance) {
             isWarning = false;
             lastIdent = "";
@@ -685,14 +691,30 @@ function onTrafficMessage(evt) {
             }
 
             if (isWarning) {
-                svg.setAttribute("style", "visibility: visible");
+                toggleTrafficWarning(true);
                 positionAndRotateCourseArrow(brng, true);
             }
             else {
-                svg.setAttribute("style", "visibility: hidden;");
+                toggleTrafficWarning(false);
                 positionAndRotateCourseArrow(0, false);
             }
         }
+    }
+}
+
+function getSeconds(startTime, endTime) {
+    var diffMs = (endTime - startTime); // milliseconds between endTime and startTime
+    return Math.abs(Math.round(diffMs * .001));
+}
+
+function toggleTrafficWarning(isVisible) {
+    if (isVisible) {
+        svgTraffic.setAttribute("style", "visibility: visible");
+        warningVisible = true;
+    }
+    else {
+        svgTraffic.setAttribute("style", "visibility: hidden");
+        warningVisible = false;
     }
 }
 
@@ -740,6 +762,9 @@ function runStratuxAhrs() {
     daltindicator.css("left", "-1000");
     vsarrow.css("top", "422px");
     vsindicator.css("top", "422px");
+
+    fetch(urlCageAHRS);
+    fetch(urlResetGMeter);
 
     setInterval(function () {
 

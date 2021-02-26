@@ -339,7 +339,9 @@ function systemShutdown(callback){
     exec('shutdown -h now', function(error, stdout, stderr){ callback(stdout); });
 }
 
-openSerialPort(false);
+if (!stratuxAHRS) {
+    openSerialPort(false);
+}
 
 var connections = new Array(4);
 var port;
