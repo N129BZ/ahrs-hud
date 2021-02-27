@@ -2,19 +2,11 @@
 
 var host;
 var websock;
-//var wsport = 9696; // default value
+var hitmap = new Map();
 var trafficWebSocket;
 var ahrsWebSocket;
 var wsOpen = false;
 
-// variables for proximity warning calculations
-var showWarning = true;
-var lastIdent = "";
-var lastAlt = 0;
-var lastDist = 0;
-var lastBrng = 0;
-var lastSpd = 0;
-var rcvCount = 0;
 var clrCount = 0;
 var countCycle = 0;
 var myAlt = 0;
@@ -25,7 +17,7 @@ var warningIdentity;
 var warningAltitude;
 var warningDistance;
 var warningCourse;
-var useStratuxAHRS = true;
+var useStratuxAHRS = false;
 var timestamp = new Date();
 var isWarning = false;
 var warningVisible = false;
@@ -72,8 +64,8 @@ svgTraffic.addEventListener("load", function () {
     warningCourse = svgDoc.getElementById("crs");
 }, false);
 
-var usestx = document.getElementById("stxahrs").value;
-useStratuxAHRS = usestx == "true";
+var usestx = document.getElementById("ahrs").value;
+useStratuxAHRS = (usestx == "Stratux");
 speedStyle = document.getElementById("speedstyle").value;
 var speedFactor = 1; // default in traffic messages is KNOTS
 
@@ -626,8 +618,9 @@ function onTrafficMessage(evt) {
     var newtimestamp = new Date(obj.Timestamp);
     var spdOut = Math.round(spd * speedFactor);
     var airborne = !obj.OnGround;
-    var threshhold = 20;
     var distlabel;
+    var hitbrng = [];
+    var sorted;
 
     myAlt = Number(altitudebox.textContent);
     
@@ -657,50 +650,50 @@ function onTrafficMessage(evt) {
         toggleTrafficWarning(false);
     }
 
-    console.log(evt.data); //reg + ": distance = " + dist + distlabel + ", altitude = " + alt + ", course = " + course);
-    
-    // we're only going to consider traffic that has been continuously reported for 5 cycles
-    if (airborne && rcvCount <= threshhold) {
+    if (airborne && alt > 0 && dist > 0) {
+        var airplane = {"reg": reg, "dist": dist, "alt": alt, "brng": brng, "course": course};
+        //console.log(airplane);
         if (dist > warning_distance) {
-            isWarning = false;
-            lastIdent = "";
-            lastAlt = 0;
-            lastDist = 0;
-            lastBrng = 0;
-            lastSpd = 0;
+            hitmap.delete(reg);
         }
         else if ((dist <= warning_distance && alt != 0 && spdOut != 0) &&
                  (alt <= myAlt + warning_altitude && alt >= myAlt - warning_altitude) &&
                  (brng > 0 && spdOut > 0) && (newtimestamp > timestamp)) {
-            rcvCount++;
+            hitmap.set(reg, airplane);
             timestamp = newtimestamp;
-            isWarning = true;
-            warningIdentity.textContent = reg;
-            warningAltitude.textContent = alt;
-            warningDistance.textContent = dist + distlabel;
-            warningCourse.textContent = course;
-            lastIdent = reg;
-            lastAlt = alt;
-            lastDist = dist;
-            lastBrng = brng;
-            lastSpd = spd;
-            
-            if (rcvCount >= 20) {
-                rcvCount = 0;
-                isWarning = false;
-            }
+            var airplanes = Array.from(hitmap.values()).sort(function(a,b) {
+                return (a.dist > b.dist) ? 1 : -1;
+            });
+            console.log(JSON.stringify(airplanes));
+            var hitreg = airplanes[0].reg;
+            warningIdentity.textContent = hitreg;
+            warningAltitude.textContent = hitmap.get(hitreg).alt;
+            warningDistance.textContent = hitmap.get(hitreg).dist + distlabel;
+            warningCourse.textContent = hitmap.get(hitreg).course;
+            hitbrng = hitmap.get(hitreg).brng;
+        }
 
-            if (isWarning) {
-                toggleTrafficWarning(true);
-                positionAndRotateCourseArrow(brng, true);
-            }
-            else {
-                toggleTrafficWarning(false);
-                positionAndRotateCourseArrow(0, false);
-            }
+        if (hitmap.size > 0) {
+            toggleTrafficWarning(true);
+            positionAndRotateCourseArrow(hitbrng, true);
+        }
+        else {
+            toggleTrafficWarning(false);
+            positionAndRotateCourseArrow(hitbrng, false);
         }
     }
+    else {
+        hitmap.delete(reg);
+        hitbrng = 0;
+    }
 }
+
+function sortByDistance(...airplanes){ 
+    var sorted = airplanes.sort(function(a, b) { 
+      return (a.dist > b.dist ? 1 : -1) 
+    }); 
+    return sorted;
+ }
 
 function getSeconds(startTime, endTime) {
     var diffMs = (endTime - startTime); // milliseconds between endTime and startTime
@@ -735,7 +728,7 @@ function positionAndRotateCourseArrow(bearing, visible) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//      JSON output returned by Stratux from a POST to http://192.168.10.1/getSituation (AHRS data)
+//      JSON output returned by Stratux from a POST to http://[ipaddress]/getSituation (AHRS data)
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -778,7 +771,7 @@ function runStratuxAhrs() {
 
                 // attitude pitch & roll
                 attitude.setRoll(obj.AHRSRoll * -1);
-                attitude.setPitch(obj.AHRSPitch * 4); //pitch_offset);
+                attitude.setPitch(obj.AHRSPitch * pitch_offset);
 
                 // set these values to a reasonable precision
                 var gnumber = obj.AHRSGLoad.toFixed(1);

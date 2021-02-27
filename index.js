@@ -10,6 +10,7 @@ const exec = require('child_process').exec;
 const lineReader = require('line-by-line');
 const dgram = require('dgram');
 const dgServer = dgram.createSocket('udp4');
+const favicon = require('serve-favicon');
 const { createCanvas, loadImage, Canvas } = require('canvas');
 
 var wss;
@@ -30,9 +31,10 @@ var inPlayback = false;
 var stopPlayback = false;
 var tapeimage;
 var view = "";
+var ahrs = "";
 var trafficWarnings = false;
 var stratuxAHRS = false;
-var stratuxIPaddress = "192.168.10.1"; // default, changeable in setup
+var stratuxIPaddress = "192.168.10.1"; // default, overwritten if different in setup
 var maxWarnAltitude = 0;
 var maxWarnDistance = 0;
 
@@ -54,7 +56,10 @@ if (trafficWarnings) {
     });
       
     dgServer.on('message', (msg, rinfo) => {
-        console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+        //if (msg[1] == 76) {
+            console.log(msg);
+       // }
+        //console.log(msg);
     });
       
     dgServer.on('listening', () => {
@@ -144,11 +149,10 @@ function DebugPlayback() {
 }
 
 // express web server  
-var webserver;
+var app = express();
 try {
-        webserver = express();
-        webserver.use(express.urlencoded({ extended: true }));
-        webserver.listen(httpPort, () => {
+        app.use(express.urlencoded({ extended: true }));
+        app.listen(httpPort, () => {
         console.log("Webserver listening at port " + httpPort);
     });
     
@@ -162,17 +166,18 @@ try {
           res.set('x-timestamp', Date.now());
         }
     };
+
+    app.use(express.static("public", options));
+    app.use(favicon(__dirname + '/public/img/favicon.png'));
     
-    webserver.use(express.static("public", options));
-    
-    webserver.get('/',(req, res) => {
+    app.get('/',(req, res) => {
         if (firstrun) {
             generateSetupView();
             res.sendFile(setupview);
         }
         else {
             generateHudView();
-            if (view == "vufine") {
+            if (view == "VuFine") {
                 res.sendFile(vufineview);
             }
             else {
@@ -182,26 +187,25 @@ try {
         }
     });
 
-    webserver.get("/setup", (req,res) => {
+    app.get("/setup", (req,res) => {
         generateSetupView();
         res.sendFile(setupview);           
     });
 
-    webserver.get("/shutdown", (req,res) => {
+    app.get("/shutdown", (req,res) => {
         systemShutdown(function(output){
             console.log(output);
         });
     });    
     
-    webserver.get("/reboot", (req,res) => {
+    app.get("/reboot", (req,res) => {
         systemReboot(function(output){
             console.log(output);
         });
     });    
 
-    webserver.post("/setup", (req, res) => {
+    app.post("/setup", (req, res) => {
         console.log(req.body);
-        var viewProperName = req.body.selectedview;
         var newserialport = req.body.serialPort;
         var newbaudrate =  parseInt(req.body.baudrate);
         var newdebug = req.body.dbgchecked == "true" ? true : false;
@@ -212,18 +216,19 @@ try {
         var writefile = false;
         var reopenport = false;
         var reboot = false;
-        var newview = String(viewProperName).toLowerCase();
+        var newview = req.body.view;
         var newtw = req.body.twchecked == "true" ? true : false;
         var newmaxwarnalt = Number(req.body.maxwarnaltitude);
         var newmaxwarndist = Number(req.body.maxwarndistance);
         var newspeedstyle = req.body.speedstyle;  
-        var newstxahrs = req.body.stxchecked == "true" ? true : false;
+        var newahrs = req.body.ahrs;
         var newstxipaddr = req.body.stxipaddr;
         
         firstrun = false;
 
-        if (newstxahrs != stratuxAHRS) {
-            stratuxAHRS = newstxahrs;
+        if (newahrs != ahrs) {
+            ahrs = newahrs;
+            stratuxAHRS = (ahrs == "Stratux");
             writefile = true;
         }
         
@@ -288,7 +293,7 @@ try {
         }
 
         if (writefile) {
-            var data = { "view" : viewProperName, 
+            var data = { "view" : view, 
                          "httpPort" : httpPort,
                          "wsPort" : websocketPort,
                          "serialPort" : serialPort,
@@ -301,7 +306,7 @@ try {
                          "maxwarnaltitude" : maxWarnAltitude,
                          "maxwarndistance" : maxWarnDistance,
                          "speedstyle" : speedStyle,
-                         "stratuxahrs" : stratuxAHRS,
+                         "ahrs" : ahrs,
                          "stratuxipaddress" : stratuxIPaddress,
                          "debug" : debug,
                          "firstrun" : firstrun
@@ -369,7 +374,7 @@ function openSerialPort(needsFileRead) {
 function readSettingsFile() {
     var rawdata = fs.readFileSync(__dirname + '/settings.json');
     var parsedData = JSON.parse(rawdata);
-    view = String(parsedData.view).toLowerCase();
+    view = parsedData.view;
     serialPort = parsedData.serialPort;
     var hport = parsedData.httpPort;
     var wsPort = parsedData.wsPort;
@@ -382,7 +387,8 @@ function readSettingsFile() {
     maxWarnAltitude = Number(parsedData.maxwarnaltitude);
     maxWarnDistance = Number(parsedData.maxwarndistance);
     speedStyle = parsedData.speedstyle;
-    stratuxAHRS = parsedData.stratuxahrs;
+    ahrs = parsedData.ahrs;
+    stratuxAHRS = (ahrs == "Stratux");
     stratuxIPaddress = parsedData.stratuxipaddress;
     debug = parsedData.debug;
     firstrun = parsedData.firstrun;
@@ -441,16 +447,17 @@ function generateHudView() {
         var regex2 = /##MAXWARNALT##/gi;
         var regex3 = /##MAXWARNDIST##/gi;
         var regex4 = /##SPEEDSTYLE##/gi;
-        var regex5 = /##STXAHRS##/gi;
+        var regex5 = /##AHRS##/gi;
         var regex6 = /##STXIPADDR##/gi;
-
+        
+        
         var rawdata = String(fs.readFileSync(__dirname + "/templates/index_template.html"));
         var output = rawdata.replace(regex0, websocketPort)
                             .replace(regex1, trafficWarnings)
                             .replace(regex2, maxWarnAltitude)
                             .replace(regex3, maxWarnDistance)
                             .replace(regex4, speedStyle)
-                            .replace(regex5, stratuxAHRS)
+                            .replace(regex5, ahrs)
                             .replace(regex6, stratuxIPaddress);
 
         fs.writeFileSync(indexview, output);
@@ -458,8 +465,11 @@ function generateHudView() {
 }
 
 function generateHudStylesheet() {
-    var output = String(fs.readFileSync(__dirname + "/templates/" + view + "_template.css"));
-    fs.writeFileSync(__dirname + "/public/css/classes.css", output);
+    var lcview = view.toLowerCase();
+    if (view != "vufine") {
+        var output = String(fs.readFileSync(__dirname + "/templates/" + lcview + "_template.css"));
+        fs.writeFileSync(__dirname + "/public/css/classes.css", output);
+    }
 }
 
 function generateSetupView(port) {
@@ -477,31 +487,16 @@ function generateSetupView(port) {
     var regex11 = /##MAXWARNALT##/gi;
     var regex12 = /##MAXWARNDIST##/gi;
     var regex13 = /##SPEEDSTYLE##/gi;
-    var regex14 = /##STXVALUE##/gi;
-    var regex15 = /##STXCHECKED##/gi;
-    var regex16 = /##STXIPADDR##/gi;
+    var regex14 = /##AHRS##/gi;
+    var regex15 = /##STXIPADDR##/gi;
     
-    var properViewName;
     var dbg = debug ? "true" : "false";
     var dbgchecked = debug ? "checked" : "";
     var tw = trafficWarnings ? "true" : "false";
     var twchecked = trafficWarnings ? "checked" : "";
-    var stx = stratuxAHRS ? "true" : "false";
-    var stxchecked = stratuxAHRS ? "checked" : "";
-
-    switch (view) {
-       case "vufine":
-           properViewName = "VuFine";
-           break;
-       case "kivic" :
-           properViewName = "Kivic";
-           break;
-       default : 
-           properViewName = "Hudly";
-    }
     
     var rawdata = String(fs.readFileSync(__dirname + "/templates/setup_template.html"));
-    var output = rawdata.replace(regex00, properViewName)
+    var output = rawdata.replace(regex00, view)
                         .replace(regex01, tw)
                         .replace(regex02, twchecked)
                         .replace(regex03, serialPort)
@@ -515,9 +510,8 @@ function generateSetupView(port) {
                         .replace(regex11, maxWarnAltitude)
                         .replace(regex12, maxWarnDistance)
                         .replace(regex13, speedStyle)
-                        .replace(regex14, stx)
-                        .replace(regex15, stxchecked)
-                        .replace(regex16, stratuxIPaddress);
+                        .replace(regex14, ahrs)
+                        .replace(regex15, stratuxIPaddress);
     fs.writeFileSync(setupview, output);
 }
 
@@ -561,3 +555,7 @@ function buildSpeedTapeImage(image) {
     fs.writeFileSync(__dirname + "/public/img/speed_tape.png", buffer);
 }
 
+function parseAHRSMessage(msg) {
+     
+
+}
