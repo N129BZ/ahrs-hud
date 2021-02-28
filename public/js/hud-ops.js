@@ -17,6 +17,7 @@ var warningIdentity;
 var warningAltitude;
 var warningDistance;
 var warningCourse;
+var hitbearing = 0;
 var useStratuxAHRS = false;
 var timestamp = new Date();
 var isWarning = false;
@@ -619,7 +620,6 @@ function onTrafficMessage(evt) {
     var spdOut = Math.round(spd * speedFactor);
     var airborne = !obj.OnGround;
     var distlabel;
-    var hitbrng = 0;
     
     myAlt = Number(altitudebox.textContent);
     
@@ -644,11 +644,6 @@ function onTrafficMessage(evt) {
 
     isWarning = false;
     
-    var diffsecs = getSeconds(newtimestamp, timestamp);
-    if (diffsecs > 30 && warningVisible) {
-        toggleTrafficWarning(false);
-    }
-
     if (airborne && alt > 0 && dist > 0) {
         var airplane = {"reg": reg, "dist": dist, "alt": alt, "brng": brng, "course": course};
         if (dist > warning_distance) {
@@ -668,7 +663,7 @@ function onTrafficMessage(evt) {
             warningAltitude.textContent = hitmap.get(hitreg).alt;
             warningDistance.textContent = hitmap.get(hitreg).dist + distlabel;
             warningCourse.textContent = hitmap.get(hitreg).course;
-            hitbrng = hitmap.get(hitreg).brng;
+            hitbearing = hitmap.get(hitreg).brng;
             airplanes.forEach(function(item) {
                 if (item.reg != hitreg) {
                     hitmap.delete(item.reg)
@@ -677,17 +672,14 @@ function onTrafficMessage(evt) {
         }
 
         if (hitmap.size > 0) {
-            toggleTrafficWarning(true);
-            positionAndRotateCourseArrow(hitbrng, true);
+            toggleTrafficWarning(true, hitbearing);
         }
         else {
             toggleTrafficWarning(false);
-            positionAndRotateCourseArrow(hitbrng, false);
         }
     }
     else {
         hitmap.delete(reg);
-        hitbrng = 0;
     }
 }
 
@@ -703,29 +695,21 @@ function getSeconds(startTime, endTime) {
     return Math.abs(Math.round(diffMs * .001));
 }
 
-function toggleTrafficWarning(isVisible) {
+function toggleTrafficWarning(isVisible, bearing = 0) {
     if (isVisible) {
         svgTraffic.setAttribute("style", "visibility: visible");
+        coursearrow.css("visibility", "visible");
+        coursecircle.css("visibility", "visible");
+        courseindicator.css("visibility", "visible");
+        coursearrow.css("transform", "rotate(" + bearing + "deg)");
         warningVisible = true;
     }
     else {
         svgTraffic.setAttribute("style", "visibility: hidden");
-        warningVisible = false;
-    }
-}
-
-function positionAndRotateCourseArrow(bearing, visible) {
-    if (visible) {
-        coursearrow.css("visibility", "visible");
-        coursecircle.css("visibility", "visible");
-
-        coursearrow.css("transform", "rotate(" + bearing + "deg)");
-        courseindicator.css("visibility", "visible");
-    }
-    else {
         coursearrow.css("visibility", "hidden");
         coursecircle.css("visibility", "hidden");
         courseindicator.css("visibility", "hidden");
+        warningVisible = false;
     }
 }
 
