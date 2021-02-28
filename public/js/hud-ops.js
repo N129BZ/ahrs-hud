@@ -580,12 +580,17 @@ function sendKeepAlive(data) {
     if (rs == 1) {
         trafficWebSocket.send(data);
     }
-    if (warningVisible) {
-        var ts = Date.now();
-        var dif = ts - lastTrafficTimestamp;
-        console.log(dif);
-        if (dif > 700) {
-            hitmap = new Map();
+    checkForExpiredWarnings();
+}
+
+function checkForExpiredWarnings() {
+    if (hitmap.size > 0) {
+        hitMap.forEach(function(item) {
+            if (item.dist > warning_distance || item.age > 30) {
+                hitmap.delete(item.reg)
+            }
+        });
+        if (hitMap.size == 0) {
             toggleTrafficWarning(false);
         }
     }
@@ -627,6 +632,7 @@ function onTrafficMessage(evt) {
     var reg = obj.Reg != "" ? obj.Reg : obj.Tail;
     var alt = Number(obj.Alt);
     var spd = Number(obj.Speed);
+    var age = Number(obj.Age);
     var newtimestamp = Date.now(); //(obj.Timestamp);
     var spdOut = Math.round(spd * speedFactor);
     var airborne = !obj.OnGround;
@@ -656,7 +662,7 @@ function onTrafficMessage(evt) {
     isWarning = false;
     
     if (airborne && alt > 0 && dist > 0) {
-        var airplane = {"reg": reg, "dist": dist, "alt": alt, "brng": brng, "course": course, "timestamp": newtimestamp};
+        var airplane = {"reg": reg, "dist": dist, "alt": alt, "brng": brng, "course": course, "age": age, "timestamp": newtimestamp};
         if (dist > warning_distance) {
             hitmap.delete(reg);
         }
