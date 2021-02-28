@@ -18,6 +18,7 @@ var warningIdentity;
 var warningAltitude;
 var warningDistance;
 var warningCourse;
+var warningAge;
 var hitbearing = 0;
 var useStratuxAHRS = false;
 var timestamp = Date.now();
@@ -64,6 +65,7 @@ svgTraffic.addEventListener("load", function () {
     warningAltitude = svgDoc.getElementById("alt");
     warningDistance = svgDoc.getElementById("dist");
     warningCourse = svgDoc.getElementById("crs");
+    warningAge = svgDoc.getElementById("age");
 }, false);
 
 var usestx = document.getElementById("ahrs").value;
@@ -585,12 +587,12 @@ function sendKeepAlive(data) {
 
 function checkForExpiredWarnings() {
     if (hitmap.size > 0) {
-        hitMap.forEach(function(item) {
+        hitmap.forEach(function(item) {
             if (item.dist > warning_distance || item.age > 30) {
                 hitmap.delete(item.reg)
             }
         });
-        if (hitMap.size == 0) {
+        if (hitmap.size == 0) {
             toggleTrafficWarning(false);
         }
     }
@@ -632,8 +634,8 @@ function onTrafficMessage(evt) {
     var reg = obj.Reg != "" ? obj.Reg : obj.Tail;
     var alt = Number(obj.Alt);
     var spd = Number(obj.Speed);
-    var age = Number(obj.Age);
-    var newtimestamp = Date.now(); //(obj.Timestamp);
+    var age = Number(obj.Age).toFixed(1);
+    var newtimestamp = Date.now(); 
     var spdOut = Math.round(spd * speedFactor);
     var airborne = !obj.OnGround;
     var distlabel;
@@ -674,15 +676,17 @@ function onTrafficMessage(evt) {
             var airplanes = Array.from(hitmap.values()).sort(function(a,b) {
                 return (a.dist > b.dist) ? 1 : -1;
             });
-            console.log(JSON.stringify(airplanes));
+            //console.log(JSON.stringify(airplanes));
             var hitreg = airplanes[0].reg;
             warningIdentity.textContent = hitreg;
             warningAltitude.textContent = hitmap.get(hitreg).alt;
             warningDistance.textContent = hitmap.get(hitreg).dist + distlabel;
             warningCourse.textContent = hitmap.get(hitreg).course;
+            warningAge.textContent = hitmap.get(hitreg).age;
             hitbearing = hitmap.get(hitreg).brng;
             lastTrafficTimestamp = hitmap.get(hitreg).timestamp;
-
+            console.log(airplanes[0]);
+            
             airplanes.forEach(function(item) {
                 if (item.reg != hitreg) {
                     hitmap.delete(item.reg)
