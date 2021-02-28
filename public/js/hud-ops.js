@@ -6,6 +6,7 @@ var hitmap = new Map();
 var trafficWebSocket;
 var ahrsWebSocket;
 var wsOpen = false;
+var lastTrafficTimestamp;
 
 var clrCount = 0;
 var countCycle = 0;
@@ -19,7 +20,7 @@ var warningDistance;
 var warningCourse;
 var hitbearing = 0;
 var useStratuxAHRS = false;
-var timestamp = new Date();
+var timestamp = Date.now();
 var isWarning = false;
 var warningVisible = false;
 
@@ -298,6 +299,7 @@ function onHostData(e) {
         data.winddirection -= 180;
     }
     windarrow.style.transform = 'rotate(' + data.winddirection + 'deg)';
+    data = null; 
 }
 
 function GetAverage(arrayToAverage) {
@@ -578,6 +580,15 @@ function sendKeepAlive(data) {
     if (rs == 1) {
         trafficWebSocket.send(data);
     }
+    if (warningVisible) {
+        var ts = Date.now();
+        var dif = ts - lastTrafficTimestamp;
+        console.log(dif);
+        if (dif > 700) {
+            hitmap = new Map();
+            toggleTrafficWarning(false);
+        }
+    }
 }
 
 function onError(evt) {
@@ -616,7 +627,7 @@ function onTrafficMessage(evt) {
     var reg = obj.Reg != "" ? obj.Reg : obj.Tail;
     var alt = Number(obj.Alt);
     var spd = Number(obj.Speed);
-    var newtimestamp = new Date(obj.Timestamp);
+    var newtimestamp = Date.now(); //(obj.Timestamp);
     var spdOut = Math.round(spd * speedFactor);
     var airborne = !obj.OnGround;
     var distlabel;
@@ -645,7 +656,7 @@ function onTrafficMessage(evt) {
     isWarning = false;
     
     if (airborne && alt > 0 && dist > 0) {
-        var airplane = {"reg": reg, "dist": dist, "alt": alt, "brng": brng, "course": course};
+        var airplane = {"reg": reg, "dist": dist, "alt": alt, "brng": brng, "course": course, "timestamp": newtimestamp};
         if (dist > warning_distance) {
             hitmap.delete(reg);
         }
@@ -664,11 +675,14 @@ function onTrafficMessage(evt) {
             warningDistance.textContent = hitmap.get(hitreg).dist + distlabel;
             warningCourse.textContent = hitmap.get(hitreg).course;
             hitbearing = hitmap.get(hitreg).brng;
+            lastTrafficTimestamp = hitmap.get(hitreg).timestamp;
+
             airplanes.forEach(function(item) {
                 if (item.reg != hitreg) {
                     hitmap.delete(item.reg)
                 }
             });
+            airplanes = null;
         }
 
         if (hitmap.size > 0) {
@@ -682,13 +696,6 @@ function onTrafficMessage(evt) {
         hitmap.delete(reg);
     }
 }
-
-function sortByDistance(...airplanes){ 
-    var sorted = airplanes.sort(function(a, b) { 
-      return (a.dist > b.dist ? 1 : -1) 
-    }); 
-    return sorted;
- }
 
 function getSeconds(startTime, endTime) {
     var diffMs = (endTime - startTime); // milliseconds between endTime and startTime
