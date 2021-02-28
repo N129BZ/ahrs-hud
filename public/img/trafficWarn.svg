@@ -214,7 +214,7 @@
        x="31.94656"
        y="51.272564">course</tspan></text>
   <text
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.75051px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#0000ff;fill-opacity:1;stroke-width:0.383792"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.75051px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#0000ff;fill-opacity:1;stroke-width:0.383792;"
      x="6.3045917"
      y="63.857471"
      transform="scale(1.1340112,0.88182551)"
@@ -227,10 +227,7 @@
      stroke-width="0.360999"
      id="text18-9"><tspan
        sodipodi:role="line"
-       id="tspan857"
-       x="6.3045917"
-       y="63.857471"
-       style="fill:#0000ff;fill-opacity:1;stroke-width:0.383792">Secs. since last report:</tspan></text>
+       id="tspan853">Seconds since last report:</tspan></text>
   <text
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52777px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0;word-spacing:0;fill:#0000ff;fill-opacity:1;stroke-width:0.360999;"
      x="59.060757"

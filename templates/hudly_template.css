@@ -285,36 +285,22 @@ body {
 }
 
 .courseindicator {
-    border-style: solid;
-    border-color: yellow;
-    border-width: 4px;
-    border-radius: 5px;
     position: absolute;
-    top: 252px;
-    left: 627px;
-    width: 131px;
-    height: 77px;
+    top: 207px;
+    left: 644px;
+    width: 135px;
+    height: 135px;
     display: inline-block;
     z-index: 600;
     visibility: hidden;
 }
 
-.coursecircle {
-    height: 60px;
-    width: 60px;
-    top: 10px;
-    left: 37px;
-    position: absolute;
-    visibility: visible;
-    z-index: 610;
-}
-
 .coursearrow {
-    height: 42px;
-    width: 10px;
+    height: 135px;
+    width: 135px;
     position: absolute;
-    top: 19px;
-    left: 63px;
+    top: 09px;
+    left: 0px;
     visibility: visible;
     z-index: 610;
 }

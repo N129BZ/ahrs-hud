@@ -13,6 +13,7 @@ var countCycle = 0;
 var myAlt = 0;
 var warning_altitude = 0;
 var warning_distance = 0;
+var coursearrow;
 var speedStyle = "KT";
 var warningIdentity;
 var warningAltitude;
@@ -66,6 +67,12 @@ svgTraffic.addEventListener("load", function () {
     warningDistance = svgDoc.getElementById("dist");
     warningCourse = svgDoc.getElementById("crs");
     warningAge = svgDoc.getElementById("age");
+}, false);
+
+var svgArrow = document.getElementById("coursearrow");
+svgArrow.addEventListener("load", function () {
+    var svgDoc = svgArrow.contentDocument;
+    coursearrow = svgDoc.getElementById("arrow");
 }, false);
 
 var usestx = document.getElementById("ahrs").value;
@@ -686,7 +693,7 @@ function onTrafficMessage(evt) {
             hitbearing = hitmap.get(hitreg).brng;
             lastTrafficTimestamp = hitmap.get(hitreg).timestamp;
             console.log(airplanes[0]);
-            
+
             airplanes.forEach(function(item) {
                 if (item.reg != hitreg) {
                     hitmap.delete(item.reg)
@@ -715,16 +722,13 @@ function getSeconds(startTime, endTime) {
 function toggleTrafficWarning(isVisible, bearing = 0) {
     if (isVisible) {
         svgTraffic.setAttribute("style", "visibility: visible");
-        coursearrow.css("visibility", "visible");
-        coursecircle.css("visibility", "visible");
         courseindicator.css("visibility", "visible");
-        coursearrow.css("transform", "rotate(" + bearing + "deg)");
+        svgArrow.setAttribute("style", "transform: rotate(" + bearing + "deg)");
         warningVisible = true;
     }
     else {
         svgTraffic.setAttribute("style", "visibility: hidden");
-        coursearrow.css("visibility", "hidden");
-        coursecircle.css("visibility", "hidden");
+        svgArrow.setAttribute("style", "visibility: hidden");
         courseindicator.css("visibility", "hidden");
         warningVisible = false;
     }
