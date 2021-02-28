@@ -56,10 +56,7 @@ if (trafficWarnings) {
     });
       
     dgServer.on('message', (msg, rinfo) => {
-        //if (msg[1] == 76) {
-            console.log(msg);
-       // }
-        //console.log(msg);
+        console.log(msg);
     });
       
     dgServer.on('listening', () => {

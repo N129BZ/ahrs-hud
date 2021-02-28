@@ -320,7 +320,7 @@ function GetAverage(arrayToAverage) {
     header:     =11         00 - 02  3 chars   =  3
     time:       HHMMSSMS    03 - 10  8 chars   = 11
     pitch:      +100        11 - 14  4 chars   = 15
-    roll:       +0300       15 - 19  5 chars   = 20GetAverage(avgAltitude);
+    roll:       +0300       15 - 19  5 chars   = 20
     heading:    180         20 - 22  3 chars   = 23
     airspeed:   1400        23 - 26  4 chars   = 27
     altitude:   004760      27 - 32  6 chars   = 33
@@ -619,9 +619,8 @@ function onTrafficMessage(evt) {
     var spdOut = Math.round(spd * speedFactor);
     var airborne = !obj.OnGround;
     var distlabel;
-    var hitbrng = [];
-    var sorted;
-
+    var hitbrng = 0;
+    
     myAlt = Number(altitudebox.textContent);
     
     // incoming reported speed is in KT, translation factor is 
@@ -652,7 +651,6 @@ function onTrafficMessage(evt) {
 
     if (airborne && alt > 0 && dist > 0) {
         var airplane = {"reg": reg, "dist": dist, "alt": alt, "brng": brng, "course": course};
-        //console.log(airplane);
         if (dist > warning_distance) {
             hitmap.delete(reg);
         }
@@ -671,6 +669,11 @@ function onTrafficMessage(evt) {
             warningDistance.textContent = hitmap.get(hitreg).dist + distlabel;
             warningCourse.textContent = hitmap.get(hitreg).course;
             hitbrng = hitmap.get(hitreg).brng;
+            airplanes.forEach(function(item) {
+                if (item.reg != hitreg) {
+                    hitmap.delete(item.reg)
+                }
+            });
         }
 
         if (hitmap.size > 0) {

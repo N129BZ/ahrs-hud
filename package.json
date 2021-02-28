@@ -26,6 +26,7 @@
     "line-by-line": "^0.1.6",
     "protobufjs": "^6.10.2",
     "serialport": "^8.0.7",
+    "serve-favicon": "^2.5.0",
     "websocket": "^1.0.33"
   },
   "devDependencies": {
