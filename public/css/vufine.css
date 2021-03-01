@@ -92,6 +92,16 @@ body {
     transform: scale(3,3);
 }
 
+.trafficwarn {
+    width: 940px;
+    height: 480px;
+    top: 36px;
+    left: 9px;
+    position: absolute;
+    transform: scale(1, .8);
+    z-index: 500;
+}
+
 #spanaoa {
     position: absolute;
     left: 6px;

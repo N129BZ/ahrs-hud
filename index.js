@@ -56,12 +56,13 @@ if (trafficWarnings) {
     });
       
     dgServer.on('message', (msg, rinfo) => {
-        //console.log(msg);
+        var strmsg = new TextDecoder("utf-8").decode(msg);
+        console.log(strmsg);
     });
       
     dgServer.on('listening', () => {
         var address = server.address();
-        console.log(`server listening at port ${address.port}`);
+        console.log("Stratux traffic heartbeat listener enabled");
     });
     
     dgServer.bind(4000);
@@ -75,7 +76,7 @@ try {
     wss = new WebSocketServer({
         httpServer: server
     });
-    console.log("Websocket server listening at port " + websocketPort); 
+    console.log("Serial data forwarding server enabled at port " + websocketPort); 
 }
 catch (error) {
     console.log(error);
@@ -408,8 +409,8 @@ function showPortOpen() {
 }
 
 function sendDataToBrowser(data) {
-    connections.forEach(function(element) {
-        element.send(data); 
+    connections.forEach(function(connection) {
+        connection.send(data); 
     });
 }
 
