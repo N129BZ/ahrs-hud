@@ -56,12 +56,12 @@ if (trafficWarnings) {
     });
       
     dgServer.on('message', (msg, rinfo) => {
-        console.log(msg);
+        //console.log(msg);
     });
       
     dgServer.on('listening', () => {
         var address = server.address();
-        console.log(`server listening ${address.address}:${address.port}`);
+        console.log(`server listening at port ${address.port}`);
     });
     
     dgServer.bind(4000);
@@ -201,8 +201,11 @@ try {
         });
     });    
 
+    app.get("/stratux", (req,res) => {
+        res.redirect("http://" + stratuxIPaddress);
+    });
+
     app.post("/setup", (req, res) => {
-        console.log(req.body);
         var newserialport = req.body.serialPort;
         var newbaudrate =  parseInt(req.body.baudrate);
         var newdebug = req.body.dbgchecked == "true" ? true : false;
@@ -550,9 +553,4 @@ function buildSpeedTapeImage(image) {
 
     var buffer = cvs.toBuffer('image/png');
     fs.writeFileSync(__dirname + "/public/img/speed_tape.png", buffer);
-}
-
-function parseAHRSMessage(msg) {
-     
-
 }

@@ -59,9 +59,7 @@ coursearrow.css("visibility", "hidden");
 // traffic warning image & elements
 var svgTraffic = document.getElementById("trafficwarning");
 svgTraffic.addEventListener("load", function () {
-    // get the inner DOM of alpha.svg
     var svgDoc = svgTraffic.contentDocument;
-    // get the inner element by id
     warningIdentity = svgDoc.getElementById("ident");
     warningAltitude = svgDoc.getElementById("alt");
     warningDistance = svgDoc.getElementById("dist");
@@ -595,7 +593,7 @@ function sendKeepAlive(data) {
 function checkForExpiredWarnings() {
     if (hitmap.size > 0) {
         hitmap.forEach(function(item) {
-            if (item.dist > warning_distance || item.age > 15) {
+            if (item.age > 15 || item.dist > warning_distance) {
                 hitmap.delete(item.reg)
             }
         });
@@ -683,7 +681,7 @@ function onTrafficMessage(evt) {
             var airplanes = Array.from(hitmap.values()).sort(function(a,b) {
                 return (a.dist > b.dist) ? 1 : -1;
             });
-            //console.log(JSON.stringify(airplanes));
+            
             var hitreg = airplanes[0].reg;
             warningIdentity.textContent = hitreg;
             warningAltitude.textContent = hitmap.get(hitreg).alt;
