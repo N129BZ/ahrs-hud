@@ -595,7 +595,7 @@ function sendKeepAlive(data) {
 function checkForExpiredWarnings() {
     if (hitmap.size > 0) {
         hitmap.forEach(function(item) {
-            if (item.dist > warning_distance || item.age > 30) {
+            if (item.dist > warning_distance || item.age > 15) {
                 hitmap.delete(item.reg)
             }
         });
