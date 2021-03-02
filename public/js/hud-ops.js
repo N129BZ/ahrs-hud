@@ -594,8 +594,11 @@ function sendKeepAlive(data) {
 
 function checkForExpiredWarnings() {
     if (hitmap.size > 0) {
+        var now = new Date().getTime();
         hitmap.forEach(function(item) {
-            if (item.age > warning_maxage || item.dist > warning_distance) {
+            if ((now - item.timestamp) / 1000 > warning_maxage ||
+                item.age > warning_maxage || 
+                item.dist > warning_distance) {
                 hitmap.delete(item.reg)
             }
         });
@@ -655,15 +658,15 @@ function onTrafficMessage(evt) {
     var course = brng + "\xB0 @ " + spdOut + " " + speedStyle;
 
     switch (speedStyle) {
-        case KNOTS: // convert to nautical miles 
+        case KNOTS: // convert meters to nautical miles 
             dist =  Math.round(meters * 0.000539957);
             distlabel = " nm";
             break;
-        case MPH:
+        case MPH: // convert meters to statute miles
             dist = Math.round(meters * 0.000621371);
             distlabel = " mi";
             break;
-        default: // KLIKS
+        default: // convert meters to kilometers
             dist = Math.round(meters * 0.001);
             distlabel = " km";
     }
@@ -687,15 +690,16 @@ function onTrafficMessage(evt) {
                     return (e.dist < warning_distance && e.age < warning_maxage);
                 });
                 var hit = airplanes[0];
-                warningIdentity.textContent = hit.reg;
-                warningAltitude.textContent = hit.alt;
-                warningDistance.textContent = hit.dist + distlabel;
-                warningCourse.textContent = hit.course;
-                warningAge.textContent = hit.age;
-                hitbearing = hit.brng;
-                lastTrafficTimestamp = hit.timestamp;
-                console.log(hit);
-
+                if (typeof hit != 'undefined') {
+                    warningIdentity.textContent = hit.reg;
+                    warningAltitude.textContent = hit.alt;
+                    warningDistance.textContent = hit.dist + distlabel;
+                    warningCourse.textContent = hit.course;
+                    warningAge.textContent = hit.age;
+                    hitbearing = hit.brng;
+                    lastTrafficTimestamp = hit.timestamp;
+                    console.log(hit);
+                }    
                 airplanes.forEach(function(item) {
                     if (item.reg != hit.reg) {
                         hitmap.delete(item.reg)
