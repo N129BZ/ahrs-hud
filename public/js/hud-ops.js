@@ -639,7 +639,7 @@ function onTrafficMessage(evt) {
     var reg = obj.Reg != "" ? obj.Reg : obj.Tail;
     var alt = Number(obj.Alt);
     var spd = Number(obj.Speed);
-    var age = Number(obj.Age).toFixed(1);
+    var age = Math.round(obj.Age);
     var newtimestamp = Date.now(); 
     var spdOut = Math.round(spd * speedFactor);
     var airborne = !obj.OnGround;
@@ -682,18 +682,18 @@ function onTrafficMessage(evt) {
                 return (a.dist > b.dist) ? 1 : -1;
             });
             
-            var hitreg = airplanes[0].reg;
-            warningIdentity.textContent = hitreg;
-            warningAltitude.textContent = hitmap.get(hitreg).alt;
-            warningDistance.textContent = hitmap.get(hitreg).dist + distlabel;
-            warningCourse.textContent = hitmap.get(hitreg).course;
-            warningAge.textContent = hitmap.get(hitreg).age;
-            hitbearing = hitmap.get(hitreg).brng;
-            lastTrafficTimestamp = hitmap.get(hitreg).timestamp;
-            console.log(airplanes[0]);
+            var hit = airplanes[0];
+            warningIdentity.textContent = hit.reg;
+            warningAltitude.textContent = hit.alt;
+            warningDistance.textContent = hit.dist + distlabel;
+            warningCourse.textContent = hit.course;
+            warningAge.textContent = hit.age;
+            hitbearing = hit.brng;
+            lastTrafficTimestamp = hit.timestamp;
+            //console.log(hit);
 
             airplanes.forEach(function(item) {
-                if (item.reg != hitreg) {
+                if (item.reg != hit.reg) {
                     hitmap.delete(item.reg)
                 }
             });
