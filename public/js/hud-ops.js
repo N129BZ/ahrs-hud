@@ -13,6 +13,7 @@ var countCycle = 0;
 var myAlt = 0;
 var warning_altitude = 0;
 var warning_distance = 0;
+const warning_maxage = 20;
 var coursearrow;
 var speedStyle = "KT";
 var warningIdentity;
@@ -242,6 +243,7 @@ var svgns = "http://www.w3.org/2000/svg";
 function onHostData(e) {
 
     var data = new HudData(e.data);
+
     //////////////////////////////////////////////////////////////////////////////
     //---------------------------------------------------------------------------
     // example data:
@@ -593,7 +595,7 @@ function sendKeepAlive(data) {
 function checkForExpiredWarnings() {
     if (hitmap.size > 0) {
         hitmap.forEach(function(item) {
-            if (item.age > 15 || item.dist > warning_distance) {
+            if (item.age > warning_maxage || item.dist > warning_distance) {
                 hitmap.delete(item.reg)
             }
         });
@@ -667,48 +669,54 @@ function onTrafficMessage(evt) {
     }
 
     isWarning = false;
-    
-    if (airborne && alt > 0 && dist > 0) {
-        var airplane = {"reg": reg, "dist": dist, "alt": alt, "brng": brng, "course": course, "age": age, "timestamp": newtimestamp};
-        if (dist > warning_distance) {
-            hitmap.delete(reg);
-        }
-        else if ((dist <= warning_distance && alt != 0 && spdOut != 0) &&
-                 (alt <= myAlt + warning_altitude && alt >= myAlt - warning_altitude) &&
-                 (brng > 0 && spdOut > 0) && (newtimestamp > timestamp)) {
-            hitmap.set(reg, airplane);
-            timestamp = newtimestamp;
-            var airplanes = Array.from(hitmap.values()).sort(function(a,b) {
-                return (a.dist > b.dist) ? 1 : -1;
-            });
+    try {
+        if (airborne && alt > 0 && dist > 0) {
             
-            var hit = airplanes[0];
-            warningIdentity.textContent = hit.reg;
-            warningAltitude.textContent = hit.alt;
-            warningDistance.textContent = hit.dist + distlabel;
-            warningCourse.textContent = hit.course;
-            warningAge.textContent = hit.age;
-            hitbearing = hit.brng;
-            lastTrafficTimestamp = hit.timestamp;
-            //console.log(hit);
+            var airplane = {"reg": reg, "age": age, "dist": dist, "alt": alt, "brng": brng, "course": course, "timestamp": newtimestamp};
+            if (dist > warning_distance) {
+                hitmap.delete(reg);
+            }
+            else if ((dist <= warning_distance && alt != 0 && spdOut != 0) &&
+                     (alt <= myAlt + warning_altitude && alt >= myAlt - warning_altitude) &&
+                     (brng > 0 && spdOut > 0) && (newtimestamp > timestamp)) {
+                hitmap.set(reg, airplane);
+                timestamp = newtimestamp;
+                var airplanes = Array.from(hitmap.values()).sort(function(a,b) {
+                    return (a.dist > b.dist) ? 1 : -1;
+                }).filter(function (e) {
+                    return (e.dist < warning_distance && e.age < warning_maxage);
+                });
+                var hit = airplanes[0];
+                warningIdentity.textContent = hit.reg;
+                warningAltitude.textContent = hit.alt;
+                warningDistance.textContent = hit.dist + distlabel;
+                warningCourse.textContent = hit.course;
+                warningAge.textContent = hit.age;
+                hitbearing = hit.brng;
+                lastTrafficTimestamp = hit.timestamp;
+                console.log(hit);
 
-            airplanes.forEach(function(item) {
-                if (item.reg != hit.reg) {
-                    hitmap.delete(item.reg)
-                }
-            });
-            airplanes = null;
-        }
+                airplanes.forEach(function(item) {
+                    if (item.reg != hit.reg) {
+                        hitmap.delete(item.reg)
+                    }
+                });
+                airplanes = null;
+            }
 
-        if (hitmap.size > 0) {
-            toggleTrafficWarning(true, hitbearing);
+            if (hitmap.size > 0) {
+                toggleTrafficWarning(true, hitbearing);
+            }
+            else {
+                toggleTrafficWarning(false);
+            }
         }
         else {
-            toggleTrafficWarning(false);
+            hitmap.delete(reg);
         }
     }
-    else {
-        hitmap.delete(reg);
+    catch (error) {
+        console.log(error);
     }
 }
 

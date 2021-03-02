@@ -314,7 +314,7 @@ try {
                         };
             var stringToWrite = JSON.stringify(data, null, '  ').replace(/: "(?:[^"]+|\\")*",?$/gm, ' $&');
             fs.writeFileSync(__dirname + "/settings.json", stringToWrite,{flag: 'w+'});
-            
+
             if (reboot) {
                 systemReboot(function(output){
                     console.log(output);
@@ -438,7 +438,7 @@ function generateVuFineView() {
 }
 
 function generateHudView() {
-    if (view == "vufine") {
+    if (view.toLowerCase() == "vufine") {
         generateVuFineView();
     }
     else {
@@ -467,7 +467,7 @@ function generateHudView() {
 
 function generateHudStylesheet() {
     var lcview = view.toLowerCase();
-    if (view != "vufine") {
+    if (lcview != "vufine") {
         var output = String(fs.readFileSync(__dirname + "/templates/" + lcview + "_template.css"));
         fs.writeFileSync(__dirname + "/public/css/classes.css", output);
     }
