@@ -56,8 +56,8 @@ if (trafficWarnings) {
     });
       
     dgServer.on('message', (msg, rinfo) => {
-        var strmsg = new TextDecoder("utf-8").decode(msg);
-        console.log(strmsg);
+        //var strmsg = new TextDecoder("utf-8").decode(msg);
+        //console.log(strmsg);
     });
       
     dgServer.on('listening', () => {
@@ -86,7 +86,7 @@ var connection;
 try {
     wss.on('request', function (request) {
         connection = request.accept(null, request.origin);
-        console.log("New Connection");
+        console.log("new connection");
         connections.push(connection);
         
         if (debug) {
