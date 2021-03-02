@@ -1,6 +1,6 @@
-# adahrs-hud + Stratux Traffic for Experimental Aircraft
+# ahrs-hud - A Heads Up Display that uses Dynon, Garmin, or Stratux AHRS data, plus Stratux Traffic, for Experimental Aircraft
 
-## Heads Up Display for Garmin or Dynon EFIS's using a Raspberry Pi Zero and one of the available EFIS serial ports on those units. The pi's HDMI video port is then used to display the ADAHRS data on a Hudly or Kivic HUD. This can optionally also be driven off of the AHRS output from a StratuX over the WiFi connection. 
+## This is a HUD (Heads Up Display) for Dynon, Garmin, or Stratux AHRS, using a Raspberry Pi Zero and one of the available EFIS serial ports on the Dynon or Garmin, or optionally the AHRS data from the Stratux. The pi's HDMI video port is then used to display the AHRS on a Hudly or Kivic HUD. 
 ![Image of hud](https://github.com/N129BZ/adahrs-hud/blob/master/docs/Screenshot20200418.png)
 
 # UNDER CONSTRUCTION...
