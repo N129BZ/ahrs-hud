@@ -17,21 +17,6 @@
   ],
   "author": "Brian A. Manlove",
   "license": "BSD-3-Clause",
-  "dependencies": {
-    "@serialport/parser-readline": "^8.0.6",
-    "canvas": "^2.6.1",
-    "dgram": "^1.0.1",
-    "express": "^4.17.1",
-    "fs": "0.0.1-security",
-    "http": "0.0.0",
-    "line-by-line": "^0.1.6",
-    "serialport": "^8.0.7",
-    "serve-favicon": "^2.5.0",
-    "websocket": "^1.0.33"
-  },
-  "devDependencies": {
-    "electron": "^11.3.0"
-  },
   "directories": {
     "doc": "docs"
   },
@@ -42,5 +27,17 @@
   "bugs": {
     "url": "https://github.com/N129BZ/adahrs-hud/issues"
   },
-  "homepage": "https://github.com/N129BZ/adahrs-hud#readme"
+  "homepage": "https://github.com/N129BZ/adahrs-hud#readme",
+  "dependencies": {
+    "@serialport/parser-readline": "^9.0.7",
+    "canvas": "^2.7.0",
+    "child_process": "^1.0.2",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "line-by-line": "^0.1.6",
+    "serialport": "^9.0.7",
+    "serve-favicon": "^2.5.0",
+    "websocket": "^1.0.33"
+  }
 }
