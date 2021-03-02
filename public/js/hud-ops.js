@@ -598,7 +598,7 @@ function checkForExpiredWarnings() {
         hitmap.forEach(function(item) {
             var elapsed = (now - item.timestamp) / 1000;
             if (item.age > warning_maxage || 
-                item.dist > warning_distanceelapsed > warning_maxage ||
+                item.dist > warning_distance ||
                 elapsed >= warning_maxage) {
 
                 hitmap.delete(item.reg)
