@@ -165,8 +165,8 @@ try {
         }
     };
 
-    app.use(express.static("public", options));
-    app.use(favicon(__dirname + '/public/img/favicon.png'));
+    app.use(express.static(__dirname + "/public", options));
+    app.use(favicon(__dirname + "/public/img/favicon.png"));
     
     app.get('/',(req, res) => {
         if (firstrun) {
