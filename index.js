@@ -15,7 +15,7 @@ const { createCanvas, loadImage, Canvas } = require('canvas');
 
 var wss;
 var websocketPort = 9696; 
-var httpPort = 8686; 
+var httpPort = 8080; 
 var serialPort = "";
 var baudrate = 0;
 var vne = 0;
