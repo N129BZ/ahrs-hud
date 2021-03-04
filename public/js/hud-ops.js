@@ -29,6 +29,7 @@ var warningVisible = false;
 
 var ip = document.getElementById("stxipaddr").value;
 var wsp = parseInt(document.getElementById("wsport").value);
+var httpPort = parseInt(document.getElementById("httpport").value);
 var urlTraffic = "ws://" + ip + "/traffic";
 var urlAHRS = "http://" + ip + "/getSituation";
 var urlCageAHRS = "http://" + ip + "/cageAHRS";
@@ -138,9 +139,9 @@ $(document).keyup(function(e) {
     case 98:    // "2"
         fetch("http://" + ip + "/calibrateAHRS");
         break;
-    case 83:    // "s" as in [S]ettings
+    case 83:    // "s" as in [S]etup
     case 99:    // "3"
-        location.href = "http://" + ip + "/#/settings";
+        location.href = "http://localhost:" + httpPort + "/setup";
         break;
     case 71:    // "g" as in reset [G]meter
     case 100:   // "4"
@@ -412,10 +413,7 @@ function zerosPad(rndVal, decPlaces) {
 
 // clears field of default value
 
-function clear_field(field) {
-    if (field.value == field.defaultValue) {
-        field.value = '';
-    }
+function clear_field(field) {ip
 }
 
 function runHeartbeatRoutine() {
