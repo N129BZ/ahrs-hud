@@ -124,6 +124,48 @@ $(() => {
     }
 });
 
+// if a keyboard is in place, process key strokes
+$(document).keyup(function(e) {
+    console.log(e.keyCode);
+    var kc = e.keyCode;
+   
+    switch(kc) {
+    case 67:    // "c" as in [C]age AHRS
+    case 97:    // "1"
+        fetch("http://" + ip + "/cageAHRS");
+        break;
+    case 65:    // "a" as in calibrate [A]HRS
+    case 98:    // "2"
+        fetch("http://" + ip + "/calibrateAHRS");
+        break;
+    case 83:    // "s" as in [S]ettings
+    case 99:    // "3"
+        location.href = "http://" + ip + "/#/settings";
+        break;
+    case 71:    // "g" as in reset [G]meter
+    case 100:   // "4"
+        fetch("http://" + ip + "/resetGMeter");
+        break;
+    case 66:    // "b" as in re[B]oot"
+    case 101:   // "5"
+        fetch("http://" + ip + "/reboot");
+        break;
+    case 75:    // "k" as in [K]ill stratux
+    case 102:   // "7"
+        fetch("http://" + ip + "/shutdown");
+        break;
+    case 76:    // "l" as in re[L]oad
+    case 96:    // "0"
+        location.reload();
+        break;
+    case 87:    // "w" as in show proximity [W]arnings  
+    case 105:   // "9" - toggle traffic image
+        showWarning = !showWarning;
+        setWarningBox();
+        break;
+    }
+});
+
 (function ($) {
     function AttitudeIndicator(placeholder, options) {
         var settings = $.extend({
@@ -487,7 +529,7 @@ function onTrafficMessage(evt) {
                 var airplanes = Array.from(hitmap.values()).sort(function(a,b) {
                     return (a.dist > b.dist) ? 1 : -1;
                 }).filter(function (e) {
-                    return (e.dist < warning_distance && e.age < warning_maxage);
+                    return (e.dist <= warning_distance && e.age <= warning_maxage);
                 });
                 if (airplanes.length > 0) {
                     var hit = airplanes[0];
