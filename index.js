@@ -12,8 +12,10 @@ const dgram = require('dgram');
 const dgServer = dgram.createSocket('udp4');
 const favicon = require('serve-favicon');
 const { createCanvas, loadImage, Canvas } = require('canvas');
+const { networkInterfaces } = require('os');
 
 var wss;
+var serverIpAddress;
 var websocketPort = 9696; 
 var httpPort = 8080; 
 var serialPort = "";
@@ -47,6 +49,21 @@ var ctx = cvs.getContext('2d');
 
 
 readSettingsFile();
+getServerIPAddress();
+
+function getServerIPAddress() {
+    const nets = networkInterfaces();
+    const results = new Array(); //Object.create(null);
+    for (const name of Object.keys(nets)) {
+        for (const net of nets[name]) {
+            if (net.family === 'IPv4' && !net.internal) {
+                results.push(net.address);
+            }
+        }
+    }
+    serverIpAddress = results[0];
+    console.log("Server IP address: " + serverIpAddress);
+}
 
 // if we're going to receive Stratux traffic data...
 if (trafficWarnings) {
@@ -451,6 +468,7 @@ function generateHudView() {
         var regex4 = /##SPEEDSTYLE##/gi;
         var regex5 = /##AHRS##/gi;
         var regex6 = /##STXIPADDR##/gi;
+        var regex7 = /##SERVERIPADDR##/gi;
         
         var rawdata = String(fs.readFileSync(__dirname + "/templates/index_template.html"));
         var output = rawdata.replace(regex0, websocketPort)
@@ -459,7 +477,8 @@ function generateHudView() {
                             .replace(regex3, maxWarnDistance)
                             .replace(regex4, speedStyle)
                             .replace(regex5, ahrs)
-                            .replace(regex6, stratuxIPaddress);
+                            .replace(regex6, stratuxIPaddress)
+                            .replace(regex7, serverIpAddress);
 
         fs.writeFileSync(indexview, output);
     }

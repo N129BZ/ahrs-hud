@@ -1,6 +1,5 @@
 'use strict'
 
-var host;
 var websock;
 var hitmap = new Map();
 var trafficWebSocket;
@@ -27,15 +26,15 @@ var timestamp = Date.now();
 var isWarning = false;
 var warningVisible = false;
 
-var ip = document.getElementById("stxipaddr").value;
+var stxip = document.getElementById("stxipaddr").value;
+var serverip = document.getElementById("serveripaddr").value;
 var wsp = parseInt(document.getElementById("wsport").value);
 var httpPort = location.port;
-var hostname = location.hostname;    
-var urlTraffic = "ws://" + ip + "/traffic";
-var urlAHRS = "http://" + ip + "/getSituation";
-var urlCageAHRS = "http://" + ip + "/cageAHRS";
-var urlResetGMeter = "http://" + ip + "/resetGMeter";
-var urlSerialData = "ws://" + hostname + ":" + wsp;
+var urlTraffic = "ws://" + stxip + "/traffic";
+var urlAHRS = "http://" + stxip + "/getSituation";
+var urlCageAHRS = "http://" + stxip + "/cageAHRS";
+var urlResetGMeter = "http://" + stxip + "/resetGMeter";
+var urlSerialData = "ws://" + serverip + ":" + wsp;
 
 var KNOTS = "KT";
 var MPH = "MPH";
@@ -98,8 +97,7 @@ switch (speedStyle) {
 $(() => {
     if (!useStratuxAHRS) {
         try {
-            var host = urlSerialData;
-            var websock = new WebSocket(host);
+            var websock = new WebSocket(urlSerialData);
             websock.onmessage = onHostData;
         }
         catch (error) {
@@ -138,23 +136,23 @@ $(document).keyup(function(e) {
         break;
     case 65:    // "a" as in calibrate [A]HRS
     case 98:    // "2"
-        fetch("http://" + ip + "/calibrateAHRS");
+        fetch("http://" + stxip + "/calibrateAHRS");
         break;
     case 83:    // "s" as in [S]etup
     case 99:    // "3"
-        location.href = "http://" + hostname + ":" + httpPort + "/setup";
+        location.href = "http://" + serverip + ":" + httpPort + "/setup";
         break;
     case 71:    // "g" as in reset [G]meter
     case 100:   // "4"
-        fetch("http://" + ip + "/resetGMeter");
+        fetch("http://" + stxip + "/resetGMeter");
         break;
     case 66:    // "b" as in re[B]oot"
     case 101:   // "5"
-        fetch("http://" + ip + "/reboot");
+        fetch("http://" + stxip + "/reboot");
         break;
     case 75:    // "k" as in [K]ill stratux
     case 102:   // "7"
-        fetch("http://" + ip + "/shutdown");
+        fetch("http://" + stxip + "/shutdown");
         break;
     case 76:    // "l" as in re[L]oad
     case 96:    // "0"
@@ -410,11 +408,6 @@ function zerosPad(rndVal, decPlaces) {
         for (var cntrVal = 1; cntrVal <= totalPad; cntrVal++) valStrg += '0';
     }
     return valStrg;
-}
-
-// clears field of default value
-
-function clear_field(field) {ip
 }
 
 function runHeartbeatRoutine() {
