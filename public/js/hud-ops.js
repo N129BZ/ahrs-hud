@@ -29,12 +29,13 @@ var warningVisible = false;
 
 var ip = document.getElementById("stxipaddr").value;
 var wsp = parseInt(document.getElementById("wsport").value);
-var httpPort = parseInt(document.getElementById("httpport").value);
+var httpPort = location.port;
+var hostname = location.hostname;    
 var urlTraffic = "ws://" + ip + "/traffic";
 var urlAHRS = "http://" + ip + "/getSituation";
 var urlCageAHRS = "http://" + ip + "/cageAHRS";
 var urlResetGMeter = "http://" + ip + "/resetGMeter";
-var urlSerialData = "ws://localhost:" + wsp;
+var urlSerialData = "ws://" + hostname + ":" + wsp;
 
 var KNOTS = "KT";
 var MPH = "MPH";
@@ -133,7 +134,7 @@ $(document).keyup(function(e) {
     switch(kc) {
     case 67:    // "c" as in [C]age AHRS
     case 97:    // "1"
-        fetch("http://" + ip + "/cageAHRS");
+        fetch(urlCageAHRS);
         break;
     case 65:    // "a" as in calibrate [A]HRS
     case 98:    // "2"
@@ -141,7 +142,7 @@ $(document).keyup(function(e) {
         break;
     case 83:    // "s" as in [S]etup
     case 99:    // "3"
-        location.href = "http://localhost:" + httpPort + "/setup";
+        location.href = "http://" + hostname + ":" + httpPort + "/setup";
         break;
     case 71:    // "g" as in reset [G]meter
     case 100:   // "4"
@@ -215,7 +216,7 @@ $(document).keyup(function(e) {
             });
         }
 
-        function _hideBox() {
+        function _hideBox() {urlSerialData
             placeholder.each(function () {
                 $(this).find('img.box.background').hide();
             });

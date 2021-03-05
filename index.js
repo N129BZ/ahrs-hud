@@ -90,6 +90,7 @@ try {
         connections.push(connection);
         
         if (debug) {
+            inPlayback = false;
             DebugPlayback();
         }
 
@@ -112,7 +113,7 @@ function DebugPlayback() {
 
     inPlayback = true;
 
-    var lr = new lineReader(__dirname + "/adahrsdata.log");
+    var lr = new lineReader(__dirname + "/playback.log");
 
     lr.on('error', function (err) {
         // 'err' contains error object
@@ -450,7 +451,6 @@ function generateHudView() {
         var regex4 = /##SPEEDSTYLE##/gi;
         var regex5 = /##AHRS##/gi;
         var regex6 = /##STXIPADDR##/gi;
-        var regex7 = /##HTTPPORT##/gi;
         
         var rawdata = String(fs.readFileSync(__dirname + "/templates/index_template.html"));
         var output = rawdata.replace(regex0, websocketPort)
@@ -459,8 +459,7 @@ function generateHudView() {
                             .replace(regex3, maxWarnDistance)
                             .replace(regex4, speedStyle)
                             .replace(regex5, ahrs)
-                            .replace(regex6, stratuxIPaddress)
-                            .replace(regex7, httpPort);
+                            .replace(regex6, stratuxIPaddress);
 
         fs.writeFileSync(indexview, output);
     }
