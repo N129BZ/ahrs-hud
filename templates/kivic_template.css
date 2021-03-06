@@ -284,8 +284,8 @@ body {
 
 .courseindicator {
     position: absolute;
-    top: 207px;
-    left: 644px;
+    top: 190px;
+    left: 675px;
     width: 135px;
     height: 135px;
     display: inline-block;
@@ -341,7 +341,7 @@ body {
     top: 36px;
     left: 9px;
     position: absolute;
-    transform: scale(1, .8);
+    transform: scale(1.2, .8);
     z-index: 500;
 }
 
