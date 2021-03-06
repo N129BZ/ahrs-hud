@@ -67,14 +67,14 @@ function getServerIPAddress() {
 
 // if we're going to receive Stratux traffic data...
 if (trafficWarnings) {
+    
     dgServer.on('error', (err) => {
         console.log(`server error:\n${err.stack}`);
         server.close();
     });
       
     dgServer.on('message', (msg, rinfo) => {
-        //var strmsg = new TextDecoder("utf-8").decode(msg);
-        //console.log(strmsg);
+        //console.log(msg); 
     });
       
     dgServer.on('listening', () => {
