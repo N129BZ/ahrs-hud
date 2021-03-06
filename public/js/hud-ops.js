@@ -479,11 +479,12 @@ function onTrafficMessage(evt) {
     var alt = Number(obj.Alt);
     var spd = Number(obj.Speed);
     var age = Math.round(obj.Age);
-    var newtimestamp = new Date().toDateString(); 
+    var newtimestamp = Date.now(); 
     var spdOut = Math.round(spd * speedFactor);
     var airborne = !obj.OnGround;
     var distlabel;
-    
+    var strdate = new Date();
+
     myAlt = Number(altitudebox.textContent);
     
     // incoming reported speed is in KT, translation factor is 
@@ -509,8 +510,8 @@ function onTrafficMessage(evt) {
     try {
         if (airborne && alt > 0 && dist > 0) {
             
-            var airplane = {"reg": reg, "age": age, "dist": dist, "alt": alt, "brng": brng, 
-                            "course": course, "timestamp": newtimestamp, "server IP": serverip};
+            var airplane = {"reg": reg, "age": age, "dist": dist, "alt": alt, "brng": brng, "course": course, 
+                            "date": strdate, "serveripaddr": serverip, "timestamp": newtimestamp };
             if (dist > warning_distance) {
                 hitmap.delete(reg);
             }

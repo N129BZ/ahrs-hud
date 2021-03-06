@@ -74,7 +74,7 @@ if (trafficWarnings) {
     });
       
     dgServer.on('message', (msg, rinfo) => {
-        //console.log(msg); 
+        console.log(msg); 
     });
       
     dgServer.on('listening', () => {
