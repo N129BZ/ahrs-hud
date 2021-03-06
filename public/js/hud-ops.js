@@ -132,34 +132,47 @@ $(document).keyup(function(e) {
     switch(kc) {
     case 67:    // "c" as in [C]age AHRS
     case 97:    // "1"
-        fetch(urlCageAHRS);
+    case 49:
+        $.post(urlCageAHRS);
         break;
     case 65:    // "a" as in calibrate [A]HRS
     case 98:    // "2"
-        fetch("http://" + stxip + "/calibrateAHRS");
+    case 50:
+        $.post("http://" + stxip + "/calibrateAHRS");
         break;
     case 83:    // "s" as in [S]etup
     case 99:    // "3"
+    case 51:
         location.href = "http://" + serverip + ":" + httpPort + "/setup";
         break;
     case 71:    // "g" as in reset [G]meter
     case 100:   // "4"
-        fetch("http://" + stxip + "/resetGMeter");
+    case 52:
+        $.post("http://" + stxip + "/resetGMeter");
         break;
     case 66:    // "b" as in re[B]oot"
     case 101:   // "5"
-        fetch("http://" + stxip + "/reboot");
+    case 53:
+        $.post("http://" + stxip + "/reboot");
         break;
     case 75:    // "k" as in [K]ill stratux
     case 102:   // "7"
-        fetch("http://" + stxip + "/shutdown");
+    case 55:
+        $.post("http://" + stxip + "/shutdown");
+        break;
+    case 88:    // "x" as in statu[X] settings page
+    case 104:   // "8"
+    case 56:
+        location.href = "http://" + stxip
         break;
     case 76:    // "l" as in re[L]oad
     case 96:    // "0"
+    case 48:
         location.reload();
         break;
     case 87:    // "w" as in show proximity [W]arnings  
     case 105:   // "9" - toggle traffic image
+    case 57:
         showWarning = !showWarning;
         setWarningBox();
         break;
