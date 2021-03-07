@@ -533,11 +533,15 @@ function onTrafficMessage(evt) {
                      (brng > 0 && spdOut > 0) && (newtimestamp > timestamp)) {
                 hitmap.set(reg, airplane);
                 timestamp = newtimestamp;
+                
                 var airplanes = Array.from(hitmap.values()).sort(function(a,b) {
                     return (a.dist > b.dist) ? 1 : -1;
+                }).sort(function (a,b) {
+                    return (a.alt > b.alt) ? 1: -1;    
                 }).filter(function (e) {
-                    return (e.dist <= warning_distance && e.age <= warning_maxage);
+                    return (e.age <= warning_maxage);
                 });
+                
                 if (airplanes.length > 0) {
                     var hit = airplanes[0];
                     warningIdentity.textContent = hit.reg;
