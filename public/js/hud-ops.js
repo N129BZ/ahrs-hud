@@ -503,7 +503,7 @@ function onTrafficMessage(evt) {
     // incoming reported speed is in KT, translation factor is 
     // set at app load depending on user's chosen display type
     spdOut = Math.round(spd * speedFactor);
-    var course = brng + "\xB0 @ " + spdOut + " " + speedStyle.toLowerCase();
+    var course = brng + "\xB0@" + spdOut + " " + speedStyle.toLowerCase();
 
     switch (speedStyle) {
         case KNOTS: // convert meters to nautical miles 
