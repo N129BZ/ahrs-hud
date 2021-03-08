@@ -10,8 +10,7 @@ var lastTrafficTimestamp;
 var clrCount = 0;
 var countCycle = 0;
 var myAlt = 0;
-var warning_altitude = 0;
-var warning_distance = 0;
+
 const warning_maxage = 20;
 var coursearrow;
 var speedStyle = "KT";
@@ -26,6 +25,10 @@ var timestamp = Date.now();
 var isWarning = false;
 var warningVisible = false;
 
+var trafficWarnings = document.getElementById("trafficwarnings").value;
+var warning_altitude = parseInt(document.getElementById("maxwarnaltitude").value);
+var warning_distance = parseInt(document.getElementById("maxwarndistance").value);
+
 var stxip = document.getElementById("stxipaddr").value;
 var serverip = document.getElementById("serveripaddr").value;
 var wsp = parseInt(document.getElementById("wsport").value);
@@ -33,13 +36,17 @@ var httpPort = location.port;
 var urlTraffic = "ws://" + stxip + "/traffic";
 var urlAHRS = "http://" + stxip + "/getSituation";
 var urlCageAHRS = "http://" + stxip + "/cageAHRS";
+var urlCalibrateAHRS = "http://" + stxip + "/calibrateAHRS";
 var urlResetGMeter = "http://" + stxip + "/resetGMeter";
+var urlRebootStratux = "http://" + stxip + "/reboot";
+var urlShutdownStratux = "http://" + stxip + "/shutdown";
 var urlSerialData = "ws://" + serverip + ":" + wsp;
+var urlMySetup = "http://" + serverip + ":" + httpPort + "/setup";
+var urlStratuxSetup = "http://" + stxip;
 
 var KNOTS = "KT";
 var MPH = "MPH";
 var KPH = "KPH";
-
 var MILES = "miles";
 var KLIKS = "km";
 var NMILES = "nm";
@@ -72,6 +79,7 @@ svgTraffic.addEventListener("load", function () {
 var svgArrow = document.getElementById("coursearrow");
 svgArrow.addEventListener("load", function () {
     var svgDoc = svgArrow.contentDocument;
+ 
     coursearrow = svgDoc.getElementById("arrow");
 }, false);
 
@@ -99,6 +107,7 @@ $(() => {
         try {
             var websock = new WebSocket(urlSerialData);
             websock.onmessage = onHostData;
+ 
         }
         catch (error) {
             console.log(error);
@@ -110,13 +119,7 @@ $(() => {
         runStratuxAhrs();
     }
 
-    var twelement = document.getElementById("trafficwarnings");
-    var trafficWarnings = (twelement.value == "true");
-
     if (trafficWarnings) {
-        warning_altitude = parseInt(document.getElementById("maxwarnaltitude").value);
-        warning_distance = parseInt(document.getElementById("maxwarndistance").value);
-
         trafficWebSocket = new WebSocket(urlTraffic);
         trafficWebSocket.onopen = function (evt) { onTrafficOpen(evt); };
         trafficWebSocket.onclose = function (evt) { onTrafficClose(evt); };
@@ -124,57 +127,55 @@ $(() => {
     }
 });
 
-// if a keyboard is in place, process key strokes
+// if a keyboard is in place, process key strokes"http://" + stxip + "/resetGMeter"
 $(document).keyup(function(e) {
     console.log(e.keyCode);
     var kc = e.keyCode;
-   
+
     switch(kc) {
     case 67:    // "c" as in [C]age AHRS
-    case 97:    // "1"
-    case 49:
+    case 97:    // "1" numeric keypad
+    case 49:    // "1" standard number
         $.post(urlCageAHRS);
         break;
     case 65:    // "a" as in calibrate [A]HRS
-    case 98:    // "2"
-    case 50:
-        $.post("http://" + stxip + "/calibrateAHRS");
-        break;
-    case 83:    // "s" as in [S]etup
-    case 99:    // "3"
-    case 51:
-        location.href = "http://" + serverip + ":" + httpPort + "/setup";
+    case 98:    // "2" numeric keypad
+    case 50:    // "2" standard number
+ 
+        location.href = urlMySetup;
         break;
     case 71:    // "g" as in reset [G]meter
-    case 100:   // "4"
-    case 52:
-        $.post("http://" + stxip + "/resetGMeter");
+    case 100:   // "4" numeric keypad
+    case 52:    // "4" standard number
+        $.post(urlResetGMeter);
         break;
     case 66:    // "b" as in re[B]oot"
-    case 101:   // "5"
-    case 53:
-        $.post("http://" + stxip + "/reboot");
+    case 101:   // "5" numeric keypad
+    case 53:    // "5" standard number
+        $.post(urlRebootStratux);
         break;
     case 75:    // "k" as in [K]ill stratux
-    case 102:   // "7"
-    case 55:
-        $.post("http://" + stxip + "/shutdown");
+    case 102:   // "7" numeric keypad
+    case 55:    // "7" standard number
+        $.post(urlShutdownStratux);
         break;
     case 88:    // "x" as in statu[X] settings page
-    case 104:   // "8"
-    case 56:
-        location.href = "http://" + stxip
+    case 104:   // "8" numeric keypad
+    case 56:    // "8" standard number
+        location.href = urlStratuxSetup;
         break;
     case 76:    // "l" as in re[L]oad
-    case 96:    // "0"
-    case 48:
+    case 96:    // "0" numeric keypad
+    case 48:    // "0" standard number
         location.reload();
         break;
     case 87:    // "w" as in show proximity [W]arnings  
-    case 105:   // "9" - toggle traffic image
-    case 57:
-        showWarning = !showWarning;
-        setWarningBox();
+    case 105:   // "9" numeric keypad
+    case 57:    // "9" standard number
+        trafficWarnings = !trafficWarnings;
+        if (!trafficWarnings) {
+            toggleTrafficWarning(false);
+        }
         break;
     }
 });
@@ -484,6 +485,11 @@ function onTrafficMessage(evt) {
         "Last_source":1,"ExtrapolatedPosition":false,"BearingDist_valid":true,
         "Bearing":92.7782277589171,"Distance":9.616803034808295e+06}
     --------------------------------------------------------------------------------------------*/
+
+    if (!trafficWarnings) {
+        return;
+    }
+
     var obj = JSON.parse(evt.data);
     var meters = Math.round(Number(obj.Distance));
     var dist = 0;
