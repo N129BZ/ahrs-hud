@@ -535,7 +535,7 @@ function onTrafficMessage(evt) {
             
             var airplane = {"reg": reg, "age": age, "dist": dist, "alt": alt, "brng": brng, "course": course, 
                             "date": strdate, "serveripaddr": serverip, "timestamp": newtimestamp };
-            if (dist > warning_distance) {
+            if (dist > warning_distance || age > warning_maxage) {
                 hitmap.delete(reg);
             }
             else if ((dist <= warning_distance && alt != 0 && spdOut != 0) &&
@@ -548,8 +548,6 @@ function onTrafficMessage(evt) {
                     return (a.dist > b.dist) ? 1 : -1;
                 }).sort(function (a,b) {
                     return (a.alt > b.alt) ? 1: -1;    
-                }).filter(function (e) {
-                    return (e.age <= warning_maxage);
                 });
                 
                 if (airplanes.length > 0) {
