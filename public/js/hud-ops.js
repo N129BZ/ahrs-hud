@@ -141,7 +141,11 @@ $(document).keyup(function(e) {
     case 65:    // "a" as in calibrate [A]HRS
     case 98:    // "2" numeric keypad
     case 50:    // "2" standard number
- 
+        $.post(urlCalibrateAHRS);
+        break;
+    case 83:    // "s" as in [S]etup
+    case 99:    // "3" numeric keypad
+    case 51:    // "3" standard number
         location.href = urlMySetup;
         break;
     case 71:    // "g" as in reset [G]meter
