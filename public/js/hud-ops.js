@@ -34,7 +34,7 @@ var serverip = document.getElementById("serveripaddr").value;
 var wsp = parseInt(document.getElementById("wsport").value);
 var httpPort = location.port;
 var urlTraffic = "ws://" + stxip + "/traffic";
-var urlAHRS = "http://" + stxip + "/getSituation";
+var urlAHRS = "ws://" + stxip + "/situation";
 var urlCageAHRS = "http://" + stxip + "/cageAHRS";
 var urlCalibrateAHRS = "http://" + stxip + "/calibrateAHRS";
 var urlResetGMeter = "http://" + stxip + "/resetGMeter";
@@ -42,7 +42,7 @@ var urlRebootStratux = "http://" + stxip + "/reboot";
 var urlShutdownStratux = "http://" + stxip + "/shutdown";
 var urlSerialData = "ws://" + serverip + ":" + wsp;
 var urlMySetup = "http://" + serverip + ":" + httpPort + "/setup";
-var urlStratuxSetup = "http://" + stxip;
+var urlStratuxSetup = "http://" + serverip + ":" + "/stratux";
 var urlSituation = "ws://" + stxip + "/situation";
 
 var KNOTS = "KT";
@@ -88,7 +88,6 @@ var usestx = document.getElementById("ahrs").value;
 useStratuxAHRS = (usestx == "Stratux");
 speedStyle = document.getElementById("speedstyle").value;
 var speedFactor = 1; // default in traffic messages is KNOTS
-var sitsocket;
 
 switch (speedStyle) {
     case MPH:
@@ -118,14 +117,16 @@ $(() => {
         windindicator.css("left", "-1000");
         tasindicator.css("left", "-1000");
         setupStratuxAhrs();
-        sitsocket = new WebSocket(urlSituation);
-        sitsocket.onopen = function (evt) { console.log("Situation websocket opened")};
-        sitsocket.onclose = function (evt) { console.log("Situation websocket closed")};
-        sitsocket.onmessage = function (evt) { processSituation(evt.data) };
+        ahrsWebSocket = new WebSocket(urlAHRS);
+        ahrsWebSocket.onerror = function (evt) { onAhrsError(evt) };
+        ahrsWebSocket.onopen = function (evt) { onAhrsOpen(evt) };
+        ahrsWebSocket.onclose = function (evt) { onAhrsClose(evt) };
+        ahrsWebSocket.onmessage = function (evt) { onAhrsMessage(evt.data) };
     }
 
     if (trafficWarnings) {
         trafficWebSocket = new WebSocket(urlTraffic);
+        trafficWebSocket.onerror = function (evt) { onTrafficError(evt) };
         trafficWebSocket.onopen = function (evt) { onTrafficOpen(evt); };
         trafficWebSocket.onclose = function (evt) { onTrafficClose(evt); };
         trafficWebSocket.onmessage = function (evt) { onTrafficMessage(evt); };
@@ -151,7 +152,7 @@ $(document).keyup(function(e) {
     case 83:    // "s" as in [S]etup
     case 99:    // "3" numeric keypad
     case 51:    // "3" standard number
-        location.href = urlMySetup;
+        $.post(urlMySetup);
         break;
     case 71:    // "g" as in reset [G]meter
     case 100:   // "4" numeric keypad
@@ -171,7 +172,7 @@ $(document).keyup(function(e) {
     case 88:    // "x" as in statu[X] settings page
     case 104:   // "8" numeric keypad
     case 56:    // "8" standard number
-        location.href = urlStratuxSetup;
+        $.post(urlStratuxSetup);
         break;
     case 76:    // "l" as in re[L]oad
     case 96:    // "0" numeric keypad
@@ -279,7 +280,7 @@ var alt_offset = .4792;   // Feet MSL
 var hdg_offset = 4.793;  // Degrees
 var ball_offset = 6.7;   // Degrees
 var ball_center = 68;    // this is "center" of the slip-skid indicator
-var pitch_offset = (useStratuxAHRS ? 1.19 : 1.24); // this adjusts the pitch 
+var pitch_offset = (useStratuxAHRS ? 1.19 : 1.24); // this adjusts the pitch
 
 var speedbox = document.getElementById('spanspeedbox');
 var altitudebox = document.getElementById('spanaltbox');
@@ -445,9 +446,9 @@ function sendKeepAlive(data) {
         trafficWebSocket.send(data);
     }
     if (useStratuxAHRS) {
-        rs = sitsocket.readyState;
+        rs = ahrsWebSocket.readyState;
         if (rs == 1) {
-            sitsocket.send(data);
+            ahrsWebSocket.send(data);
         }
     }
     checkForExpiredWarnings();
@@ -471,7 +472,7 @@ function checkForExpiredWarnings() {
     }
 }
 
-function onError(evt) {
+function onTrafficError(evt) {
     console.log("Traffic websocket ERROR: " + evt.data);
 }
 
@@ -570,7 +571,7 @@ function onTrafficMessage(evt) {
                     warningAge.textContent = hit.age;
                     hitbearing = hit.brng;
                     lastTrafficTimestamp = hit.timestamp;
-                    console.log(hit);
+                    //console.log(hit);
                 
                     airplanes.forEach(function(item) {
                         if (item.reg != hit.reg) {
@@ -628,6 +629,21 @@ function setupStratuxAhrs() {
     $.post(urlResetGMeter);
 }
 
+function onAhrsError(evt) {
+    console.log("Ahrs websocket ERROR: " + evt.data);
+}
+
+function onAhrsOpen(evt) {
+    console.log("Ahrs websocket successfully connected to Stratux!");
+    wsOpen = true;
+    setInterval(runHeartbeatRoutine, 12000);
+}
+
+function onAhrsClose(evt) {
+    console.log("Ahrs Websocket CLOSED.");
+    wsOpen = false;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //      JSON output returned by websocket connected Stratux at ws://[ipaddress]/situation (AHRS data)
@@ -647,14 +663,14 @@ function setupStratuxAhrs() {
 //  "AHRSLastAttitudeTime":"0001-01-01T00:01:33.55Z","AHRSStatus":6}
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function processSituation(data) {
+function onAhrsMessage(data) {
     var speed = 0;
     var altitude = 0;
     var heading = "";
     var vertspeed = 0;
     try {
         var obj = JSON.parse(data);
-        console.log(obj);
+        //console.log(obj);
         // attitude pitch & roll
         attitude.setRoll(obj.AHRSRoll * -1);
         attitude.setPitch(obj.AHRSPitch * pitch_offset);

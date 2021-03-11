@@ -66,25 +66,6 @@ function getServerIPAddress() {
     console.log("Server IP address: " + serverIpAddress);
 }
 
-// if we're going to receive Stratux traffic data...
-if (trafficWarnings) {
-    
-    dgServer.on('error', (err) => {
-        console.log(`server error:\n${err.stack}`);
-        server.close();
-    });
-      
-    dgServer.on('message', (msg, rinfo) => {
-        // ignore; 
-    });
-      
-    dgServer.on('listening', () => {
-        console.log("Stratux traffic heartbeat listener enabled");
-    });
-    
-    dgServer.bind(4000);
-}
-
 function startSerialServer() {
     if (stratuxAHRS) {
         return;
@@ -373,7 +354,7 @@ function systemShutdown(callback){
 }
 
 if (!stratuxAHRS) {
-    openSerialPort(false);
+    openSerialPort(false);.29
 }
 
 var connections = new Array(4);
