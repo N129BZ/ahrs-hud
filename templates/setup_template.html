@@ -197,6 +197,7 @@
   </div>
   <script>
      window.onload = function() {
+        document.addEventListener('keyup', onKeyUp); 
         document.getElementById("view").value = "##VIEW##";
         document.getElementById("selectedview").value ="##VIEW##";
         document.getElementById("twchecked").value ="##TWVALUE##";
@@ -213,8 +214,18 @@
         document.getElementById("speedstyle").value = "##SPEEDSTYLE##";
         document.getElementById("selectedspeedstyle").value = "##SPEEDSTYLE##";
         updateDistanceLabels("##SPEEDSTYLE##");
-    };
-
+      };
+      
+      function onKeyUp(e) {
+        console.log(e.keyCode);
+        switch (e.keyCode) {
+            case 13:
+                break;
+            case 27:
+                break;
+        }  
+      };
+      
       function updateTrafficWarning(newvalue) {
         document.getElementById("twchecked").value = newvalue ? "true" : "false";
       };
