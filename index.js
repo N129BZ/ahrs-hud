@@ -51,6 +51,7 @@ var ctx = cvs.getContext('2d');
 readSettingsFile();
 getServerIPAddress();
 
+
 function getServerIPAddress() {
     const nets = networkInterfaces();
     const results = new Array(); //Object.create(null);
@@ -74,52 +75,54 @@ if (trafficWarnings) {
     });
       
     dgServer.on('message', (msg, rinfo) => {
-        //console.log(msg); 
+        // ignore; 
     });
       
     dgServer.on('listening', () => {
-        var address = server.address();
         console.log("Stratux traffic heartbeat listener enabled");
     });
     
     dgServer.bind(4000);
 }
 
-// http websocket server to forward serial data to browser client
-var server = http.createServer(function (request, response) { });
-try {
-    server.listen(websocketPort, function () { });
-    // create the server
-    wss = new WebSocketServer({
-        httpServer: server
-    });
-    console.log("Serial data forwarding server enabled at port " + websocketPort); 
-}
-catch (error) {
-    console.log(error);
-}
+function startSerialServer() {
+    if (stratuxAHRS) {
+        return;
+    }
+    // http websocket server to forward serial data to browser client
+    var server = http.createServer(function (request, response) { });
+    try {
+        server.listen(websocketPort, function () { });
+        // create the server
+        wss = new WebSocketServer({ httpServer: server });
+        console.log("Serial data forwarding server enabled at port " + websocketPort); 
+    }
+    catch (error) {
+        console.log(error);
+    }
 
-var connection;
-try {
-    wss.on('request', function (request) {
-        connection = request.accept(null, request.origin);
-        console.log("new connection");
-        connections.push(connection);
-        
-        if (debug) {
-            inPlayback = false;
-            DebugPlayback();
-        }
+    var connection;
+    try {
+        wss.on('request', function (request) {
+            connection = request.accept(null, request.origin);
+            console.log("new connection");
+            connections.push(connection);
+            
+            if (debug) {
+                inPlayback = false;
+                DebugPlayback();
+            }
 
-        connection.on('close', function () {
-            console.log("connection closed");
-            var position = connections.indexOf(connection);
-            connections.splice(position, 1);
+            connection.on('close', function () {
+                console.log("connection closed");
+                var position = connections.indexOf(connection);
+                connections.splice(position, 1);
+            });
         });
-    });
-}
-catch (error) {
-    console.log(error);
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
 
 function DebugPlayback() {
@@ -242,12 +245,14 @@ try {
         var newspeedstyle = req.body.speedstyle;  
         var newahrs = req.body.ahrs;
         var newstxipaddr = req.body.stxipaddr;
-        
+        var ahrsViaSerial = false;
+
         firstrun = false;
 
         if (newahrs != ahrs) {
             ahrs = newahrs;
             stratuxAHRS = (ahrs == "Stratux");
+            ahrsViaSerial = !stratuxAHRS;
             writefile = true;
         }
         
@@ -346,6 +351,10 @@ try {
             openSerialPort(true);
         }
         
+        if (ahrsViaSerial) {
+            startSerialServer();
+        }
+
         generateSetupView();
         buildSpeedTapeImage(tapeimage);
         

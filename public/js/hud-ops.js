@@ -444,6 +444,12 @@ function sendKeepAlive(data) {
     if (rs == 1) {
         trafficWebSocket.send(data);
     }
+    if (useStratuxAHRS) {
+        rs = sitsocket.readyState;
+        if (rs == 1) {
+            sitsocket.send(data);
+        }
+    }
     checkForExpiredWarnings();
 }
 
@@ -472,7 +478,7 @@ function onError(evt) {
 function onTrafficOpen(evt) {
     console.log("Traffic warning websocket successfully connected to Stratux!");
     wsOpen = true;
-    setInterval(runHeartbeatRoutine, 8000);
+    setInterval(runHeartbeatRoutine, 12000);
 }
 
 function onTrafficClose(evt) {
@@ -554,7 +560,7 @@ function onTrafficMessage(evt) {
                 }).sort(function (a,b) {
                     return (a.alt > b.alt) ? 1: -1;    
                 });
-                
+
                 if (airplanes.length > 0) {
                     var hit = airplanes[0];
                     warningIdentity.textContent = hit.reg;
@@ -648,7 +654,7 @@ function processSituation(data) {
     var vertspeed = 0;
     try {
         var obj = JSON.parse(data);
-
+        console.log(obj);
         // attitude pitch & roll
         attitude.setRoll(obj.AHRSRoll * -1);
         attitude.setPitch(obj.AHRSPitch * pitch_offset);
