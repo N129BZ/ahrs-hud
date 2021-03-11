@@ -76,7 +76,7 @@
             ADAHRS-HUD FOR DYNON OR GARMIN EFIS
         </th>
     </table>
-    <form method="post" action="/setup" id="setupform" novalidate>
+    <form method="post" action="/setup" name="setupform" novalidate>
     <br>
     <p>
         <h3><label for="viewer" class="label">Select the view you are using</label></h3>
@@ -190,14 +190,13 @@
     <br>
     <br>
     <div class="form-field">
-        <input type="submit" value="Save"><input type="cancel" value="Cancel" onClick="window.location='/';">
+        <input type="submit" value="Save" name="dosubmit"><input type="cancel" name="docancel" value="Cancel" onClick="window.location='/';">
     </div>
     </p>
     </form>
   </div>
   <script>
      window.onload = function() {
-        document.addEventListener('keyup', onKeyUp); 
         document.getElementById("view").value = "##VIEW##";
         document.getElementById("selectedview").value ="##VIEW##";
         document.getElementById("twchecked").value ="##TWVALUE##";
@@ -214,16 +213,6 @@
         document.getElementById("speedstyle").value = "##SPEEDSTYLE##";
         document.getElementById("selectedspeedstyle").value = "##SPEEDSTYLE##";
         updateDistanceLabels("##SPEEDSTYLE##");
-      };
-      
-      function onKeyUp(e) {
-        console.log(e.keyCode);
-        switch (e.keyCode) {
-            case 13:
-                break;
-            case 27:
-                break;
-        }  
       };
       
       function updateTrafficWarning(newvalue) {
