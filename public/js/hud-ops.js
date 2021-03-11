@@ -43,6 +43,7 @@ var urlShutdownStratux = "http://" + stxip + "/shutdown";
 var urlSerialData = "ws://" + serverip + ":" + wsp;
 var urlMySetup = "http://" + serverip + ":" + httpPort + "/setup";
 var urlStratuxSetup = "http://" + stxip;
+var urlSituation = "ws://" + stxip + "/situation";
 
 var KNOTS = "KT";
 var MPH = "MPH";
@@ -87,6 +88,7 @@ var usestx = document.getElementById("ahrs").value;
 useStratuxAHRS = (usestx == "Stratux");
 speedStyle = document.getElementById("speedstyle").value;
 var speedFactor = 1; // default in traffic messages is KNOTS
+var sitsocket;
 
 switch (speedStyle) {
     case MPH:
@@ -107,7 +109,6 @@ $(() => {
         try {
             var websock = new WebSocket(urlSerialData);
             websock.onmessage = onHostData;
- 
         }
         catch (error) {
             console.log(error);
@@ -116,7 +117,11 @@ $(() => {
     else {
         windindicator.css("left", "-1000");
         tasindicator.css("left", "-1000");
-        runStratuxAhrs();
+        setupStratuxAhrs();
+        sitsocket = new WebSocket(urlSituation);
+        sitsocket.onopen = function (evt) { console.log("Situation websocket opened")};
+        sitsocket.onclose = function (evt) { console.log("Situation websocket closed")};
+        sitsocket.onmessage = function (evt) { processSituation(evt.data) };
     }
 
     if (trafficWarnings) {
@@ -606,9 +611,20 @@ function toggleTrafficWarning(isVisible, bearing = 0) {
     }
 }
 
+function setupStratuxAhrs() {
+    oatindicator.css("left", "-1000");
+    baroindicator.css("left", "-1000");
+    daltindicator.css("left", "-1000");
+    vsarrow.css("top", "422px");
+    vsindicator.css("top", "422px");
+    $.post(urlCalibrateAHRS);
+    $.post(urlCageAHRS);
+    $.post(urlResetGMeter);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//      JSON output returned by Stratux from a POST to http://[ipaddress]/getSituation (AHRS data)
+//      JSON output returned by websocket connected Stratux at ws://[ipaddress]/situation (AHRS data)
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -625,70 +641,52 @@ function toggleTrafficWarning(isVisible, bearing = 0) {
 //  "AHRSLastAttitudeTime":"0001-01-01T00:01:33.55Z","AHRSStatus":6}
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function runStratuxAhrs() {
+function processSituation(data) {
     var speed = 0;
     var altitude = 0;
     var heading = "";
     var vertspeed = 0;
-    oatindicator.css("left", "-1000");
-    baroindicator.css("left", "-1000");
-    daltindicator.css("left", "-1000");
-    vsarrow.css("top", "422px");
-    vsindicator.css("top", "422px");
-
-    fetch(urlCageAHRS);
-    fetch(urlResetGMeter);
     try {
-        setInterval(function () {
-            fetch(urlAHRS)
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (myJson) {
-                    var str = JSON.stringify(myJson);
-                    var obj = JSON.parse(str);
+        var obj = JSON.parse(data);
 
-                    // attitude pitch & roll
-                    attitude.setRoll(obj.AHRSRoll * -1);
-                    attitude.setPitch(obj.AHRSPitch * pitch_offset);
+        // attitude pitch & roll
+        attitude.setRoll(obj.AHRSRoll * -1);
+        attitude.setPitch(obj.AHRSPitch * pitch_offset);
 
-                    // set these values to a reasonable precision
-                    var gnumber = obj.AHRSGLoad.toFixed(1);
-                    var slipskid = Math.trunc(obj.AHRSSlipSkid);
-                    var oat = Math.trunc((obj.BaroTemperature * 1.8) + 32, 0) + "\xB0 F";
-                    speed = Number(obj.GPSGroundSpeed * speedFactor).toFixed(0); 
-                    altitude = Math.trunc(obj.GPSAltitudeMSL);
-                    heading = pad(Math.trunc(obj.GPSTrueCourse), 3);
-                    vertspeed = Math.trunc(obj.GPSVerticalSpeed);
-                    // set the speed, altitude, heading, and GMeter values
-                    speedbox.textContent = speed;
-                    altitudebox.textContent = altitude;
-                    headingbox.textContent = heading;
-                    vspeedbox.textContent = Math.abs(vertspeed) + " FPM";
-                    arrowbox.textContent = (vertspeed < 0 ? "▼" : "▲");
-                    oatbox.textContent = oat;
-                    var speedticks = (speed * spd_offset);
-                    var altticks = (altitude * alt_offset);
-                    var hdgticks = (heading * hdg_offset) * -1;
+        // set these values to a reasonable precision
+        var gnumber = obj.AHRSGLoad.toFixed(1);
+        var slipskid = Math.trunc(obj.AHRSSlipSkid);
+        var oat = Math.trunc((obj.BaroTemperature * 1.8) + 32, 0) + "\xB0 F";
+        speed = Number(obj.GPSGroundSpeed * speedFactor).toFixed(0); 
+        altitude = Math.trunc(obj.GPSAltitudeMSL);
+        heading = pad(Math.trunc(obj.GPSTrueCourse), 3);
+        vertspeed = Math.trunc(obj.GPSVerticalSpeed);
+        // set the speed, altitude, heading, and GMeter values
+        speedbox.textContent = speed;
+        altitudebox.textContent = altitude;
+        headingbox.textContent = heading;
+        vspeedbox.textContent = Math.abs(vertspeed) + " FPM";
+        arrowbox.textContent = (vertspeed < 0 ? "▼" : "▲");
+        oatbox.textContent = oat;
+        var speedticks = (speed * spd_offset);
+        var altticks = (altitude * alt_offset);
+        var hdgticks = (heading * hdg_offset) * -1;
 
-                    // set the coordinates of the tapes
-                    speedtape.css('transform', 'translateY(' + speedticks + 'px)');
-                    alttape.css('transform', 'translateY(' + altticks + 'px');
-                    headingtape.css('transform', 'translateX(' + hdgticks + 'px');
-                    gbox.textContent = gnumber + " G";
+        // set the coordinates of the tapes
+        speedtape.css('transform', 'translateY(' + speedticks + 'px)');
+        alttape.css('transform', 'translateY(' + altticks + 'px');
+        headingtape.css('transform', 'translateX(' + hdgticks + 'px');
+        gbox.textContent = gnumber + " G";
 
-                    // set the skid-slip ball position
-                    if (slipskid < -17) {
-                        slipskid = -17;
-                    }
-                    else if (slipskid > 17) {
-                        slipskid = 17;
-                    }
-                    var ballposition = ball_center + (slipskid * ball_offset);
-                    ball.css('left', ballposition + 'px');
-                });
-        }, 50);
-        
+        // set the skid-slip ball position
+        if (slipskid < -17) {
+            slipskid = -17;
+        }
+        else if (slipskid > 17) {
+            slipskid = 17;
+        }
+        var ballposition = ball_center + (slipskid * ball_offset);
+        ball.css('left', ballposition + 'px');
     }
     catch(error) {
         console.log(error);
