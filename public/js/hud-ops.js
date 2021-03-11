@@ -42,7 +42,7 @@ var urlRebootStratux = "http://" + stxip + "/reboot";
 var urlShutdownStratux = "http://" + stxip + "/shutdown";
 var urlSerialData = "ws://" + serverip + ":" + wsp;
 var urlMySetup = "http://" + serverip + ":" + httpPort + "/setup";
-var urlStratuxSetup = "http://" + serverip + ":" + "/stratux";
+var urlStratuxSetup = "http://" + stxip;
 var urlSituation = "ws://" + stxip + "/situation";
 
 var KNOTS = "KT";
@@ -152,7 +152,7 @@ $(document).keyup(function(e) {
     case 83:    // "s" as in [S]etup
     case 99:    // "3" numeric keypad
     case 51:    // "3" standard number
-        $.post(urlMySetup);
+        location.href = urlMySetup;
         break;
     case 71:    // "g" as in reset [G]meter
     case 100:   // "4" numeric keypad
@@ -172,7 +172,7 @@ $(document).keyup(function(e) {
     case 88:    // "x" as in statu[X] settings page
     case 104:   // "8" numeric keypad
     case 56:    // "8" standard number
-        $.post(urlStratuxSetup);
+        location.href = urlStratuxSetup;
         break;
     case 76:    // "l" as in re[L]oad
     case 96:    // "0" numeric keypad
