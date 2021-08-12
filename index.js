@@ -50,7 +50,7 @@ var ctx = cvs.getContext('2d');
 
 readSettingsFile();
 getServerIPAddress();
-
+startSerialServer();
 
 function getServerIPAddress() {
     const nets = networkInterfaces();
@@ -98,6 +98,7 @@ function startSerialServer() {
                 console.log("connection closed");
                 var position = connections.indexOf(connection);
                 connections.splice(position, 1);
+                stopPlayback = true;
             });
         });
     }
@@ -114,8 +115,8 @@ function DebugPlayback() {
 
     inPlayback = true;
 
-    var lr = new lineReader(__dirname + "/playback.log");
-
+    var lr = new lineReader(__dirname + "/playback.txt");
+    
     lr.on('error', function (err) {
         // 'err' contains error object
     });
@@ -133,9 +134,8 @@ function DebugPlayback() {
         lr.pause();
 
         // ...do asynchronous line processing..
-        var dataline = String(line);
         if (line.substr(0, 1) == "!") {
-            sendDataToBrowser("!" + dataline.substr(1));
+            sendDataToBrowser("!" + line.substr(1));
         }
         
         setTimeout(function () {
@@ -145,6 +145,8 @@ function DebugPlayback() {
 
     lr.on('end', function () {
         inPlayback = false;
+        lr.close();
+        stopPlayback = false;
     });
 }
 
@@ -227,7 +229,7 @@ try {
         var newahrs = req.body.ahrs;
         var newstxipaddr = req.body.stxipaddr;
         var ahrsViaSerial = false;
-
+        
         firstrun = false;
 
         if (newahrs != ahrs) {
@@ -346,15 +348,15 @@ catch (error) {
     console.log(error);
 }
 
-function systemReboot(callback){
+function systemReboot(callback) {
     exec('shutdown -r now', function(error, stdout, stderr){ callback(stdout); });
 }
-function systemShutdown(callback){
+function systemShutdown(callback) {
     exec('shutdown -h now', function(error, stdout, stderr){ callback(stdout); });
 }
 
 if (!stratuxAHRS) {
-    openSerialPort(false);.29
+    openSerialPort(false);
 }
 
 var connections = new Array(4);
@@ -369,10 +371,10 @@ function openSerialPort(needsFileRead) {
         }
 
         port = new SerialPort(serialPort, { baudRate: baudrate });    
-        parser = port.pipe(new Readline({ delimiter: '\n' }));
+        parser = port.pipe(new Readline({ delimiter: '\r\n' }));
         port.on('open', showPortOpen);
         port.on('close', showPortClose);
-        port.on('error', showError);
+        port.on('error', showPortError);
         parser.on('data', sendDataToBrowser);
     }
     catch (error) {
@@ -401,7 +403,7 @@ function readSettingsFile() {
     stratuxIPaddress = parsedData.stratuxipaddress;
     debug = parsedData.debug;
     firstrun = parsedData.firstrun;
-    
+
     if (httpPort != hport) {
         httpPort = hport;
     }
@@ -425,8 +427,8 @@ function sendDataToBrowser(data) {
 function showPortClose() {
     console.log('port closed.');
 }
-// this is called when the serial port has an error:
-function showError(error) {
+
+function showPortError(error) {
     console.log('Serial port error: ' + error);
 }
 
@@ -469,7 +471,7 @@ function generateHudView() {
                             .replace(regex5, ahrs)
                             .replace(regex6, stratuxIPaddress)
                             .replace(regex7, serverIpAddress);
-
+ 
         fs.writeFileSync(indexview, output);
     }
 }
@@ -499,7 +501,7 @@ function generateSetupView(port) {
     var regex13 = /##SPEEDSTYLE##/gi;
     var regex14 = /##AHRS##/gi;
     var regex15 = /##STXIPADDR##/gi;
-    
+
     var dbg = debug ? "true" : "false";
     var dbgchecked = debug ? "checked" : "";
     var tw = trafficWarnings ? "true" : "false";
@@ -522,6 +524,7 @@ function generateSetupView(port) {
                         .replace(regex13, speedStyle)
                         .replace(regex14, ahrs)
                         .replace(regex15, stratuxIPaddress);
+
     fs.writeFileSync(setupview, output);
 }
 
@@ -544,14 +547,14 @@ function buildSpeedTapeImage(image) {
 
     var greenTop = yellowTop + yellowHeight;
     var greenHeight = (vno - vs1) * mphfactor;
-    
+ 
     var whiteTop = greenTop + greenHeight;
     var whiteHeight = (vs1 - vs0) * mphfactor;
 
     ctx.drawImage(image, 0, 0, stW, stH);
     ctx.fillStyle = "red";
     ctx.fillRect(71, redTop, 9.5, redHeight);
-
+    
     ctx.fillStyle = "white";
     ctx.fillRect(71, whiteTop, 9.5, whiteHeight);
 

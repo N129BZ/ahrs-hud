@@ -173,8 +173,12 @@
         <br>
         <label class="label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(does not work when using Stratux AHRS)</label>
     </div>
+    <br>
     <div class="form-field">
         <input type="text" id="dbgchecked" name="dbgchecked" style="visibility: hidden;">
+    </div>
+    <div class="form-field">
+        <input type="text" id="gpschecked" name="gpschecked" style="visibility: hidden;">
     </div>
     <div class="form-field"> 
         <input type="text" id="selectedview" name="selectedview" style="visibility: hidden;">
@@ -218,7 +222,6 @@
       function updateTrafficWarning(newvalue) {
         document.getElementById("twchecked").value = newvalue ? "true" : "false";
       };
-
       function updateDebugChecked(newvalue) {
         document.getElementById("dbgchecked").value = newvalue ? "true" : "false";
       };
