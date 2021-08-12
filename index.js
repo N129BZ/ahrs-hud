@@ -118,11 +118,14 @@ function DebugPlayback() {
     var lr = new lineReader(__dirname + "/playback.txt");
     
     lr.on('error', function (err) {
-        // 'err' contains error object
+        console.log(err); 
     });
 
     lr.on('line', function (line) {
         
+        // pause emitting of lines...
+        lr.pause();
+
         if (stopPlayback) {
             inPlayback = false;
             stopPlayback = false;
@@ -130,15 +133,11 @@ function DebugPlayback() {
             return;
         }
 
-        // pause emitting of lines...
-        lr.pause();
-
         // ...do asynchronous line processing..
-        if (line.substr(0, 1) == "!") {
-            sendDataToBrowser("!" + line.substr(1));
-        }
-        
-        setTimeout(function () {
+        setTimeout(function () {    
+            if (line.substr(0, 1) == "!") {
+                sendDataToBrowser("!" + line.substr(1));
+            }
             lr.resume();
         }, 150);
     });
@@ -566,4 +565,8 @@ function buildSpeedTapeImage(image) {
 
     var buffer = cvs.toBuffer('image/png');
     fs.writeFileSync(__dirname + "/public/img/speed_tape.png", buffer);
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
