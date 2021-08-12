@@ -36,7 +36,6 @@
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
     "line-by-line": "^0.1.6",
-    "nmea-simple": "^3.2.0",
     "serialport": "^9.0.7",
     "serve-favicon": "^2.5.0",
     "websocket": "^1.0.33"
