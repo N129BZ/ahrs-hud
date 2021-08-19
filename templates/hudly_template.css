@@ -27,6 +27,8 @@
 
 }
 
+html {height:100%;width:100%}
+
 body {
     background-color: #000000;
     width: 960px;

@@ -11,7 +11,7 @@ var clrCount = 0;
 var countCycle = 0;
 var myAlt = 0;
 
-const warning_maxage = 20;
+var warning_maxage = 20;
 var coursearrow;
 var speedStyle = "KT";
 var warningIdentity;
@@ -19,13 +19,11 @@ var warningAltitude;
 var warningDistance;
 var warningCourse;
 var warningAge;
-var hitbearing = 0;
+var warningVisible = false;
 var useStratuxAHRS = false;
 var timestamp = Date.now();
-var isWarning = false;
-var warningVisible = false;
 
-var trafficWarnings = document.getElementById("trafficwarnings").value;
+var trafficWarnings = document.getElementById("trafficwarnings").value == "true";
 var warning_altitude = parseInt(document.getElementById("maxwarnaltitude").value);
 var warning_distance = parseInt(document.getElementById("maxwarndistance").value);
 
@@ -53,34 +51,64 @@ var KLIKS = "km";
 var NMILES = "nm";
 var distanceMeasure = MILES;
 
-var windindicator = $('.windindicator');
-var tasindicator = $('.tasbox');
-var oatindicator = $('.oatbox');
-var baroindicator = $('.barobox');
-var daltindicator = $('.daltbox');
-var vsarrow = $('.vsarrowbox');
-var vsindicator = $('.vsbox');
-var courseindicator = $('.courseindicator');
-var coursecircle = $('.coursecircle');
-var coursearrow = $('.coursearrow');
+var windindicator = $(".windindicator");
+var tasbox = $(".tasbox");
+var oatbox = $(".oatbox");
+var barobox = $(".barobox");
+var daltbox = $(".daltbox");
+var vsarrowbox = $(".vsarrowbox");
+var vsbox = $(".vsbox");
+var courseindicator = $(".courseindicator");
+var coursecircle = $(".coursecircle");
+var coursearrow = $(".coursearrow");
 coursecircle.css("visibility", "hidden");
 coursearrow.css("visibility", "hidden");
 
+class Aircraft {
+    constructor(reg, age, dist, alt, brng, course, strdate, serverip, timestamp) {
+        this.reg = reg;
+        this.age = age;
+        this.dist = dist;
+        this.alt = alt;
+        this.brng = brng;
+        this.course = course;
+        this.date = strdate;
+        this.serverip = serverip;
+        this.timestamp = timestamp;
+    }; 
+}
+var warningAircraft = new Aircraft("",0,0,0,0,0,"","","",false);
+var warningCancellations = new Map();
+
 // traffic warning image & elements
 var svgTraffic = document.getElementById("trafficwarning");
-svgTraffic.addEventListener("load", function () {
-    var svgDoc = svgTraffic.contentDocument;
-    warningIdentity = svgDoc.getElementById("ident");
-    warningAltitude = svgDoc.getElementById("alt");
-    warningDistance = svgDoc.getElementById("dist");
-    warningCourse = svgDoc.getElementById("crs");
-    warningAge = svgDoc.getElementById("age");
-}, false);
+if (trafficWarnings) {
+    svgTraffic.addEventListener("load", function () {
+        var svgDoc = svgTraffic.contentDocument;
+        warningIdentity = svgDoc.getElementById("ident");
+        warningAltitude = svgDoc.getElementById("alt");
+        warningDistance = svgDoc.getElementById("dist");
+        warningCourse = svgDoc.getElementById("crs");
+        warningAge = svgDoc.getElementById("age");
+        svgDoc.addEventListener("click", onTrafficClicked);
+    }, false);
+}
 
+function onTrafficClicked(evt) {
+    try {
+        // the user clicked on the warning screen to cancel warnings for an aircraft
+        warningCancellations.set(warningAircraft.reg, warningAircraft);
+        hitmap.delete(warningAircraft.reg);
+        toggleTrafficWarning(false);
+        console.log("Warnings cancelled for " + warningAircraft.reg);
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
 var svgArrow = document.getElementById("coursearrow");
-svgArrow.addEventListener("load", function () {
+svgArrow.addEventListener("load", () => {
     var svgDoc = svgArrow.contentDocument;
- 
     coursearrow = svgDoc.getElementById("arrow");
 }, false);
 
@@ -114,22 +142,33 @@ $(() => {
         }
     }
     else {
-        windindicator.css("left", "-1000");
-        tasindicator.css("left", "-1000");
-        setupStratuxAhrs();
-        ahrsWebSocket = new WebSocket(urlAHRS);
-        ahrsWebSocket.onerror = function (evt) { onAhrsError(evt) };
-        ahrsWebSocket.onopen = function (evt) { onAhrsOpen(evt) };
-        ahrsWebSocket.onclose = function (evt) { onAhrsClose(evt) };
-        ahrsWebSocket.onmessage = function (evt) { onAhrsMessage(evt.data) };
+        if (!ahrsInitialized) {
+            windindicator.css("transform", "translateX(-1000px)");
+            tasbox.css("transform", "translateX(-1000px)");
+            oatbox.css("transform", "translateX(-1000px)");
+            barobox.css("transform", "translateX(-1000px)");
+            daltbox.css("transform", "translateX(-1000px)");
+            vsarrowbox.css("top", "422px");
+            vsbox.css("top", "422px");
+            setupStratuxAhrs();
+            ahrsWebSocket = new WebSocket(urlAHRS);
+            ahrsWebSocket.onerror = function (evt) { onAhrsError(evt) };
+            ahrsWebSocket.onopen = function (evt) { onAhrsOpen(evt) };
+            ahrsWebSocket.onclose = function (evt) { onAhrsClose(evt) };
+            ahrsWebSocket.onmessage = function (evt) { onAhrsMessage(evt.data) };
+            ahrsInitialized = true;
+        }
     }
-
+    
     if (trafficWarnings) {
-        trafficWebSocket = new WebSocket(urlTraffic);
-        trafficWebSocket.onerror = function (evt) { onTrafficError(evt) };
-        trafficWebSocket.onopen = function (evt) { onTrafficOpen(evt); };
-        trafficWebSocket.onclose = function (evt) { onTrafficClose(evt); };
-        trafficWebSocket.onmessage = function (evt) { onTrafficMessage(evt); };
+        if (!trafficInitialized) {
+            trafficWebSocket = new WebSocket(urlTraffic);
+            trafficWebSocket.onerror = function (evt) { onTrafficError(evt) };
+            trafficWebSocket.onopen = function (evt) { onTrafficOpen(evt); };
+            trafficWebSocket.onclose = function (evt) { onTrafficClose(evt); };
+            trafficWebSocket.onmessage = function (evt) { onTrafficMessage(evt); };
+            trafficInitialized = true;
+        }
     }
 });
 
@@ -184,6 +223,8 @@ $(document).keyup(function(e) {
     case 57:    // "9" standard number
         trafficWarnings = !trafficWarnings;
         if (!trafficWarnings) {
+            hitmap.clear();
+            warningCancellations.clear();
             toggleTrafficWarning(false);
         }
         break;
@@ -208,13 +249,13 @@ $(document).keyup(function(e) {
             _setRoll(settings.roll);
             _setPitch(settings.pitch);
 
-            $(this).find('div.instrument').css({ height: 500, width: 600 });
-            $(this).find('div.instrument img.box.background').toggle(settings.showBox);
+            $(this).find("div.instrument").css({ height: 500, width: 600 });
+            $(this).find("div.instrument img.box.background").toggle(settings.showBox);
         });
 
         function _setRoll(roll) {
             placeholder.each(function () {
-                $(this).find('div.instrument.attitude div.roll').css('transform', 'rotate(' + roll + 'deg)');
+                $(this).find("div.instrument.attitude div.roll").css("transform", "rotate(" + roll + "deg)");
             });
         }
 
@@ -222,25 +263,25 @@ $(document).keyup(function(e) {
             if (pitch > constants.pitch_bound) { pitch = constants.pitch_bound; }
             else if (pitch < -constants.pitch_bound) { pitch = -constants.pitch_bound; }
             placeholder.each(function () {
-                $(this).find('div.instrument.attitude div.roll div.pitch').css('top', pitch * 0.7 + '%');
+                $(this).find("div.instrument.attitude div.roll div.pitch").css("top", pitch * 0.7 + "%");
             });
         }
 
         function _resize(size) {
             placeholder.each(function () {
-                $(this).find('div.instrument').css({ height: size, width: size });
+                $(this).find("div.instrument").css({ height: size, width: size });
             });
         }
 
         function _showBox() {
             placeholder.each(function () {
-                $(this).find('img.box.background').show();
+                $(this).find("img.box.background").show();
             });
         }
 
         function _hideBox() {urlSerialData
             placeholder.each(function () {
-                $(this).find('img.box.background').hide();
+                $(this).find("img.box.background").hide();
             });
         }
 
@@ -265,12 +306,12 @@ $(document).keyup(function(e) {
     };
 }(jQuery));
 
-var speedtape = $('#speedtape');
-var alttape = $('#alttape');
-var headingtape = $('#headingtape');
-var ball = $('#ball');
-var attitude = $.attitudeIndicator('#attitude', 'attitude', { roll: 50, pitch: -20, size: 600, showBox: true });
-var aoa = $('.aoa');
+var speedtape = $("#speedtape");
+var alttape = $("#alttape");
+var headingtape = $("#headingtape");
+var ball = $("#ball");
+var attitude = $.attitudeIndicator("#attitude", "attitude", { roll: 50, pitch: -20, size: 600, showBox: true });
+var aoa = $(".aoa");
 var avgVspeed = new Array(10);
 var isGarmin = false;
 
@@ -281,22 +322,24 @@ var hdg_offset = 4.793;  // Degrees
 var ball_offset = 6.7;   // Degrees
 var ball_center = 68;    // this is "center" of the slip-skid indicator
 var pitch_offset = (useStratuxAHRS ? 1.19 : 1.24); // this adjusts the pitch
+var trafficInitialized = false;
+var ahrsInitialized = false;
 
-var speedbox = document.getElementById('spanspeedbox');
-var altitudebox = document.getElementById('spanaltbox');
-var headingbox = document.getElementById('spanheadingbox');
-var gbox = document.getElementById('spangmeter');
-var vspeedbox = document.getElementById('spanvspeed');
-var arrowbox = document.getElementById('spanvsarrow');
-var tasbox = document.getElementById("spantas");
-var oatbox = document.getElementById("spanoat");
-var daltbox = document.getElementById("spandalt");
+var spanspeedbox = document.getElementById("spanspeedbox");
+var spanaltbox = document.getElementById("spanaltbox");
+var spanheadingbox = document.getElementById("spanheadingbox");
+var spangmeter = document.getElementById("spangmeter");
+var spanvspeed = document.getElementById("spanvspeed");
+var spanvsarrow = document.getElementById("spanvsarrow");
+var spantas = document.getElementById("spantas");
+var spanoat = document.getElementById("spanoat");
+var spandalt = document.getElementById("spandalt");
 var windarrow = document.getElementById("windarrow");
 var windcircle = document.getElementById("windcircle");
-var windspeed = document.getElementById("spanwindspeed");
-var windlabel = document.getElementById("spanwindlabel");
-var barobox = document.getElementById("spanbaro");
-var aoatext = document.getElementById('spanaoa');
+var spanwindspeed = document.getElementById("spanwindspeed");
+var spanwindlabel = document.getElementById("spanwindlabel");
+var spanbaro = document.getElementById("spanbaro");
+var aoatext = document.getElementById("spanaoa");
 
 function pad(num, size) {
     var s = num + "";
@@ -317,27 +360,27 @@ function onHostData(e) {
     //////////////////////////////////////////////////////////////////////////////
     if (!isGarmin && data.client == "garmin") {
         isGarmin = true;
-        windindicator.css('left', '-1000');
+        windindicator.css("left", "-1000");
     }
 
     attitude.setRoll(data.roll * -1);
     attitude.setPitch(data.pitch * pitch_offset);
 
-    speedbox.textContent = data.airspeed;
-    headingbox.textContent = data.heading;
-    arrowbox.textContent = data.vertspeed < 0 ? "▼" : "▲";
-    barobox.textContent = "BARO " + data.baropressure.toFixed("2");
-    oatbox.textContent = "OAT " + data.oatF + " F";
-    tasbox.textContent = "TAS " + data.tas + " kt";
-    daltbox.textContent = "DALT " + (data.dalt >= 0 ? "+" + data.dalt : "-" + data.dalt);
-    windspeed.textContent = isNaN(data.windkts) ? "-- kt" : data.windkts + " kt";
-    altitudebox.textContent = data.baltitude;
+    spanspeedbox.textContent = data.airspeed;
+    spanheadingbox.textContent = data.heading;
+    spanvsarrow.textContent = data.vertspeed < 0 ? "▼" : "▲";
+    spanbaro.textContent = "BARO " + data.baropressure.toFixed("2");
+    spanoat.textContent = "OAT " + data.oatF + " F";
+    spantas.textContent = "TAS " + data.tas + " kt";
+    spandalt.textContent = "DALT " + (data.dalt >= 0 ? "+" + data.dalt : "-" + data.dalt);
+    spanwindspeed.textContent = isNaN(data.windkts) ? "-- kt" : data.windkts + " kt";
+    spanaltbox.textContent = data.baltitude;
 
     if (avgVspeed.length < 3) {
         avgVspeed.push(Math.abs(data.vertspeed));
     }
     else {
-        vspeedbox.textContent = GetAverage(avgVspeed) + " fpm";
+        spanvspeed.textContent = GetAverage(avgVspeed) + " fpm";
         avgVspeed.splice(0, avgVspeed.length);
     }
 
@@ -348,23 +391,23 @@ function onHostData(e) {
 
     // check the AOA
     if (data.aoa >= 99) {
-        aoa.css('visibility', 'visible');
+        aoa.css("visibility", "visible");
         aoatext.textContent = "AOA-PUSH!";
     }
     else {
-        aoa.css('visibility', 'hidden');
+        aoa.css("visibility", "hidden");
     }
 
     // set the coordinates of the tapes
-    speedtape.css('transform', 'translateY(' + speedticks + 'px)');
-    alttape.css('transform', 'translateY(' + altticks + 'px)');
-    headingtape.css('transform', 'translateX(' + hdgticks + 'px)');
+    speedtape.css("transform", "translateY(" + speedticks + "px)");
+    alttape.css("transform", "translateY(" + altticks + "px)");
+    headingtape.css("transform", "translateX(" + hdgticks + "px)");
 
-    gbox.textContent = (data.gLoad >= 0 ? "+" + data.gLoad : "-" + data.gLoad) + " g";
+    spangmeter.textContent = (data.gLoad >= 0 ? "+" + data.gLoad : "-" + data.gLoad) + " g";
 
     // set the skid-slip ball position
     var ballposition = ball_center + (data.slipskid * ball_offset);
-    ball.css('left', ballposition + 'px');
+    ball.css("left", ballposition + "px");
 
     // set the wind speed & direction
     if (data.winddirection < 180) {
@@ -373,7 +416,7 @@ function onHostData(e) {
     else {
         data.winddirection -= 180;
     }
-    windarrow.style.transform = 'rotate(' + data.winddirection + 'deg)';
+    windarrow.style.transform = "rotate(" + data.winddirection + "deg)";
     data = null; 
 }
 
@@ -414,13 +457,13 @@ function perRound(num, precision) {
 
 function zerosPad(rndVal, decPlaces) {
     var valStrg = rndVal.toString(); // Convert the number to a string
-    var decLoc = valStrg.indexOf('.'); // Locate the decimal point
+    var decLoc = valStrg.indexOf("."); // Locate the decimal point
     var decPartLen = 0;
     // check for a decimal
     if (decLoc == -1) {
         // If no decimal, then all decimal places will be padded with 0s
         // If decPlaces is greater than zero, add a decimal point
-        valStrg += decPlaces > 0 ? '.' : '';
+        valStrg += decPlaces > 0 ? "." : "";
     }
     else {
         decPartLen = valStrg.length - decLoc - 1; // If there is a decimal already, only the needed decimal places will be padded with 0s
@@ -429,35 +472,32 @@ function zerosPad(rndVal, decPlaces) {
 
     if (totalPad > 0) {
         // Pad the string with 0s
-        for (var cntrVal = 1; cntrVal <= totalPad; cntrVal++) valStrg += '0';
+        for (var cntrVal = 1; cntrVal <= totalPad; cntrVal++) valStrg += "0";
     }
     return valStrg;
 }
 
 function runHeartbeatRoutine() {
     var data = new Date().getTime();
-    sendKeepAlive(data);
+    sendKeepAlives(data);
     console.log("((💜))")
 }
 
-function sendKeepAlive(data) {
-    var rs = trafficWebSocket.readyState;
-    if (rs == 1) {
-        trafficWebSocket.send(data);
-    }
-    if (useStratuxAHRS) {
-        rs = ahrsWebSocket.readyState;
+function sendKeepAlives(data) {
+
+    if (trafficWarnings) {
+        var rs = trafficWebSocket.readyState;
         if (rs == 1) {
-            ahrsWebSocket.send(data);
+            trafficWebSocket.send(data);
         }
+        checkForExpiredWarnings();
     }
-    checkForExpiredWarnings();
 }
 
 function checkForExpiredWarnings() {
     if (hitmap.size > 0) {
         var now = new Date().getTime();
-        hitmap.forEach(function(item) {
+        hitmap.forEach((item) => {
             var elapsed = (now - item.timestamp) / 1000;
             if (item.age > warning_maxage || 
                 item.dist > warning_distance ||
@@ -469,6 +509,15 @@ function checkForExpiredWarnings() {
         if (hitmap.size == 0) {
             toggleTrafficWarning(false);
         }
+        warningCancellations.forEach((item) => {
+            var elapsed = (now - item.timestamp) / 1000;
+            if (item.age > warning_maxage || 
+                item.dist > warning_distance ||
+                elapsed >= warning_maxage) {
+
+                warningCancellations.delete(item.reg)
+            }
+        });
     }
 }
 
@@ -519,8 +568,8 @@ function onTrafficMessage(evt) {
     var airborne = !obj.OnGround;
     var distlabel;
     var strdate = new Date();
-
-    myAlt = Number(altitudebox.textContent);
+   
+    myAlt = Number(spanaltbox.textContent);
     
     // incoming reported speed is in KT, translation factor is 
     // set at app load depending on user's chosen display type
@@ -541,56 +590,54 @@ function onTrafficMessage(evt) {
             distlabel = " km";
     }
 
-    isWarning = false;
     try {
         if (airborne && alt > 0 && dist > 0) {
-            
-            var airplane = {"reg": reg, "age": age, "dist": dist, "alt": alt, "brng": brng, "course": course, 
-                            "date": strdate, "serveripaddr": serverip, "timestamp": newtimestamp };
-            if (dist > warning_distance || age > warning_maxage) {
-                hitmap.delete(reg);
-            }
-            else if ((dist <= warning_distance && alt != 0 && spdOut != 0) &&
-                     (alt <= myAlt + warning_altitude && alt >= myAlt - warning_altitude) &&
-                     (brng > 0 && spdOut > 0) && (newtimestamp > timestamp)) {
-                hitmap.set(reg, airplane);
+            if ((dist <= warning_distance) && 
+                (spdOut > 0) &&
+                (alt <= myAlt + warning_altitude) && 
+                (alt >= myAlt - warning_altitude) &&
+                (brng > 0) && 
+                (newtimestamp > timestamp)) {
+                
                 timestamp = newtimestamp;
                 
-                var airplanes = Array.from(hitmap.values()).sort(function(a,b) {
-                    return (a.dist > b.dist) ? 1 : -1;
-                }).sort(function (a,b) {
-                    return (a.alt > b.alt) ? 1: -1;    
-                });
-
-                if (airplanes.length > 0) {
-                    var hit = airplanes[0];
-                    warningIdentity.textContent = hit.reg;
-                    warningAltitude.textContent = hit.alt;
-                    warningDistance.textContent = hit.dist + distlabel;
-                    warningCourse.textContent = hit.course;
-                    warningAge.textContent = hit.age;
-                    hitbearing = hit.brng;
-                    lastTrafficTimestamp = hit.timestamp;
-                    //console.log(hit);
-                
-                    airplanes.forEach(function(item) {
-                        if (item.reg != hit.reg) {
-                            hitmap.delete(item.reg)
-                        }
-                    });
+                if (warningCancellations.has(reg)) {
+                    hitmap.delete(reg); 
                 }
-                airplanes = null;
-            }
+                else {
+                    hitmap.set(reg, new Aircraft(reg, age, dist, alt, brng, course, strdate, serverip, timestamp, false));
+                }
 
-            if (hitmap.size > 0) {
-                toggleTrafficWarning(true, hitbearing);
-            }
-            else {
-                toggleTrafficWarning(false);
+                if (hitmap.size > 0) {
+                    var airplanes = Array.from(hitmap.values()).sort(function(a,b) {
+                        return (a.dist < b.dist) ? 1 : -1;
+                    }).sort(function (a,b) {
+                        return (a.alt > b.alt) ? 1: -1;    
+                    });
+
+                    if (airplanes.length > 0) {
+                        // update the Warning screen elements and turn the screen on.
+                        warningAircraft = airplanes[0];
+                        warningIdentity.textContent = warningAircraft.reg;
+                        warningAltitude.textContent = warningAircraft.alt;
+                        warningDistance.textContent = warningAircraft.dist + distlabel;
+                        warningCourse.textContent = warningAircraft.course;
+                        warningAge.textContent = warningAircraft.age;
+                        lastTrafficTimestamp = warningAircraft.timestamp;
+                        toggleTrafficWarning(true);
+                    }
+                    else {
+                        toggleTrafficWarning(false);
+                    }
+                }
             }
         }
         else {
+            warningCancellations.delete(reg);
             hitmap.delete(reg);
+            if (hitmap.size == 0) {
+                toggleTrafficWarning(false);
+            }
         }
     }
     catch (error) {
@@ -603,11 +650,11 @@ function getSeconds(startTime, endTime) {
     return Math.abs(Math.round(diffMs * .001));
 }
 
-function toggleTrafficWarning(isVisible, bearing = 0) {
+function toggleTrafficWarning(isVisible) {
     if (isVisible) {
         svgTraffic.setAttribute("style", "visibility: visible");
         courseindicator.css("visibility", "visible");
-        svgArrow.setAttribute("style", "transform: rotate(" + bearing + "deg)");
+        svgArrow.setAttribute("style", "transform: rotate(" + warningAircraft.brng + "deg)");
         warningVisible = true;
     }
     else {
@@ -619,11 +666,6 @@ function toggleTrafficWarning(isVisible, bearing = 0) {
 }
 
 function setupStratuxAhrs() {
-    oatindicator.css("left", "-1000");
-    baroindicator.css("left", "-1000");
-    daltindicator.css("left", "-1000");
-    vsarrow.css("top", "422px");
-    vsindicator.css("top", "422px");
     $.post(urlCalibrateAHRS);
     $.post(urlCageAHRS);
     $.post(urlResetGMeter);
@@ -636,7 +678,9 @@ function onAhrsError(evt) {
 function onAhrsOpen(evt) {
     console.log("Ahrs websocket successfully connected to Stratux!");
     wsOpen = true;
-    setInterval(runHeartbeatRoutine, 12000);
+    if (!trafficWarnings && useStratuxAHRS) {
+        setInterval(runHeartbeatRoutine, 12000);
+    }
 }
 
 function onAhrsClose(evt) {
@@ -684,21 +728,21 @@ function onAhrsMessage(data) {
         heading = pad(Math.trunc(obj.GPSTrueCourse), 3);
         vertspeed = Math.trunc(obj.GPSVerticalSpeed);
         // set the speed, altitude, heading, and GMeter values
-        speedbox.textContent = speed;
-        altitudebox.textContent = altitude;
-        headingbox.textContent = heading;
-        vspeedbox.textContent = Math.abs(vertspeed) + " FPM";
-        arrowbox.textContent = (vertspeed < 0 ? "▼" : "▲");
-        oatbox.textContent = oat;
+        spanspeedbox.textContent = speed;
+        spanaltbox.textContent = altitude;
+        spanheadingbox.textContent = heading;
+        spanvspeed.textContent = Math.abs(vertspeed) + " FPM";
+        spanvsarrow.textContent = (vertspeed < 0 ? "▼" : "▲");
+        spanoat.textContent = oat;
         var speedticks = (speed * spd_offset);
         var altticks = (altitude * alt_offset);
         var hdgticks = (heading * hdg_offset) * -1;
 
         // set the coordinates of the tapes
-        speedtape.css('transform', 'translateY(' + speedticks + 'px)');
-        alttape.css('transform', 'translateY(' + altticks + 'px');
-        headingtape.css('transform', 'translateX(' + hdgticks + 'px');
-        gbox.textContent = gnumber + " G";
+        speedtape.css("transform", "translateY(" + speedticks + "px)");
+        alttape.css("transform", "translateY(" + altticks + "px");
+        headingtape.css("transform", "translateX(" + hdgticks + "px");
+        spangmeter.textContent = gnumber + " G";
 
         // set the skid-slip ball position
         if (slipskid < -17) {
@@ -708,7 +752,7 @@ function onAhrsMessage(data) {
             slipskid = 17;
         }
         var ballposition = ball_center + (slipskid * ball_offset);
-        ball.css('left', ballposition + 'px');
+        ball.css("left", ballposition + "px");
     }
     catch(error) {
         console.log(error);

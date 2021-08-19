@@ -34,7 +34,7 @@ var stopPlayback = false;
 var tapeimage;
 var view = "";
 var ahrs = "";
-var trafficWarnings = false;
+var showTrafficWarnings = false;
 var stratuxAHRS = false;
 var stratuxIPaddress = "192.168.10.1"; // default, overwritten if different in setup
 var maxWarnAltitude = 0;
@@ -281,12 +281,12 @@ try {
             writefile = true;
         }
 
-        if (trafficWarnings && !newtw) {
-            trafficWarnings = false;
+        if (showTrafficWarnings && !newtw) {
+            showTrafficWarnings = false;
             writefile = true;
         }
-        else if (!trafficWarnings && newtw) {
-            trafficWarnings = true;
+        else if (!showTrafficWarnings && newtw) {
+            showTrafficWarnings = true;
             writefile = true;
         }
 
@@ -308,7 +308,7 @@ try {
                          "vno" : vno,
                          "vs1" : vs1,
                          "vs0" : vs0,
-                         "trafficwarnings" : trafficWarnings,
+                         "trafficwarnings" : showTrafficWarnings,
                          "maxwarnaltitude" : maxWarnAltitude,
                          "maxwarndistance" : maxWarnDistance,
                          "speedstyle" : speedStyle,
@@ -393,7 +393,7 @@ function readSettingsFile() {
     vno = parsedData.vno;
     vs1 = parsedData.vs1;
     vs0 = parsedData.vs0;
-    trafficWarnings = parsedData.trafficwarnings;
+    showTrafficWarnings = parsedData.trafficwarnings;
     maxWarnAltitude = Number(parsedData.maxwarnaltitude);
     maxWarnDistance = Number(parsedData.maxwarndistance);
     speedStyle = parsedData.speedstyle;
@@ -463,7 +463,7 @@ function generateHudView() {
         
         var rawdata = String(fs.readFileSync(__dirname + "/templates/index_template.html"));
         var output = rawdata.replace(regex0, websocketPort)
-                            .replace(regex1, trafficWarnings)
+                            .replace(regex1, showTrafficWarnings)
                             .replace(regex2, maxWarnAltitude)
                             .replace(regex3, maxWarnDistance)
                             .replace(regex4, speedStyle)
@@ -503,8 +503,8 @@ function generateSetupView(port) {
 
     var dbg = debug ? "true" : "false";
     var dbgchecked = debug ? "checked" : "";
-    var tw = trafficWarnings ? "true" : "false";
-    var twchecked = trafficWarnings ? "checked" : "";
+    var tw = showTrafficWarnings ? "true" : "false";
+    var twchecked = showTrafficWarnings ? "checked" : "";
     
     var rawdata = String(fs.readFileSync(__dirname + "/templates/setup_template.html"));
     var output = rawdata.replace(regex00, view)

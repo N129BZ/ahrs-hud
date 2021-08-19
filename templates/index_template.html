@@ -1,9 +1,8 @@
-<html lang="en" dir="ltr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Cache-Control: no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma: no-cache">
-    <meta http-equiv="Expires: 0">
-    <meta charset="utf-8">
+    <title>AHRS-HUD</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="css/classes.css" />
     <link rel="stylesheet" type="text/css" href="css/hud.css" />
 </head>
@@ -14,44 +13,44 @@
     <div class="aoa"><span id="spanaoa"></span></div>
     <div class="speedbox"><span id="spanspeedbox">000</span></div>
     <div class="scrollspeed">
-        <img src="img/speed_mask.png" id="speedmask"> 
-        <img src="img/speed_tape.png" id="speedtape">
+        <img src="img/speed_mask.png" id="speedmask" alt=""> 
+        <img src="img/speed_tape.png" id="speedtape" alt="">
         <span id="ktlabel">##SPEEDSTYLE##</span>
     </div>
     <span id="attitude"></span>
     <div class="altbox"><span id="spanaltbox">0000</span></div>
     <div class="scrollaltitude">
-        <img src="img/altitude_mask.png" id="altmask">
-        <img src="img/altitude_tape.png" id="alttape">
+        <img src="img/altitude_mask.png" id="altmask" alt="">
+        <img src="img/altitude_tape.png" id="alttape" alt="">
         <span id="msllabel">MSL</span>
     </div>
     <div class='headingbox'><span id="spanheadingbox">000</span></div>
     <div class="scrollheading">
-        <img src="img/heading_mask.png" id="headingmask">
-        <img src="img/heading_tape.png" id="headingtape">
+        <img src="img/heading_mask.png" id="headingmask" alt="">
+        <img src="img/heading_tape.png" id="headingtape" alt="">
     </div>
     <div>
         <div class="windindicator" id="windindicator">
             <span id="spanwindlabel">WIND</span>
             <span id="spanwindspeed">0 kt</span>
-            <img id="windcircle" src="img/windcircle.png">
-            <img id="windarrow" src="img/windarrow.png">
+            <img id="windcircle" src="img/windcircle.png" alt="">
+            <img id="windarrow" src="img/windarrow.png" alt="">
         </div>
         <div class="courseindicator" id="courseindicator">
-            <object data="img/coursearrow.svg" type="image/svg+xml" class="coursearrow" id="coursearrow"></object>
+            <object data="img/coursearrow.svg" type="image/svg+xml" id="coursearrow"></object>
         </div>
-        <div class="gmeterbox"><span id="spangmeter">+1.0 g</span></div> 
-        <div class="daltbox"><span id="spandalt">DALT 0</span></div> 
-        <div class="oatbox"><span id="spanoat">OAT 59 F</span></div> 
+        <div class="gmeterbox" id="gmeterbox"><span id="spangmeter">+1.0 g</span></div> 
+        <div class="daltbox" id="daltbox"><span id="spandalt">DALT 0</span></div> 
+        <div class="oatbox" id="oatbox"><span id="spanoat">OAT 59 F</span></div> 
         <div class="tasbox" id="tasbox"><span id="spantas">TAS 0 kt</span></div> 
-        <div class="barobox"><span id="spanbaro">BARO 29.92</span></div>
-        <div class="vsarrowbox"><span id="spanvsarrow">▲</span></div>
-        <div class="vsbox"><span id="spanvspeed">0 fpm</span></div>
-        <img src="img/yawbackground.png" id="yawbackground">
+        <div class="barobox" id="barobox"><span id="spanbaro">BARO 29.92</span></div>
+        <div class="vsarrowbox" id="vsarrowbox"><span id="spanvsarrow">▲</span></div>
+        <div class="vsbox" id="vsbox"><span id="spanvspeed">0 fpm</span></div>
+        <img src="img/yawbackground.png" id="yawbackground" class="yawbackground" alt="">
         <div class="yawindicator">
-            <img src="img/slipskidbar.png" id="leftbar">
-            <img src="img/slipskidbar.png" id="rightbar">
-            <img src="img/ball.png" id="ball">
+            <img src="img/slipskidbar.png" id="leftbar" alt="">
+            <img src="img/slipskidbar.png" id="rightbar" alt="">
+            <img src="img/ball.png" id="ball" alt="">
         </div>
     </div>
     <div id="warning" style="visibility: hidden;">
@@ -71,3 +70,4 @@
 <script src="js/HudData.js"></script>
 <script src="js/hud-ops.js"></script>
 </body>
+</html>

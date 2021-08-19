@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta http-equiv="Cache-Control: no-cache, no-store, must-revalidate">
@@ -141,9 +142,6 @@
         <input type="checkbox" id="trafficwarnings" name="trafficwarnings" style="height: 30px; width: 30px;" onClick="updateTrafficWarning(this.checked);" ##TWCHECKED##>
         <label class="label">&nbsp&nbspEnable ADSB Traffic Warnings from Stratux</label>
     </div>
-    <div class="form-field">
-        <input type="text" id="twchecked" name="twchecked" style="visibility: hidden;">
-    </div>
     <p>
     <br>
     <p>
@@ -174,6 +172,9 @@
         <label class="label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(does not work when using Stratux AHRS)</label>
     </div>
     <br>
+    <div class="form-field">
+        <input type="text" id="twchecked" name="twchecked" style="visibility: hidden;">
+    </div>
     <div class="form-field">
         <input type="text" id="dbgchecked" name="dbgchecked" style="visibility: hidden;">
     </div>
