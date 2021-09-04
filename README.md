@@ -11,6 +11,7 @@
     5. Navigate your browser to localhost:8080 and the HUD Setup page will be displayed. Enter the desired parameters and save.
     6. After saving the setup values, the HUD will be displayed. 
     7. It is highly recommended to install and use node pm2 to setup an automatic startup daemon of index.js 
+    8. Open the settings.json file to change v-speed values, your choice of MPH or KTS, etc.
 
 ###### NOTE:
 If you need to tweak the view of the HUD screen, the div.hud class in css/hud.css can be edited at the setting transform: scale(x, y) to scale the 2 dimensions to your liking, or even rotate 180° if mounting the HUD from the top of the windscreen. It is suggested to not change values for masks and tapes, as they are calibrated by number of pixels to offset based on the speed, altitude, or heading values being applied.
