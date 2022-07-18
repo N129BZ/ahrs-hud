@@ -36,7 +36,7 @@ var view = "";
 var ahrs = "";
 var showTrafficWarnings = false;
 var stratuxAHRS = false;
-var stratuxIPaddress = "192.168.10.1"; // default, overwritten if different in setup
+var stratuxip = "192.168.10.1"; // default, overwritten if different in setup
 var maxWarnAltitude = 0;
 var maxWarnDistance = 0;
 
@@ -135,8 +135,8 @@ function DebugPlayback() {
 
         // ...do asynchronous line processing..
         setTimeout(function () {    
-            if (line.substr(0, 1) == "!") {
-                sendDataToBrowser("!" + line.substr(1));
+            if (line.substring(0, 1) == "!") {
+                sendDataToBrowser("!" + line.substring(1));
             }
             lr.resume();
         }, 150);
@@ -144,8 +144,8 @@ function DebugPlayback() {
 
     lr.on('end', function () {
         inPlayback = false;
-        lr.close();
         stopPlayback = false;
+        lr.close();
     });
 }
 
@@ -187,6 +187,13 @@ try {
 
         }
     });
+    
+    app.get("/getsettings", (req, res) => {
+        let rawdata = fs.readFileSync(`${__dirname}/settings.json`);
+        res.writeHead(200);
+        res.write(rawdata);
+        res.end();
+    });
 
     app.get("/setup", (req,res) => {
         generateSetupView();
@@ -206,7 +213,7 @@ try {
     });    
 
     app.get("/stratux", (req,res) => {
-        res.redirect("http://" + stratuxIPaddress);
+        res.redirect("http://" + stratuxip);
     });
 
     app.post("/setup", (req, res) => {
@@ -238,8 +245,8 @@ try {
             writefile = true;
         }
         
-        if (newstxipaddr != stratuxIPaddress) {
-            stratuxIPaddress = newstxipaddr;
+        if (newstxipaddr != stratuxip) {
+            stratuxip = newstxipaddr;
             writefile = true;
         }
 
@@ -300,9 +307,9 @@ try {
 
         if (writefile) {
             var data = { "view" : view, 
-                         "httpPort" : httpPort,
-                         "wsPort" : websocketPort,
-                         "serialPort" : serialPort,
+                         "httpport" : httpPort,
+                         "wsport" : websocketPort,
+                         "serialport" : serialPort,
                          "baudrate" : baudrate, 
                          "vne" : vne,
                          "vno" : vno,
@@ -313,7 +320,7 @@ try {
                          "maxwarndistance" : maxWarnDistance,
                          "speedstyle" : speedStyle,
                          "ahrs" : ahrs,
-                         "stratuxipaddress" : stratuxIPaddress,
+                         "stratuxip" : stratuxip,
                          "debug" : debug,
                          "firstrun" : firstrun
                         };
@@ -385,9 +392,9 @@ function readSettingsFile() {
     var rawdata = fs.readFileSync(__dirname + '/settings.json');
     var parsedData = JSON.parse(rawdata);
     view = parsedData.view;
-    serialPort = parsedData.serialPort;
-    var hport = parsedData.httpPort;
-    var wsPort = parsedData.wsPort;
+    serialPort = parsedData.serialport;
+    var hport = parsedData.httpport;
+    var wsPort = parsedData.wsport;
     baudrate = parseInt(parsedData.baudrate);
     vne = parsedData.vne;
     vno = parsedData.vno;
@@ -399,7 +406,7 @@ function readSettingsFile() {
     speedStyle = parsedData.speedstyle;
     ahrs = parsedData.ahrs;
     stratuxAHRS = (ahrs == "Stratux");
-    stratuxIPaddress = parsedData.stratuxipaddress;
+    stratuxip = parsedData.stratuxip;
     debug = parsedData.debug;
     firstrun = parsedData.firstrun;
 
@@ -468,7 +475,7 @@ function generateHudView() {
                             .replace(regex3, maxWarnDistance)
                             .replace(regex4, speedStyle)
                             .replace(regex5, ahrs)
-                            .replace(regex6, stratuxIPaddress)
+                            .replace(regex6, stratuxip)
                             .replace(regex7, serverIpAddress);
  
         fs.writeFileSync(indexview, output);
@@ -522,7 +529,7 @@ function generateSetupView(port) {
                         .replace(regex12, maxWarnDistance)
                         .replace(regex13, speedStyle)
                         .replace(regex14, ahrs)
-                        .replace(regex15, stratuxIPaddress);
+                        .replace(regex15, stratuxip);
 
     fs.writeFileSync(setupview, output);
 }

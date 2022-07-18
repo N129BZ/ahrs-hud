@@ -1,0 +1,356 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'monacoregular';
+    src: url('../fonts/ monaco-webfont.woff2') format('woff2'),
+         url('../fonts/monaco-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'monacob2bold';
+    src: url('../fonts/monacob2-bold-webfont.woff2') format('woff2'),
+         url('../fonts/monacob2-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'monacobregular';
+    src: url('../fonts/monacob-webfont.woff2') format('woff2'),
+         url('../fonts/monacob-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+html {height:100%;width:100%}
+
+body {
+    background-color: #000000;
+    width: 960px;
+    height: 480px;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    margin: 0%;
+    overflow: hidden;
+}
+
+.hud {
+    width: 960px;
+    height: 480px;
+    top: -53px;
+    left: -150px;
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.74,0.80);
+}
+
+.lhblocker {
+    width: 200px;
+    height:100px;
+    top: 0px;
+    left: 138px;
+    position: absolute;
+    z-index: 200;
+    background-color: black;
+}
+
+.rhblocker {
+    width: 179px;
+    height:100px;
+    top: 0px;
+    left: 622px;
+    position: absolute;
+    z-index: 200;
+    background-color: black;
+}
+
+.aoa {
+    border-style: solid;
+    border-color: red;
+    border-width: 12px;
+    border-radius: 8px;
+    background-color: white;
+    position: absolute;
+    width: 343px;
+    height: 80px;
+    top: 134px;
+    left: 287px;
+    z-index: 500;
+    visibility: hidden;
+}
+
+.scrollspeed {
+    width: 200px;
+    height: 600px;
+    top: -110px;
+    left: 20px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.speedbox {
+    border-style: solid;
+    border-color: rgb(255,102,0);
+    border-width: 6px;
+    border-radius: 5px;
+    position: absolute;
+    top: 128px;
+    left: 146px;
+    width: 63px;
+    height: 40px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.scrollaltitude {
+    width: 229px;
+    height: 632px;
+    top: -120px;
+    left: 720px;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.altbox {
+    border-style: solid;
+    border-color: rgb(255,102,0);
+    border-width: 6px;
+    border-radius: 5px;
+    position: absolute;
+    top: 127px;
+    left: 697px;
+    width: 99px;
+    height: 40px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.altbox_flipped {
+    border-style: solid;
+    border-color: rgb(255,102,0);
+    border-width: 6px;
+    border-radius: 5px;
+    position: absolute;
+    top: 127px;
+    left: 792px;
+    width: 99px;
+    height: 40px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.scrollheading {
+    width: 800px;
+    height: 95px;
+    top: 380px;
+    left: -44px;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.headingbox {
+    border-style: solid;
+    border-color: rgb(255,102,0);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 379px;
+    left: 430px;
+    width: 63px;
+    height: 30px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.gmeterbox {
+    border-style: solid;
+    border-color: rgb(2,85,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 422px;
+    left: 52px;
+    width: 132px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+ 
+.barobox {
+    border-style: solid;
+    border-color: rgb(2,85,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 337px;
+    left: 750px;
+    width: 145px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.daltbox {
+    border-style: solid;
+    border-color: rgb(2,85,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 422px;
+    left: 750px;
+    width: 145px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+ 
+.oatbox {
+    border-style: solid;
+    border-color: rgb(2,85,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 379px;
+    left: 750px;
+    width: 145px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+} 
+
+.tasbox {
+    border-style: solid;
+    border-color: rgb(2,85,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 379px;
+    left: 52px;
+    width: 131px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+    visibility: visible;
+}
+
+.vsbox {
+    border-style: solid;
+    border-color: rgb(2,85,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 296px;
+    left: 788px;
+    width: 107px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.vsarrowbox {
+    border-style: solid;
+    border-color: rgb(2,85,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 296px;
+    left: 750px;
+    width: 33px;
+    height: 38px;
+    display: inline-block;
+    z-index: 210;
+}
+
+.windindicator {
+    border-style: solid;
+    border-color: rgb(2,85,255);
+    border-width: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 298px;
+    left: 52px;
+    width: 131px;
+    height: 77px;
+    display: inline-block;
+    z-index: 205;
+}
+
+.courseindicator {
+    position: absolute;
+    top: 190px;
+    left: 675px;
+    width: 135px;
+    height: 135px;
+    display: inline-block;
+    z-index: 600;
+    visibility: hidden;
+}
+
+.coursearrow {
+    height: 135px;
+    width: 135px;
+    position: absolute;
+    top: 09px;
+    left: 0px;
+    visibility: visible;
+    z-index: 610;
+}
+
+.yawindicator {
+    border-style: solid;
+    border-color: rgb(255,102,0);
+    border-width: 3px;
+    border-radius: 5px;
+    background-color: black;
+    position: absolute;
+    width: 156px;
+    height: 18px;
+    top: 349px;
+    left: 383px;
+    z-index: 210;
+}
+
+.attitude {
+    width: 300px;
+    height: 400px;
+    top: -15px;
+    left: 168px;
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.attitude .box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.trafficwarn {
+    width: 940px;
+    height: 480px;
+    top: 36px;
+    left: 9px;
+    position: absolute;
+    transform: scale(1.2, .8);
+    z-index: 500;
+}
+
+div.instrument.attitude div.roll {
+    transform: rotate(0deg);
+}
+
+div.instrument.attitude div.roll div.pitch {
+    top: 0%;
+}

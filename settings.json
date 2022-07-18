@@ -1,8 +1,8 @@
 {
   "view" : "Kivic",
-  "httpPort": 8080,
-  "wsPort": 9696,
-  "serialPort" : "/dev/ttyACM0",
+  "httpport": 8686,
+  "wsport": 9696,
+  "serialport" : "/dev/ttyACM0",
   "baudrate": 9600,
   "vne": 160,
   "vno": 130,
@@ -13,7 +13,7 @@
   "maxwarndistance": 15,
   "speedstyle" : "MPH",
   "ahrs" : "Dynon",
-  "stratuxipaddress" : "192.168.10.1",
+  "stratuxip" : "192.168.1.187",
   "debug": true,
   "firstrun": false
 }

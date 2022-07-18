@@ -1,5 +1,18 @@
 'use strict'
 
+let URL_LOCATION            =  location.hostname;
+let URL_PROTOCOL            =  location.protocol;
+let URL_PORT                =  location.port;
+let URL_HOST_BASE           =  URL_LOCATION;
+if (parseInt(URL_PORT) > 0) {
+    URL_HOST_BASE += `:${URL_PORT}`;
+}
+let URL_HOST_PROTOCOL       = `${URL_PROTOCOL}//`;
+let URL_SERVER              = `${URL_HOST_PROTOCOL}${URL_HOST_BASE}`;
+let URL_WINSOCK             = `ws://${URL_LOCATION}:`;
+let URL_GET_SETTINGS        = `${URL_SERVER}/getsettings`;
+
+var settings = {};
 var websock;
 var hitmap = new Map();
 var trafficWebSocket;
@@ -10,38 +23,56 @@ var lastTrafficTimestamp;
 var clrCount = 0;
 var countCycle = 0;
 var myAlt = 0;
-
-var warning_maxage = 20;
 var coursearrow;
-var speedStyle = "KT";
+
 var warningIdentity;
 var warningAltitude;
 var warningDistance;
 var warningCourse;
 var warningAge;
 var warningVisible = false;
-var useStratuxAHRS = false;
 var timestamp = Date.now();
 
-var trafficWarnings = document.getElementById("trafficwarnings").value == "true";
-var warning_altitude = parseInt(document.getElementById("maxwarnaltitude").value);
-var warning_distance = parseInt(document.getElementById("maxwarndistance").value);
+/** 
+ * Request settings JSON object from server
+ */
+$.get({
+    async: false,
+    type: "GET",
+    url: URL_GET_SETTINGS,
+    success: (data) => {
+        try {
+            settings = JSON.parse(data);
+        }
+        catch(err) {
+            console.log(err);
+        }
+    },
+    error: (xhr, ajaxOptions, thrownError) => {
+        console.error(xhr.status, thrownError);
+    }
+});
 
-var stxip = document.getElementById("stxipaddr").value;
-var serverip = document.getElementById("serveripaddr").value;
-var wsp = parseInt(document.getElementById("wsport").value);
-var httpPort = location.port;
-var urlTraffic = "ws://" + stxip + "/traffic";
-var urlAHRS = "ws://" + stxip + "/situation";
-var urlCageAHRS = "http://" + stxip + "/cageAHRS";
-var urlCalibrateAHRS = "http://" + stxip + "/calibrateAHRS";
-var urlResetGMeter = "http://" + stxip + "/resetGMeter";
-var urlRebootStratux = "http://" + stxip + "/reboot";
-var urlShutdownStratux = "http://" + stxip + "/shutdown";
-var urlSerialData = "ws://" + serverip + ":" + wsp;
-var urlMySetup = "http://" + serverip + ":" + httpPort + "/setup";
-var urlStratuxSetup = "http://" + stxip;
-var urlSituation = "ws://" + stxip + "/situation";
+var warning_maxage = settings.maxwarnage; //20;
+var speedStyle = settings.speedstyle;     //"KT";
+var useStratuxAHRS = (settings.ahrs === "Stratux");
+var trafficWarnings = settings.trafficwarnings; // document.getElementById("trafficwarnings").value == "true";
+var warning_altitude = settings.maxwarnaltitude; //parseInt(document.getElementById("maxwarnaltitude").value);
+var warning_distance = settings.maxwarndistance; //parseInt(document.getElementById("maxwarndistance").value);
+var stratuxip = settings.stratuxip; // document.getElementById("stxipaddr").value;
+var wsport = settings.wsport;       // parseInt(document.getElementById("wsport").value);
+
+var wsTraffic = `ws://${stratuxip}/traffic`;
+var wsSituation = `ws://${stratuxip}/situation`;
+var wsSerialData = `${URL_WINSOCK}${wsport}`;
+var urlAHRS = `ws://${stratuxip}/situation`;
+var urlCageAHRS = `http://${stratuxip}/cageAHRS`;
+var urlCalibrateAHRS = `http://${stratuxip}/calibrateAHRS`;
+var urlResetGMeter = `http://${stratuxip}/resetGMeter`;
+var urlRebootStratux = `http://${stratuxip}/reboot`;
+var urlShutdownStratux = `http://${stratuxip}/shutdown`;
+var urlMySetup = `${URL_SERVER}/setup`;
+var urlStratuxSetup = `http://${stratuxip}`;
 
 var KNOTS = "KT";
 var MPH = "MPH";
@@ -112,9 +143,6 @@ svgArrow.addEventListener("load", () => {
     coursearrow = svgDoc.getElementById("arrow");
 }, false);
 
-var usestx = document.getElementById("ahrs").value;
-useStratuxAHRS = (usestx == "Stratux");
-speedStyle = document.getElementById("speedstyle").value;
 var speedFactor = 1; // default in traffic messages is KNOTS
 
 switch (speedStyle) {
@@ -134,7 +162,7 @@ switch (speedStyle) {
 $(() => {
     if (!useStratuxAHRS) {
         try {
-            var websock = new WebSocket(urlSerialData);
+            var websock = new WebSocket(wsSerialData);
             websock.onmessage = onHostData;
         }
         catch (error) {
@@ -162,7 +190,7 @@ $(() => {
     
     if (trafficWarnings) {
         if (!trafficInitialized) {
-            trafficWebSocket = new WebSocket(urlTraffic);
+            trafficWebSocket = new WebSocket(wsTraffic);
             trafficWebSocket.onerror = function (evt) { onTrafficError(evt) };
             trafficWebSocket.onopen = function (evt) { onTrafficOpen(evt); };
             trafficWebSocket.onclose = function (evt) { onTrafficClose(evt); };
@@ -231,6 +259,13 @@ $(document).keyup(function(e) {
     }
 });
 
+var speedtape = $("#speedtape");
+var alttape = $("#alttape");
+var headingtape = $("#headingtape");
+var ball = $("#ball");
+var attitude;
+var aoa = $(".aoa");
+
 (function ($) {
     function AttitudeIndicator(placeholder, options) {
         var settings = $.extend({
@@ -279,7 +314,7 @@ $(document).keyup(function(e) {
             });
         }
 
-        function _hideBox() {urlSerialData
+        function _hideBox() {wsSerialData
             placeholder.each(function () {
                 $(this).find("img.box.background").hide();
             });
@@ -306,12 +341,7 @@ $(document).keyup(function(e) {
     };
 }(jQuery));
 
-var speedtape = $("#speedtape");
-var alttape = $("#alttape");
-var headingtape = $("#headingtape");
-var ball = $("#ball");
-var attitude = $.attitudeIndicator("#attitude", "attitude", { roll: 50, pitch: -20, size: 600, showBox: true });
-var aoa = $(".aoa");
+attitude = $.attitudeIndicator("#attitude", "attitude", { roll: 50, pitch: -20, size: 600, showBox: true });
 var avgVspeed = new Array(10);
 var isGarmin = false;
 
@@ -353,11 +383,10 @@ function onHostData(e) {
 
     var data = new HudData(e.data);
 
-    //////////////////////////////////////////////////////////////////////////////
-    //---------------------------------------------------------------------------
-    // example data:
-    // !1121144703-014+00003310811+01736+003-03+1013-033+110831245+01650023176C
-    //////////////////////////////////////////////////////////////////////////////
+    /****************************************************************************
+     * example data:
+     * !1121144703-014+00003310811+01736+003-03+1013-033+110831245+01650023176C
+     ****************************************************************************/
     if (!isGarmin && data.client == "garmin") {
         isGarmin = true;
         windindicator.css("left", "-1000");
