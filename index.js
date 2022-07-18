@@ -91,6 +91,7 @@ function startSerialServer() {
             
             if (debug) {
                 inPlayback = false;
+                stopPlayback = false;
                 DebugPlayback();
             }
 
@@ -121,7 +122,13 @@ function DebugPlayback() {
         console.log(err); 
     });
 
-    lr.on('line', function (line) {
+    lr.on('end', function() {
+        inPlayback = false;
+        stopPlayback = false;
+        lr.close();
+    });
+
+    lr.on('line', function(line) {
         
         // pause emitting of lines...
         lr.pause();
@@ -134,19 +141,15 @@ function DebugPlayback() {
         }
 
         // ...do asynchronous line processing..
-        setTimeout(function () {    
+        setTimeout(function() {    
             if (line.substring(0, 1) == "!") {
                 sendDataToBrowser("!" + line.substring(1));
             }
             lr.resume();
         }, 150);
-    });
 
-    lr.on('end', function () {
-        inPlayback = false;
-        stopPlayback = false;
-        lr.close();
-    });
+        
+    });    
 }
 
 // express web server  
