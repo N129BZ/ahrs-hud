@@ -2,9 +2,9 @@
 
 const express = require('express');
 const http = require('http');
-const SerialPort = require('serialport');
+const { SerialPort } = require('serialport');
+const { ReadlineParser } = require('@serialport/parser-readline');
 const WebSocketServer = require('websocket').server;
-const Readline = require('@serialport/parser-readline');
 const fs = require('fs');
 const exec = require('child_process').exec;
 const lineReader = require('line-by-line');
@@ -379,8 +379,8 @@ function openSerialPort(needsFileRead) {
             needsFileRead = false;
         }
 
-        port = new SerialPort(serialPort, { baudRate: baudrate });    
-        parser = port.pipe(new Readline({ delimiter: '\r\n' }));
+        port = new SerialPort({ path: serialPort, baudRate: baudrate, });    
+        parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
         port.on('open', showPortOpen);
         port.on('close', showPortClose);
         port.on('error', showPortError);

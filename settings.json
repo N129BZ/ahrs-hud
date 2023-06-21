@@ -2,7 +2,7 @@
   "view" : "Kivic",
   "httpport": 8686,
   "wsport": 9696,
-  "serialport" : "/dev/ttyACM0",
+  "serialport" : "COM3",
   "baudrate": 9600,
   "vne": 160,
   "vno": 130,
@@ -11,9 +11,9 @@
   "trafficwarnings": true,
   "maxwarnaltitude": 8000,
   "maxwarndistance": 15,
-  "speedstyle" : "MPH",
-  "ahrs" : "Dynon",
-  "stratuxip" : "192.168.1.187",
-  "debug": true,
+  "speedstyle" : "KT",
+  "ahrs" : "Stratux",
+  "stratuxip" : "192.168.1.188",
+  "debug": false,
   "firstrun": false
 }
